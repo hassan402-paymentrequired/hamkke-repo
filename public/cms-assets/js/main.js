@@ -3,6 +3,11 @@
  */
 
 'use strict';
+const HamkkeJsHelpers = {
+  submitLogoutForm(){
+    $('#logoutForm').submit();
+  }
+}
 
 let isRtl = window.Helpers.isRtl(),
   isDarkStyle = window.Helpers.isDarkStyle(),

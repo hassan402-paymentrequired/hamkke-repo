@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Laravel\Sanctum\Sanctum;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        Sanctum::ignoreMigrations();
     }
 
     /**
@@ -33,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
             $optionValue = $arguments[1];
             $optionText = !empty($arguments[2]) ? $arguments[2] : $optionValue;
             return "<option value={$optionValue}" . (old($formFieldName) == $optionValue ? 'selected' : '') . ">{$optionText}</option>";
+        });
+
+        view()->composer('*', function(View $view) {
+            $view->with('authUser', Auth::user());
         });
     }
 }
