@@ -1,0 +1,16 @@
+.app-brand-logo img {
+    width: 40px;
+}
+
+.app-brand-text {
+    font-size: 30px;
+    font-weight: 700px;
+}
+
+html:not([dir=rtl]) .app-brand-text  {
+    margin-left: 0 !important;
+}
+.form-error {
+    color: crimson !important;
+    font-size: 0.85em
+}
