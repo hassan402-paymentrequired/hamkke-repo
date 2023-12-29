@@ -179,6 +179,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <!-- Sales last 6 months -->

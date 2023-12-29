@@ -51,6 +51,7 @@
 </head>
 
 <body class="font-sans antialiased">
+
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
@@ -117,6 +118,7 @@
 <script src="{{ asset('cms-assets/js/main.js') }}"></script>
 
 @yield('more-scripts')
+
 </body>
 
 </html>
