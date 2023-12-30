@@ -3,7 +3,7 @@
 use App\Models\GeneralSetting;
 
 ?>
-@extends('layouts.app', ['pageTitle' => 'Settings::Site Info'])
+@extends('layouts.app', ['pageTitle' => 'Settings::General'])
 
 @section('more-styles')
 @endsection
@@ -33,7 +33,7 @@ use App\Models\GeneralSetting;
                                            accept="image/png, image/jpeg" name="site_logo"/>
                                 </label>
                                 <button type="button" class="btn btn-label-secondary account-image-reset mb-3">
-                                    <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+                                    <em class="ti ti-refresh-dot d-block d-sm-none"></em>
                                     <span class="d-none d-sm-block">Reset</span>
                                 </button>
 
@@ -86,7 +86,7 @@ use App\Models\GeneralSetting;
                                                    value="{{ $siteSettings->getSocialLink('instagram') }}"/>
                                         </div>
                                         <div class="mb-3 col-md-6">
-                                            <label for="youube_link" class="form-label">
+                                            <label for="youtube_link" class="form-label">
                                                 <img src="{{ asset('images/brands/instagram.png') }}"
                                                      alt="instagram icon" class="me-3" height="30"/>
                                                 YouTube</label>

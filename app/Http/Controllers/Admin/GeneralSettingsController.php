@@ -14,7 +14,6 @@ class GeneralSettingsController extends Controller
 
     public function siteSettings(Request $request)
     {
-
         $siteSettings = new SiteSettings();
         if (request()->isMethod('GET')) {
             return view('settings.site-settings', compact('siteSettings'));
