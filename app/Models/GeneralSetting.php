@@ -43,11 +43,6 @@ class GeneralSetting extends Model
     const SITE_LOGO = 3;
     const SOCIAL_LINKS = 4;
 
-    const SOCIAL_LINK_FACEBOOK='facebook';
-    const SOCIAL_LINK_INSTAGRAM='instagram';
-    const SOCIAL_LINK_TWITTER='twitter';
-    const SOCIAL_LINK_YOUTUBE='youtube';
-
     public static function seedData()
     {
         return [
@@ -56,33 +51,33 @@ class GeneralSetting extends Model
                 'name' => 'Site Name',
                 'string_value' => 'Hamkke',
                 'json_value' => null,
-                'core_site_setting' => TRUE
+                'core_site_setting' => true
             ],
             [
                 'id' => self::SITE_TAGLINE,
                 'name' => 'Tagline',
                 'string_value' => 'A Space Of Knowledge, Fun And Friendship',
                 'json_value' => null,
-                'core_site_setting' => TRUE
+                'core_site_setting' => true
             ],
             [
                 'id' => self::SITE_LOGO,
                 'name' => 'Site Logo',
                 'string_value' => asset('images/logo.jpeg'),
                 'json_value' => null,
-                'core_site_setting' => TRUE
+                'core_site_setting' => true
             ],
             [
                 'id' => self::SOCIAL_LINKS,
                 'name' => 'Social Links',
                 'string_value' => null,
                 'json_value' => json_encode([
-                    self::SOCIAL_LINK_FACEBOOK => 'https://www.facebook.com/hamkkechingus',
-                    self::SOCIAL_LINK_INSTAGRAM => 'https://www.instagram.com/darlingdaraa',
-                    self::SOCIAL_LINK_TWITTER => 'https://www.twitter.com/ham_kke',
-                    self::SOCIAL_LINK_YOUTUBE => 'https://www.youtube.com/c/darlingdaraa'
+                    SOCIAL_LINK_FACEBOOK => 'https://www.facebook.com/hamkkechingus',
+                    SOCIAL_LINK_INSTAGRAM => 'https://www.instagram.com/darlingdaraa',
+                    SOCIAL_LINK_TWITTER => 'https://www.twitter.com/ham_kke',
+                    SOCIAL_LINK_YOUTUBE => 'https://www.youtube.com/c/darlingdaraa'
                 ]),
-                'core_site_setting' => TRUE
+                'core_site_setting' => true
             ]
         ];
 

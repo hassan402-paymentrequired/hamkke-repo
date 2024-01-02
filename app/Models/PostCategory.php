@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  *
+ * @property PostType $postType
+ *
  * @package App\Models
  */
 class PostCategory extends Model
@@ -37,6 +39,7 @@ class PostCategory extends Model
 		'post_type_id',
 		'name',
 		'slug',
+        'description',
         'navigation_icon'
 	];
 
@@ -45,24 +48,30 @@ class PostCategory extends Model
         return [
             [
                 'id' => 1,
-                'name' => 'Study Materials',
-                'post_type_id' => PostType::LEARN_KOREAN,
+                'name' => 'E-Learning Materials',
+                'post_type_id' => PostType::LEARNING,
                 'navigation_icon' => asset('frontend-assets/study.svg')
             ],
             [
                 'id' => 2,
-                'name' => 'Lessons and Schedules',
-                'post_type_id' => PostType::LEARN_KOREAN,
-                'navigation_icon' => asset('frontend-assets/schedule.svg')
+                'name' => 'Physical Learning Materials',
+                'post_type_id' => PostType::LEARNING,
+                'navigation_icon' => asset('frontend-assets/study.svg')
             ],
             [
                 'id' => 3,
-                'name' => 'Tips and Tricks',
-                'post_type_id' => PostType::LEARN_KOREAN,
-                'navigation_icon' => asset('frontend-assets/tips.svg')
+                'name' => 'Lessons and Schedules',
+                'post_type_id' => PostType::LEARNING,
+                'navigation_icon' => asset('frontend-assets/schedule.svg')
             ],
             [
                 'id' => 4,
+                'name' => 'Tips and Tricks',
+                'post_type_id' => PostType::LEARNING,
+                'navigation_icon' => asset('frontend-assets/tips.svg')
+            ],
+            [
+                'id' => 5,
                 'name' => 'KPOP',
                 'post_type_id' => PostType::HALLYU,
                 'navigation_icon' => asset('frontend-assets/kpop.svg')

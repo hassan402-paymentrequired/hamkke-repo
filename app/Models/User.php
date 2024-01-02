@@ -14,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * Class User
- * 
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -35,7 +35,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'users';
- 
+
 	protected $casts = [
 		'role_id' => 'int',
 		'email_verified_at' => 'datetime',
@@ -61,4 +61,9 @@ class User extends Authenticatable
 	{
 		return $this->belongsTo(Role::class);
 	}
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'post_author');
+    }
 }

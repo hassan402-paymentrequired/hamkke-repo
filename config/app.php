@@ -59,6 +59,9 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'admin_domain' => env('ADMIN_DOMAIN'),
+    'default_domain' => env('DEFAULT_DOMAIN'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
