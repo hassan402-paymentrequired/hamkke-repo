@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('frontend-assets/css/styles.css') }}" type="text/css">
     <title>{{ $pageTitle ? "{$pageTitle} :: " : '' }}Hamkke Chingu</title>
 </head>
