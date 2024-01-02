@@ -1,19 +1,22 @@
-@extends('layouts.app', ['pageTitle' => 'Post::Create'])
+@extends('layouts.app', ['pageTitle' => 'Post::Edit'])
 
 @section('main-content')
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Posts /</span> Add New</h4>
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Posts /{{ $post->id }}/</span> Edit</h4>
 
     <div class="row">
-        <form id="postCreationForm" action="{{ route('admin.post.create') }}" method="POST" enctype="multipart/form-data">
+        <form id="postUpdateForm" action="{{ route('admin.post.update', ['post' => $post->id]) }}" method="POST"
+              enctype="multipart/form-data">
             @csrf
             <!-- Full Editor -->
             <div class="col-12">
                 <div class="card mb-4">
-                    <h5 class="card-header">Add New Post</h5>
+                    <h5 class="card-header">Edit Post</h5>
                     <div class="card-body">
+                        <div class="d-flex align-items-start align-items-sm-center gap-4 mb-3">
+                            <img src="{{ $post->featured_image }}" alt="featured-image"
+                                 class="d-block h-300 rounded" id="uploadedFeaturedImage"/>
+                        </div>
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
-                            <img src="" alt="featured-image"
-                                 class="d-block w-px-100 h-px-100 rounded" id="uploadedFeaturedImage"/>
                             <div class="button-wrapper">
                                 <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
                                     <span class="d-none d-sm-block">Click to Upload Featured Image</span>
@@ -31,17 +34,26 @@
                         <hr class="my-0"/>
                         <div class="mb-3">
                             <label for="formTitle" class="form-label">Post Title</label>
-                            <input type="text" class="form-control" value="{{ old('post_title') }}" id="formTitle"
-                                   name="post_title"
+                            <input type="text" class="form-control" value="{{ old('post_title', $post->title) }}"
+                                   id="formTitle" name="post_title" required
                                    placeholder="Title"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postStatus" class="form-label">Post Status</label>
+                            <select required class="form-select" id="postStatus" name="post_status" aria-label="Post Status Selection">
+                                @foreach($postStatuses as $postStatus)
+                                    <option value="{{ $postStatus->value }}"
+                                        {{ old('post_status', $post->post_status_id) == $postStatus->value ? 'selected' : '' }}>
+                                        {{ $postStatus->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="postType" class="form-label">Post Type</label>
                             <select class="form-select" id="postType" name="post_type" aria-label="Post Type Selection">
-                                <option value="">Select Post Type</option>
                                 @foreach($postTypes as $postType)
                                     <option value="{{ $postType->id }}"
-                                        {{ old('post_type') == $postType->id ? 'selected' : '' }}>
+                                        {{ old('post_type', $post->post_category->post_type_id) == $postType->id ? 'selected' : '' }}>
                                         {{ $postType->name }}</option>
                                 @endforeach
                             </select>
@@ -53,9 +65,8 @@
                                 <option value="">Select Post Type</option>
                                 @foreach($postCategories as $postCategory)
                                     <option value="{{ $postCategory->id }}"
-                                        {{ old('post_category') == $postCategory->id ? 'selected' : '' }}>
+                                        {{ old('post_category', $post->post_category_id) == $postCategory->id ? 'selected' : '' }}>
                                         {{ "{$postCategory->post_type->name}::{$postCategory->name}" }}</option>
-                                    )
                                 @endforeach
                             </select>
                         </div>
@@ -64,11 +75,13 @@
                             <div id="full-editor">
                                 <p id="postContentEditor"></p>
                             </div>
-                            <textarea name="post_content" style="display: none;" id="postContent">{{ old('post_content') }}</textarea>
+                            <textarea name="post_content" style="display: none"
+                                      id="postContent">{{ old('post_content', $post->body) }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="postSummary" class="form-label">Post Summary</label>
-                            <textarea class="form-control" id="postSummary" name="post_summary" rows="4">{{ old('post_summary') }}</textarea>
+                            <textarea class="form-control" id="postSummary" name="post_summary"
+                                      rows="4">{{ old('post_summary', $post->summary) }}</textarea>
                         </div>
                         <div class="mt-2">
                             <button type="submit" class="btn btn-outline primary me-2">Save changes and Preview</button>
@@ -82,5 +95,5 @@
 @endsection
 
 @section('more-scripts')
-    <script src="{{ asset("cms-assets/js/pages/create-post.js") }}"></script>
+    <script src="{{ asset("cms-assets/js/pages/edit-post.js") }}"></script>
 @endsection

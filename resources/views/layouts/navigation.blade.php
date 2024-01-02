@@ -44,11 +44,23 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text" data-i18n="Posts & Pages">Apps &amp; Pages</span>
         </li>
-        <li class="menu-item {{ isCurrentRoute('post.list') ? 'active' : '' }}">
-            <a href="javascript:void(0);" class="menu-link">
+        <li class="menu-item {{ isCurrentRoute(['admin.post.list', 'admin.post.create']) ? 'open': ''}}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <em class="menu-icon tf-icons ti ti-file"></em>
-                <div data-i18n="Posts">Posts</div>
+                <div>Posts</div>
             </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ isCurrentRoute('admin.post.list') ? 'active' : '' }}">
+                    <a href="{{ route('admin.post.list') }}" class="menu-link">
+                        <div>List</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ isCurrentRoute('admin.post.create') ? 'active' : '' }}">
+                    <a href="{{ route('admin.post.create') }}" class="menu-link">
+                        <div>Add New</div>
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
 </aside>

@@ -40,6 +40,10 @@
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/apex-charts/apex-charts.css') }}"/>
 
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/typography.css') }}" />
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/katex.css') }}" />
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/editor.css') }}" />
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('cms-assets/css/main.css') }}"/>
 
@@ -113,6 +117,9 @@
 
 <!-- Vendors JS -->
 <script src="{{ asset('cms-assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+<!-- Vendors JS -->
+<script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
+<script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
 
 <!-- Main JS -->
 <script src="{{ asset('cms-assets/js/main.js') }}"></script>
