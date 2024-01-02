@@ -41,10 +41,10 @@ class GeneralSettingsController extends Controller
         }
         GeneralSetting::where('id', GeneralSetting::SOCIAL_LINKS)->update([
             'json_value' => json_encode([
-                GeneralSetting::SOCIAL_LINK_FACEBOOK => $request->social_facebook ?: $siteSettings->getSocialLink(GeneralSetting::SOCIAL_LINK_FACEBOOK),
-                GeneralSetting::SOCIAL_LINK_INSTAGRAM => $request->social_instagram ?: $siteSettings->getSocialLink(GeneralSetting::SOCIAL_LINK_INSTAGRAM),
-                GeneralSetting::SOCIAL_LINK_TWITTER => $request->social_twitter ?: $siteSettings->getSocialLink(GeneralSetting::SOCIAL_LINK_TWITTER),
-                GeneralSetting::SOCIAL_LINK_YOUTUBE => $request->social_youtube ?: $siteSettings->getSocialLink(GeneralSetting::SOCIAL_LINK_YOUTUBE),
+                SOCIAL_LINK_FACEBOOK => $request->social_facebook ?: $siteSettings->getSocialLink(SOCIAL_LINK_FACEBOOK),
+                SOCIAL_LINK_INSTAGRAM => $request->social_instagram ?: $siteSettings->getSocialLink(SOCIAL_LINK_INSTAGRAM),
+                SOCIAL_LINK_TWITTER => $request->social_twitter ?: $siteSettings->getSocialLink(SOCIAL_LINK_TWITTER),
+                SOCIAL_LINK_YOUTUBE => $request->social_youtube ?: $siteSettings->getSocialLink(SOCIAL_LINK_YOUTUBE),
             ])
         ]);
 
