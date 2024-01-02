@@ -30,9 +30,12 @@ class SiteSettings {
         return $entry->string_value;
     }
 
-    public function getSocialLink(string $socialAccount) : string {
+    public function getSocialLink(string $socialAccount = null) : string {
         $entry = $this->allSiteSettings->where('id', GeneralSetting::SOCIAL_LINKS)->first();
         $socialLinks = !is_array($entry->json_value) ? json_decode($entry->json_value, true) : $entry->json_value;
+        if(empty($socialAccount)){
+            return $socialLinks;
+        }
         return $socialLinks[$socialAccount];
     }
 }

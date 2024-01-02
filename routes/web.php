@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\GeneralSettingsController;
+use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Front\PagesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,20 +16,34 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::domain(config('app.admin_domain'))->group( function () {
+    Route::get('/', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::middleware('auth')->group(function () {
+        Route::match(['GET', 'POST'], '/site-settings', [GeneralSettingsController::class, 'siteSettings'])
+            ->name('settings.general');
+
+        Route::get('posts', [PostsController::class, 'index'])->name('admin.post.list');
+        Route::match(['GET', 'POST'], 'posts/create', [PostsController::class, 'create'])->name('admin.post.create');
+        Route::get('posts/{post:id}', [PostsController::class, 'preview'])->name('admin.post.view');
+        Route::match(['GET', 'POST'], 'posts/{post:id}/update', [PostsController::class, 'update'])->name('admin.post.update');
+        Route::post('posts/{post:id}/change-status', [PostsController::class, 'changeStatus'])->name('admin.post.change_status');
+        Route::post('posts/{post:id}/delete', [PostsController::class, 'delete'])->name('admin.post.delete');
+    });
+
+    require __DIR__.'/auth.php';
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::match(['GET', 'POST'], '/site-settings', [GeneralSettingsController::class, 'siteSettings'])->name('settings.general');
+Route::domain(config('app.default_domain'))->group( function () {
+    Route::get('/', [PagesController::class, 'home'])->name('home');
+    Route::get('/about-us', [PagesController::class, 'about'])->name('about_us');
+    Route::post('/contact-us', [PagesController::class, 'submitContactRequest'])->name('contact_us');
+    Route::get('/pt/{post_type}', [PagesController::class, 'home'])->name('post_type.view');
+    Route::get('/category/{post_category}', [PagesController::class, 'home'])->name('post_category.view');
+    // Route::get('/tag/{post_tag}', [PagesController::class, 'home'])->name('post_type.view')
+    Route::get('/posts', [PagesController::class, 'home'])->name('post.list');
+    Route::get('/posts/{post}', [PagesController::class, 'home'])->name('post.view');
 });
 
-require __DIR__.'/auth.php';

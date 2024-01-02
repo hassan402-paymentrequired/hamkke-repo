@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\SiteSettings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -39,7 +40,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer('*', function(View $view) {
-            $view->with('authUser', Auth::user());
+            $view->with('authUser', Auth::user())
+                ->with('coreSiteDetails', new SiteSettings());
         });
     }
 }
