@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 /**
  * Class Role
@@ -42,4 +43,25 @@ class Role extends Model
 	{
 		return $this->hasMany(User::class);
 	}
+
+    /**
+     * @return array[]
+     */
+    public static function seedData()
+    {
+        return [
+            [
+                'id' => ROLE_SUPER_ADMIN,
+                'name' => 'super_admin',
+                'display_name' => 'Super Admin',
+                'hierarchy' => 100
+            ],
+            [
+                'id' => ROLE_WRITER,
+                'name' => 'writer',
+                'display_name' => 'Writer',
+                'hierarchy' => 80
+            ]
+        ];
+    }
 }

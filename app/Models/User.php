@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -27,6 +28,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon|null $updated_at
  *
  * @property Role $role
+ * @property Role $getRoleData
  *
  * @package App\Models
  */
@@ -65,5 +67,17 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class, 'post_author');
+    }
+
+    /**
+     * @return Role
+     */
+    public function getRoleData() : Role
+    {
+        $role = Arr::first(Role::seedData(), function ($entry){
+            return $entry['id'] = $this->role_id;
+        });
+        $roleInstance = new Role($role); $roleInstance->id = $role['id'];
+        return $roleInstance;
     }
 }
