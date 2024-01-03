@@ -14,7 +14,7 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Name|Username</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Status</th>
@@ -24,8 +24,8 @@
                         <tbody>
                         @forelse ($users as $user)
                             <tr>
-                                <td>{{ $user->id }}</td>
-                                <td>{{ $user->name }}</td>
+                                <td><img src="{{ $user->avatar }}" alt="User Avatar" height="40px"></td>
+                                <td>{{ $user->name }}@if($user->username){{ " | @$user->username" }}@endif</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->getRoleData()->display_name }}</td>
                                 <td class="{{ $user->is_active ?'text-success' : 'text-danger' }}">
@@ -38,10 +38,11 @@
                                             <i class="ti ti-dots-vertical"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ route('admin.user.update', $user) }}">
+                                            <a class="dropdown-item text-primary"
+                                               href="{{ route('admin.user.update', $user) }}">
                                                 <i class="ti ti-pencil me-1"></i> Edit
                                             </a>
-                                            <a class="dropdown-item"
+                                            <a class="dropdown-item text-danger"
                                                onclick="HamkkeJsHelpers.submitActionForm(
                                                    '{{ route('admin.user.delete', $user) }}',
                                                    'This user will no longer have access to the application'
