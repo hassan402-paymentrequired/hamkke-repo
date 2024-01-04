@@ -16,7 +16,7 @@ class UsersController extends Controller
         $authUser = auth()->user();
         $users = User::join('roles', 'roles.id', '=', 'users.role_id')
             ->where('roles.hierarchy', '<=', $authUser->role->hierarchy)
-            ->select(['users.*'])
+            ->select(['users.*', 'roles.hierarchy'])
             ->paginate(20);
         return view('users.users-list', compact('users'));
     }
@@ -28,10 +28,9 @@ class UsersController extends Controller
             return view('users.create-user', compact('roles'));
         }
         $userPassword = Str::password(10,symbols: false);
-        $emailSections = explode('@', $request->email);
         $user = new User([
             'name' => $request->get('name'),
-            'username' => $emailSections[0],
+            'username' => $request->get('username'),
             'email' => $request->get('email'),
             'role_id' => $request->get('role'),
             'author_bio' => $request->get('author_bio'),
@@ -50,10 +49,30 @@ class UsersController extends Controller
         return redirect()->route('admin.user.list');
     }
 
-    public function update(User $user)
+    public function update(UpdateOrCreateUser $request, User $user)
     {
-        flashErrorMessage('The user update feature is currently unavailable');
-        return back();
+        if($request->isMethod('GET')){
+            $roles = Role::all();
+            return view('users.edit-user', compact('roles', 'user'));
+        }
+        $userAvatar = $user->avatar;
+        if($request->user_avatar) {
+            $userAvatar = uploadFilesFromRequest(
+                $request,
+                'user_avatar',
+                'users-avatars',
+                strtolower("user_{$user->id}_avatar")
+            );
+        }
+        $user->update([
+            'name' => $request->get('name'),
+            'username' => $request->get('username'),
+            'role_id' => $request->get('role'),
+            'author_bio' => $request->get('author_bio'),
+            'avatar' => $userAvatar
+        ]);
+        flashSuccessMessage("User: @{$user->username} updated successfully");
+        return redirect()->route('admin.user.list');
     }
 
     public function delete(User $user)

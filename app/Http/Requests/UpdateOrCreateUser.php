@@ -26,9 +26,21 @@ class UpdateOrCreateUser extends FormRequest
         if(!$this->isMethod('POST')){
             return [];
         }
+        if($this->route('user')){
+            $user = $this->route('user');
+            return [
+                'user_avatar' => ['nullable', File::image()->types(['jpg', 'jpeg'])->min('2kb')->max('2mb')],
+                'name' => 'required|string|max:200',
+                'username' => ['nullable', Rule::unique('users','username')->ignore($user->id)],
+                'email' => ['required', Rule::unique('users','email')->ignore($user->id)],
+                'role' => 'required|exists:roles,id',
+                'author_bio' => 'nullable'
+            ];
+        }
         return [
             'user_avatar' => ['nullable', File::image()->types(['jpg', 'jpeg'])->min('2kb')->max('2mb')],
-            'name' => 'required|string|max:250',
+            'name' => 'required|string|max:200',
+            'username' => ['nullable', 'string', 'max:200', Rule::unique('users','username')],
             'email' => 'required|unique:users,email',
             'role' => 'required|exists:roles,id',
             'author_bio' => 'nullable'

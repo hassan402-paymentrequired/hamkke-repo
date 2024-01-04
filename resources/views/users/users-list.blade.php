@@ -25,38 +25,45 @@
                         @forelse ($users as $user)
                             <tr>
                                 <td><img src="{{ $user->avatar }}" alt="User Avatar" height="40px"></td>
-                                <td>{{ $user->name }}@if($user->username){{ " | @$user->username" }}@endif</td>
+                                <td>{{ $user->name }}@if($user->username)
+                                        {{ " | @$user->username" }}
+                                    @endif</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->getRoleData()->display_name }}</td>
                                 <td class="{{ $user->is_active ?'text-success' : 'text-danger' }}">
                                     {{ $user->is_active ? 'ACTIVE' : 'DEACTIVATED' }}
                                 </td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown">
-                                            <i class="ti ti-dots-vertical"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item text-primary"
-                                               href="{{ route('admin.user.update', $user) }}">
-                                                <i class="ti ti-pencil me-1"></i> Edit
-                                            </a>
-                                            <a class="dropdown-item text-danger"
-                                               onclick="HamkkeJsHelpers.submitActionForm(
+                                    @if($authUser->role_id == ROLE_SUPER_ADMIN
+                                        || $authUser->role->hierarchy > $user->hierarchy)
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown">
+                                                <i class="ti ti-dots-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item text-primary"
+                                                   href="{{ route('admin.user.update', $user) }}">
+                                                    <i class="ti ti-pencil me-1"></i> Edit
+                                                </a>
+                                                <a class="dropdown-item text-danger"
+                                                   onclick="HamkkeJsHelpers.submitActionForm(
                                                    '{{ route('admin.user.delete', $user) }}',
                                                    'This user will no longer have access to the application'
                                                )"
-                                               href="javascript:void(0);">
-                                                <i class="ti ti-trash me-1"></i> Delete
-                                            </a>
+                                                   href="javascript:void(0);">
+                                                    <i class="ti ti-trash me-1"></i> Delete
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        --
+                                    @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center">No Posts Found..</td>
+                                <td colspan="6" class="text-center">No Users Found..</td>
                             </tr>
                         @endforelse
                         </tbody>
