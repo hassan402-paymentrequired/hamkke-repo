@@ -21,11 +21,23 @@
                 <div data-i18n="Dashboard">Dashboard</div>
             </a>
         </li>
-        <li class="menu-item {{ isCurrentRoute('user.list') ? 'active' : '' }}">
-            <a href="javascript:void(0);" class="menu-link">
+        <li class="menu-item {{ isCurrentRoute(['admin.user.list', 'admin.user.create']) ? 'open': ''}}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <em class="menu-icon tf-icons ti ti-users"></em>
-                <div data-i18n="Users">Users</div>
+                <div>Users</div>
             </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ isCurrentRoute('admin.user.list') ? 'active' : '' }}">
+                    <a href="{{ route('admin.user.list') }}" class="menu-link">
+                        <div>All Users</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ isCurrentRoute('admin.user.create') ? 'active' : '' }}">
+                    <a href="{{ route('admin.user.create') }}" class="menu-link">
+                        <div>Add New User</div>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li class="menu-item {{ isCurrentRoute('settings.roles_and_permissions') ? 'active' : '' }}">
             <a href="javascript:void(0);" class="menu-link">
@@ -52,15 +64,17 @@
             <ul class="menu-sub">
                 <li class="menu-item {{ isCurrentRoute('admin.post.list') ? 'active' : '' }}">
                     <a href="{{ route('admin.post.list') }}" class="menu-link">
-                        <div>List</div>
+                        <div>All Posts</div>
                     </a>
                 </li>
                 <li class="menu-item {{ isCurrentRoute('admin.post.create') ? 'active' : '' }}">
                     <a href="{{ route('admin.post.create') }}" class="menu-link">
-                        <div>Add New</div>
+                        <div>Add New Post</div>
                     </a>
                 </li>
+{{--                TODO:: Add Categories and Tags Links --}}
             </ul>
         </li>
     </ul>
 </aside>
+<!-- wp:post-title {"textAlign":"center","align":"wide","style":{"typography":{"lineHeight":"1.2","fontStyle":"normal","fontWeight":"400", color:}},"textColor":"base","fontSize":"xxx-large"} /-->

@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Admin\GeneralSettingsController;
 use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,9 +28,22 @@ Route::domain(config('app.admin_domain'))->group( function () {
         Route::get('posts', [PostsController::class, 'index'])->name('admin.post.list');
         Route::match(['GET', 'POST'], 'posts/create', [PostsController::class, 'create'])->name('admin.post.create');
         Route::get('posts/{post:id}', [PostsController::class, 'preview'])->name('admin.post.view');
-        Route::match(['GET', 'POST'], 'posts/{post:id}/update', [PostsController::class, 'update'])->name('admin.post.update');
-        Route::post('posts/{post:id}/change-status', [PostsController::class, 'changeStatus'])->name('admin.post.change_status');
+        Route::match(['GET', 'POST'], 'posts/{post:id}/update', [PostsController::class, 'update'])
+            ->name('admin.post.update');
+        Route::post('posts/{post:id}/change-status', [PostsController::class, 'changeStatus'])
+            ->name('admin.post.change_status');
         Route::post('posts/{post:id}/delete', [PostsController::class, 'delete'])->name('admin.post.delete');
+
+        // Start User Management Routes
+        Route::get('users', [UsersController::class, 'index'])->name('admin.user.list');
+        Route::match(['GET', 'POST'], 'users/create', [UsersController::class, 'create'])
+            ->name('admin.user.create');
+        Route::match(['GET', 'POST'], 'users/{user}/update', [UsersController::class, 'update'])
+            ->name('admin.user.update');
+        Route::post('users/{user}/activate', [UsersController::class, 'activate'])->name('admin.user.activate');
+        Route::post('users/{user}/deactivate', [UsersController::class, 'deactivate'])->name('admin.user.deactivate');
+        Route::post('users/{user}/delete', [UsersController::class, 'delete'])->name('admin.user.delete');
+        // End User Management Routes
     });
 
     require __DIR__.'/auth.php';

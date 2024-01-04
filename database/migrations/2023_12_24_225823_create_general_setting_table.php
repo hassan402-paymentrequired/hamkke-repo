@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('general_setting');
+        Schema::dropIfExists('general_settings');
     }
 };

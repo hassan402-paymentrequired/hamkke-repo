@@ -4,7 +4,7 @@
 'use strict';
 const HamkkeJsHelpers = {
     submitLogoutForm() {
-        return this.confirmationAlert(
+        return HamkkeJsHelpers.confirmationAlert(
             'You will be required to login to perfome any actions after',
             'Are you sure'
         ).then(completeAction => {
@@ -81,21 +81,15 @@ const HamkkeJsHelpers = {
         });
     },
 
-    submitActionForm: (url, message, confirmFirst = false, method = 'POST', alertTitle = "Are you sure?") => {
-        const formRef = $('#sitewide-action-form');
-        if (confirmFirst) {
-            BaseHelper.confirmationAlert(message, alertTitle)
-                .then((continueAction) => {
-                    console.log(continueAction);
-                    if (continueAction) {
-                        formRef.attr('action', url).attr('method', method);
-                        formRef.submit();
-                    }
-                });
-        } else {
-            formRef.attr('action', url).attr('method', method);
-            formRef.submit();
-        }
+    submitActionForm: (url, message, method = 'POST', alertTitle = "Are you sure?") => {
+        const formRef = $('#site-wide-action-form');
+        HamkkeJsHelpers.confirmationAlert(message, alertTitle)
+            .then((continueAction) => {
+                if (continueAction) {
+                    formRef.attr('action', url).attr('method', method);
+                    formRef.submit();
+                }
+            });
     },
 
     autocompleteHelper: (inputId, sourceUrl = null, selectFunction, responseFunction = null) => {
@@ -121,7 +115,7 @@ const HamkkeJsHelpers = {
 
     allowOnlyPhoneCharacters(e) {
         const keyValue = e.key;
-        return keyValue === '+' || this.allowOnlyNum(e);
+        return keyValue === '+' || HamkkeJsHelpers.allowOnlyNum(e);
     },
 
     phoneNumberCheck(value, element, params) {
@@ -186,65 +180,6 @@ const HamkkeJsHelpers = {
             newWin.close();
         };
         // setTimeout(function(){},10);
-    },
-
-    verifyApplicant(wrapperEL, formID, proceedButtonAction) {
-        const _this = this;
-        const country = $('#applicant-country').val();
-        const phone = $('#applicant-phone').val();
-        const redirect_route = $('#redirect_route').val();
-        const service_id = $('#service').val();
-        _this.dataLoading({ wrapper: wrapperEL, show: true, loading_text: 'Verifying applicant' });
-        $.ajax({
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            url: '/verify-applicant',
-            data: {
-                country,
-                phone,
-                redirect_route,
-                service_id
-            },
-            success: function (result) {
-                console.log(result);
-                const { status, message, data } = result;
-                if (status) {
-                    let formData = {
-                        address: null,
-                        email: null,
-                        firstname: null,
-                        lastname: null,
-                        redirect_route: redirect_route,
-                        applicant_id: null
-                    };
-                    if (data.exists) {
-                        const applicant = data.applicant;
-                        formData = {
-                            address: applicant.address,
-                            // country: applicant.country || country,
-                            email: applicant.email,
-                            firstname: applicant.firstname,
-                            lastname: applicant.lastname,
-                            // phone: applicant.phone,
-                            redirect_route: redirect_route,
-                            service: service_id,
-                            applicant_id: applicant.id
-                        };
-
-                    }
-                    _this.populateFormWithData(formData, formID);
-                }
-                _this.dataLoading({ wrapper: wrapperEL, show: false });
-                $('#applicantDetails').removeClass('hidden');
-                proceedButtonAction(result);
-            },
-            error: function (requestError, statusText) {
-                const jsonResponse = requestError.responseJSON;
-                proceedButtonAction(jsonResponse)
-            }
-        });
     },
 
     /**
@@ -322,7 +257,7 @@ const HamkkeJsHelpers = {
     },
 
     openCreationOrUpdateModal(details, modalID, formID) {
-        BaseHelper.populateFormWithData(details, formID);
+        HamkkeJsHelpers.populateFormWithData(details, formID);
         if (details.update_route) {
             $('#' + formID).attr('action', details.update_route);
         }
@@ -352,7 +287,7 @@ const HamkkeJsHelpers = {
         for (let item in payload) {
             if (payload.hasOwnProperty(item)) {
                 let value = payload[item];
-                if (value && typeof payload[item] == 'string' && this.stringIsValidJson(value)) {
+                if (value && typeof payload[item] == 'string' && HamkkeJsHelpers.stringIsValidJson(value)) {
                     try {
                         value = JSON.parse(value);
                         if (typeof value == 'object') {
@@ -448,15 +383,35 @@ const HamkkeJsHelpers = {
                 'error'
             );
         }
-        if (!this.validateUploadSize(uploadField, maxSize)) {
+        if (!HamkkeJsHelpers.validateUploadSize(uploadField, maxSize)) {
             response.correctMaxSize = false;
             Swal.fire(
                 'Invalid File',
-                'File size is ' + this.number_format(uploadField.files[0].size / 1024 / 1024, 2) + 'MB. It should not exceed ' + maxSize + 'MB',
+                'File size is ' + HamkkeJsHelpers.number_format(uploadField.files[0].size / 1024 / 1024, 2) + 'MB. It should not exceed ' + maxSize + 'MB',
                 'error'
             );
         }
         return callback(response);
+    },
+
+    uploadAndPreviewImage(displayContainerSelector, inputFieldSelector, resetButtonSelector)
+    {
+        let displayContainer = document.querySelector(displayContainerSelector);
+        const fileInput = document.querySelector(inputFieldSelector),
+            resetFileInput = document.querySelector(resetButtonSelector);
+
+        if (displayContainer) {
+            const resetImage = displayContainer.src;
+            fileInput.onchange = () => {
+                if (fileInput.files[0]) {
+                    displayContainer.src = window.URL.createObjectURL(fileInput.files[0]);
+                }
+            };
+            resetFileInput.onclick = () => {
+                fileInput.value = '';
+                displayContainer.src = resetImage;
+            };
+        }
     }
 };
 

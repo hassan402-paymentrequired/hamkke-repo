@@ -90,6 +90,9 @@
             <!-- Content wrapper -->
         </div>
         <!-- / Layout page -->
+        <form action="javascript:void(0);" method="POST" id="site-wide-action-form" style="display: none;">
+            @csrf
+        </form>
     </div>
 
     <!-- Overlay -->

@@ -350,7 +350,7 @@ function isImageFile($file)
 
 function flashErrorMessage($message)
 {
-    Session::flash('danger', $message);
+    Session::flash('error', $message);
 }
 
 function flashInfoMessage($message)

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('posts', function (Blueprint $table) {
             $table->unsignedBigInteger('post_author')->after('post_status_id');
             $table->text('featured_image')->nullable()->after('post_status_id');
-            $table->foreign('post_author')->references('id')->on('users');
+            $table->foreign('post_author', 'post_author_foreign_index')->references('id')->on('users');
         });
     }
 
@@ -24,6 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
+            $table->dropForeign('post_author_foreign_index');
             $table->dropColumn('post_author');
             $table->dropColumn('featured_image');
         });
