@@ -75,9 +75,25 @@ class UsersController extends Controller
         return redirect()->route('admin.user.list');
     }
 
+    public function activate(User $user)
+    {
+        $user->update(['is_active' => 1]);
+        flashSuccessMessage('User activated successfully');
+        return redirect()->route('admin.user.list');
+    }
+
+    public function deactivate(User $user)
+    {
+        $user->update(['is_active' => 0]);
+        flashSuccessMessage('User deactivated successfully');
+        return redirect()->route('admin.user.list');
+    }
+
     public function delete(User $user)
     {
-        flashErrorMessage('The user deletion feature is currently unavailable');
-        return back();
+        $user->delete();
+        $userName = $user->username ?: $user->name;
+        flashSuccessMessage("User:{$userName} removed successfully");
+        return redirect()->route('admin.user.list');
     }
 }

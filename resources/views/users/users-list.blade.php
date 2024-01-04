@@ -46,14 +46,35 @@
                                                    href="{{ route('admin.user.update', $user) }}">
                                                     <i class="ti ti-pencil me-1"></i> Edit
                                                 </a>
-                                                <a class="dropdown-item text-danger"
-                                                   onclick="HamkkeJsHelpers.submitActionForm(
-                                                   '{{ route('admin.user.delete', $user) }}',
-                                                   'This user will no longer have access to the application'
-                                               )"
-                                                   href="javascript:void(0);">
-                                                    <i class="ti ti-trash me-1"></i> Delete
-                                                </a>
+                                                @if($authUser->id !== $user->id)
+                                                    @if($user->is_active)
+                                                        <a class="dropdown-item text-warning"
+                                                           onclick="HamkkeJsHelpers.submitActionForm(
+                                                           '{{ route('admin.user.deactivate', $user) }}',
+                                                           'This user will no longer have access to the application'
+                                                       )"
+                                                           href="javascript:void(0);">
+                                                            <i class="ti ti-pencil me-1"></i> Deactivate
+                                                        </a>
+                                                    @else
+                                                        <a class="dropdown-item text-success"
+                                                           onclick="HamkkeJsHelpers.submitActionForm(
+                                                           '{{ route('admin.user.activate', $user) }}',
+                                                           'This user\'s access to the application will be restored'
+                                                       )"
+                                                           href="javascript:void(0);">
+                                                            <i class="ti ti-pencil me-1"></i> Activate
+                                                        </a>
+                                                    @endif
+                                                    <a class="dropdown-item text-danger"
+                                                       onclick="HamkkeJsHelpers.submitActionForm(
+                                                           '{{ route('admin.user.delete', $user) }}',
+                                                           'This user will be removed from the application'
+                                                       )"
+                                                       href="javascript:void(0);">
+                                                        <i class="ti ti-trash me-1"></i> Delete
+                                                    </a>
+                                                @endif
                                             </div>
                                         </div>
                                     @else

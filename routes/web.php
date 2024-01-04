@@ -34,13 +34,16 @@ Route::domain(config('app.admin_domain'))->group( function () {
             ->name('admin.post.change_status');
         Route::post('posts/{post:id}/delete', [PostsController::class, 'delete'])->name('admin.post.delete');
 
+        // Start User Management Routes
         Route::get('users', [UsersController::class, 'index'])->name('admin.user.list');
         Route::match(['GET', 'POST'], 'users/create', [UsersController::class, 'create'])
             ->name('admin.user.create');
         Route::match(['GET', 'POST'], 'users/{user}/update', [UsersController::class, 'update'])
             ->name('admin.user.update');
-        Route::post('users/{user}/delete', [UsersController::class, 'delete'])
-            ->name('admin.user.delete');
+        Route::post('users/{user}/activate', [UsersController::class, 'activate'])->name('admin.user.activate');
+        Route::post('users/{user}/deactivate', [UsersController::class, 'deactivate'])->name('admin.user.deactivate');
+        Route::post('users/{user}/delete', [UsersController::class, 'delete'])->name('admin.user.delete');
+        // End User Management Routes
     });
 
     require __DIR__.'/auth.php';
