@@ -34,6 +34,15 @@ Route::domain(config('app.admin_domain'))->group( function () {
             ->name('admin.post.change_status');
         Route::post('posts/{post:id}/delete', [PostsController::class, 'delete'])->name('admin.post.delete');
 
+        Route::get('post-categories', [PostsController::class, 'categories'])->name('admin.category.list');
+        Route::post('post-categories/create', [PostsController::class, 'saveCategory'])->name('admin.category.create');
+        Route::post('post-categories/{category:id}/update', [PostsController::class, 'updateCategory'])->name('admin.category.update');
+        Route::post('post-categories/{category:id}/delete', [PostsController::class, 'deleteCategory'])->name('admin.category.delete');
+
+        Route::get('post-tags', [PostsController::class, 'tags'])->name('admin.tag.list');
+        Route::post('post-tags/create', [PostsController::class, 'saveTag'])->name('admin.tag.create');
+        Route::post('post-tags/{tag:id}/update', [PostsController::class, 'updateTag'])->name('admin.tag.update');
+
         // Start User Management Routes
         Route::get('users', [UsersController::class, 'index'])->name('admin.user.list');
         Route::match(['GET', 'POST'], 'users/create', [UsersController::class, 'create'])
