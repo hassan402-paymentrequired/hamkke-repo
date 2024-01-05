@@ -72,9 +72,19 @@
                         <div>Add New Post</div>
                     </a>
                 </li>
-{{--                TODO:: Add Categories and Tags Links --}}
+
+                <li class="menu-item {{ isCurrentRoute('admin.category.list') ? 'active' : '' }}">
+                    <a href="{{ route('admin.category.list') }}" class="menu-link">
+                        <div>Categories</div>
+                    </a>
+                </li>
+
+{{--                <li class="menu-item {{ isCurrentRoute('admin.tag.list') ? 'active' : '' }}">--}}
+{{--                    <a href="{{ route('admin.tag.list') }}" class="menu-link">--}}
+{{--                        <div>Tags</div>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
             </ul>
         </li>
     </ul>
 </aside>
-<!-- wp:post-title {"textAlign":"center","align":"wide","style":{"typography":{"lineHeight":"1.2","fontStyle":"normal","fontWeight":"400", color:}},"textColor":"base","fontSize":"xxx-large"} /-->
