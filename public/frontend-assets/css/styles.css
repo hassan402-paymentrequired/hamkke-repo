@@ -423,12 +423,12 @@
 }
 
 .forum{
-    padding: 30px;
+    /*padding: 30px;*/
     background-color: #ffffff;
 }
 
 .forum .card{
-    padding: 50px;
+    padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
     margin-top: 25px;
 }
@@ -450,14 +450,16 @@
     font-weight: 500;
     color: #404040;
     margin: 0 0 15px 0;
+    height: 55px;
 }
 
 .forum .card-text{
     font-size: 16px;
     font-weight: 300;
-    margin: 0 0 20px 0;
+    margin: 0 0 10px 0;
     color: #707070;
     line-height: 25px;
+    height: 110px;
 }
 
 .card-img-top{
@@ -854,7 +856,7 @@
 /* ABOUT US - CONTACT US */
 
 .about-div{
-    background-image: url(/frontend-assets/AboutUs-img.jpg);
+    background-image: url(/frontend-assets/about-us.png);
     background-size: cover;
     height: auto;
     padding: 50px;
@@ -959,6 +961,10 @@
     font-weight: 300;
     color: #404040;
     line-height: 36px;
+}
+
+.article-div img{
+    max-width: 100%;
 }
 
 .article-top-bg{
@@ -1949,7 +1955,14 @@ footer{
     }
 
     .profile-div{
-        display: block !important
+        display: block !important;
+        text-align: justify;
+    }
+
+    .row>.post-impression {
+        width: inherit;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
     }
 
     .forum .card-text {

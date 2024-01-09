@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class PostCategory
@@ -28,20 +29,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class PostCategory extends Model
 {
-	use SoftDeletes;
-	protected $table = 'post_categories';
+    use SoftDeletes;
 
-	protected $casts = [
-		'post_type_id' => 'int'
-	];
+    protected $table = 'post_categories';
 
-	protected $fillable = [
-		'post_type_id',
-		'name',
-		'slug',
+    protected $casts = [
+        'post_type_id' => 'int'
+    ];
+
+    protected $fillable = [
+        'post_type_id',
+        'name',
+        'slug',
         'description',
         'navigation_icon'
-	];
+    ];
 
     public static function seedData()
     {
@@ -125,5 +127,23 @@ class PostCategory extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function postsWithCommentsAndLikes()
+    {
+        return $this->posts()
+            ->leftJoin('users', 'users.id', 'posts.post_author')
+            ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
+            ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id')
+            ->groupBy('posts.id')
+            ->select([
+                'posts.*',
+                'users.id as author_id',
+                'users.name as author_name',
+                DB::raw('COUNT(post_comments.id) as comments'),
+                DB::raw('COUNT(post_likes.customer_id) as likes')
+            ])
+            ->latest()
+            ->paginate(10);
     }
 }
