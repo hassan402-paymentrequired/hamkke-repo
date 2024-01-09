@@ -100,7 +100,7 @@ class PostsController extends Controller
             'post_status_id' => $request->get('post_status'),
             'featured_image' => $featuredImage ?: $post->featured_image
         ]);
-        flashSuccessMessage('Post created successfully - Title:' . $post->title);
+        flashSuccessMessage('Post updated successfully - Title:' . $post->title);
         return redirect()->route('admin.post.update', $post);
     }
 

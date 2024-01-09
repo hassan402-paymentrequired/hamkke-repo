@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\GeneralSettingsController;
 use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
 use Illuminate\Support\Facades\Route;
@@ -62,10 +63,10 @@ Route::domain(config('app.default_domain'))->group( function () {
     Route::get('/', [PagesController::class, 'home'])->name('home');
     Route::get('/about-us', [PagesController::class, 'about'])->name('about_us');
     Route::post('/contact-us', [PagesController::class, 'submitContactRequest'])->name('contact_us');
-    Route::get('/pt/{post_type}', [PagesController::class, 'home'])->name('post_type.view');
+    Route::get('/pt/{post_type}', [FrontPostsController::class, 'postsByPostType'])->name('post_type.view');
     Route::get('/category/{post_category}', [PagesController::class, 'home'])->name('post_category.view');
     // Route::get('/tag/{post_tag}', [PagesController::class, 'home'])->name('post_type.view')
     Route::get('/posts', [PagesController::class, 'home'])->name('post.list');
-    Route::get('/posts/{post}', [PagesController::class, 'home'])->name('post.view');
+    Route::get('/posts/{post}', [FrontPostsController::class, 'singlePost'])->name('post.view');
 });
 

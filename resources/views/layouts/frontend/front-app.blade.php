@@ -35,7 +35,14 @@
         </div>
     </footer>
 
+    <script src="{{ asset('cms-assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('cms-assets/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('frontend-assets/bootstrap-5.3.2-dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
+    <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
+    <script src="{{ asset('cms-assets/js/main.js') }}"></script>
+
+    @yield('more-scripts')
 </body>
 
 </html>

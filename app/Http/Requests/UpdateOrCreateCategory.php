@@ -27,7 +27,7 @@ class UpdateOrCreateCategory extends FormRequest
         if(isCurrentRoute('admin.category.update')){
             $category = $this->route('category');
             return [
-                'edit_category_navigation_icon' => ['nullable', File::image()->types(['png', 'jpg', 'jpeg'])->min('2kb')->max('2mb')],
+                'edit_category_navigation_icon' => ['nullable', File::image()->types(['png', 'jpg', 'jpeg', 'svg'])->min('2kb')->max('2mb')],
                 'edit_category_name' => ['required', Rule::unique('post_categories','name')->ignore($category)
                     ->whereNull('deleted_at')],
                 'edit_category_post_type' => ['required', 'exists:post_types,id'],
@@ -35,7 +35,7 @@ class UpdateOrCreateCategory extends FormRequest
             ];
         }
         return [
-            'navigation_icon' => ['nullable', File::image()->types(['png', 'jpg', 'jpeg'])->min('2kb')->max('2mb')],
+            'navigation_icon' => ['nullable', File::image()->types(['png', 'jpg', 'jpeg', 'svg'])->min('2kb')->max('2mb')],
             'name' => ['required', Rule::unique('post_categories','name')],
             'post_type' => ['required', 'exists:post_types,id'],
             'description' => 'required'
