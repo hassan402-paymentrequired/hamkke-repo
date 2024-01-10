@@ -1,0 +1,22 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.4
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y unzip
+            composer install --no-interaction
+
+      - run:
+          name: Deploy to Server
+          command: |
+            ssh $SERVER_USER@$SERVER_IP 'cd $PROJECT_PATH && git pull origin master && /opt/scripts/finish_deployment_production.sh'
