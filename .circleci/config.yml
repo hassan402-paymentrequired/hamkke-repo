@@ -24,7 +24,7 @@ jobs:
             elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
               PROJECT_PATH="$DEV_WORKING_DIRECTORY"
               DEPLOYMENT_SCRIPT="$DEV_DEPLOYMENT_SCRIPT_PATH"
-              echo "This is Dev $SSH_FINGERPRINT"
+              echo "This is Dev ${SSH_FINGERPRINT} DEPLOYMENT_SCRIPT - ${DEPLOYMENT_SCRIPT}"
             else
               echo "Skipping deployment for branch ${CIRCLE_BRANCH}"
               exit 0
