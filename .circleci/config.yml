@@ -12,6 +12,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - $SSH_FINGERPRINT
+            - $HOST_SERVER_FINGERPRINT
 
       # Deploy the project
       - run:
