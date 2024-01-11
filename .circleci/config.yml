@@ -1,21 +1,19 @@
 version: 2.1
 
 jobs:
-  build:
+  deploy:
     docker:
-      - image: circleci/php:7.4
-    working_directory: ~/repo
+      - image: cimg/php:8.2
 
     steps:
       - checkout
 
-      - run:
-          name: Install Dependencies
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y unzip
-            composer install --no-interaction
+      # Set up SSH for deployment
+      - add_ssh_keys:
+          fingerprints:
+            - $SSH_FINGERPRINT
 
+      # Deploy the project
       - run:
           name: Deploy to Server
           command: |
