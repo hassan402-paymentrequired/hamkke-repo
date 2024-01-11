@@ -19,4 +19,25 @@ jobs:
       - run:
           name: Deploy to Server
           command: |
-            ssh $SERVER_USER@$SERVER_IP 'cd $PROJECT_PATH && git pull origin master && /opt/scripts/finish_deployment_production.sh'
+            # Determine PROJECT_PATH based on the branch
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              PROJECT_PATH="$PRODUCTION_WORKING_DIRECTORY"
+              DEPLOYMENT_SCRIPT="$DEPLOYMENT_SCRIPT_PATH"
+            elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              PROJECT_PATH="$DEV_WORKING_DIRECTORY"
+              DEPLOYMENT_SCRIPT="$DEV_DEPLOYMENT_SCRIPT_PATH"
+            else
+              echo "Skipping deployment for branch ${CIRCLE_BRANCH}"
+              exit 0
+            fi
+            echo "yes" | ssh -o StrictHostKeyChecking=no -T $SERVER_USER@$SERVER_IP 'cd $PROJECT_PATH && git pull origin $CIRCLE_BRANCH && $DEPLOYMENT_SCRIPT'
+
+workflows:
+  build_and_deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
