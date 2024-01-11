@@ -25,13 +25,12 @@ jobs:
             elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
               PROJECT_PATH="$DEV_WORKING_DIRECTORY"
               DEPLOYMENT_SCRIPT="$DEV_DEPLOYMENT_SCRIPT_PATH"
-              echo "IN HERE"
             else
               echo "Skipping deployment for branch ${CIRCLE_BRANCH}"
               exit 0
             fi
             set -x  # Enable debugging
-            ssh -o StrictHostKeyChecking=no -T $SERVER_USER@$SERVER_IP "cd $PROJECT_PATH && git pull origin $CIRCLE_BRANCH && $DEPLOYMENT_SCRIPT"
+            ssh -o StrictHostKeyChecking=no -T $SERVER_USER@$SERVER_IP "echo 'IN SERVER' cd $PROJECT_PATH && git pull origin $CIRCLE_BRANCH && $DEPLOYMENT_SCRIPT"
 
 workflows:
   build_and_deploy:
