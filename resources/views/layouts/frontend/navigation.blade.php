@@ -33,11 +33,11 @@
 
             <div class="navbtn">
                 <button>
-                    <a class="nav-link" href="javascript:void(0)"><img src="{{ asset('frontend-assets/store.svg') }}" />Store</a>
+                    <a class="nav-link" onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currectly unavailable').then(completeAction => false)" href="javascript:void(0)"><img src="{{ asset('frontend-assets/store.svg') }}" />Store</a>
                 </button>
 
                 <button>
-                    <a class="nav-link" href="javascript:void(0)"><img src="{{ asset('frontend-assets/cart.svg') }}" />Cart</a>
+                    <a class="nav-link" onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currectly unavailable').then(completeAction => false)" href="javascript:void(0)"><img src="{{ asset('frontend-assets/cart.svg') }}" />Cart</a>
                 </button>
             </div>
         </div>
