@@ -27,7 +27,7 @@ class SiteSettings {
 
     public function siteLogo() : string {
         $entry = $this->allSiteSettings->where('id', GeneralSetting::SITE_LOGO)->first();
-        return $entry->string_value;
+        return $entry->string_value ? getCorrectAbsolutePath($entry->string_value) : '';
     }
 
     public function getSocialLink(string $socialAccount = null) : string {

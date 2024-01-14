@@ -13,7 +13,7 @@
                     <h5 class="card-header">Edit Post</h5>
                     <div class="card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4 mb-3">
-                            <img src="{{ $post->featured_image }}" alt="featured-image"
+                            <img src="{{ getCorrectAbsolutePath($post->featured_image) }}" alt="featured-image"
                                  class="d-block h-300 rounded" id="uploadedFeaturedImage"/>
                         </div>
                         <div class="d-flex align-items-start align-items-sm-center gap-4">

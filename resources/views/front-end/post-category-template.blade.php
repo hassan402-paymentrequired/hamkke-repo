@@ -30,7 +30,7 @@
                                 @foreach($category->postsWithCommentsAndLikes() as $post)
                                     <div
                                         class="card d-flex align-items-center justify-content-between post-listing-card">
-                                        <img class="card-img-top" src="{{ $post->featured_image }}"
+                                        <img class="card-img-top" src="{{ getCorrectAbsolutePath($post->featured_image) }}"
                                              alt="{{ $post->title }}"/>
                                         <div class="d-flex profile-div justify-content-between align-items-center clearfix">
                                             <h5 class="card-title">{{ $post->title }}</h5>

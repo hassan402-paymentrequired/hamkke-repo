@@ -50,7 +50,7 @@
                             <div class="overlay">
                                 <p>{{ $post->title }}</p>
                             </div>
-                            <img src="{{ $post->featured_image }}" alt="Featured Image - {{ $post->title }}"/>
+                            <img src="{{ getCorrectAbsolutePath($post->featured_image) }}" alt="Featured Image - {{ $post->title }}"/>
                         </div>
                     </div>
                 @endforeach
