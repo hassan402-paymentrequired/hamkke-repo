@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 /app/GeneratedModels
 .DS_Store
+.scripts
