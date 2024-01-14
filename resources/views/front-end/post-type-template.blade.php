@@ -29,7 +29,7 @@
                             <div class="col-md-6 mb-3">
                                 <div class="forum">
                                     <div class="card d-flex justify-content-between post-listing-card">
-                                        <img class="card-img-top" src="{{ $post->featured_image }}"
+                                        <img class="card-img-top" src="{{ getCorrectAbsolutePath($post->featured_image) }}"
                                              alt="{{ $post->title }}"/>
                                         <h5 class="card-title">{{ $post->title }}</h5>
                                         <div class="d-flex profile-div justify-content-between mb-1">
