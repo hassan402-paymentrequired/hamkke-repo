@@ -8,9 +8,11 @@ namespace App\Models;
 
 use App\Enums\PostStatus;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class Post
@@ -55,6 +57,18 @@ class Post extends Model
 		'featured_image',
 		'post_author'
 	];
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        if (Request::getHost() === config('app.default_domain')) {
+            static::addGlobalScope('published', function (Builder $builder) {
+                $builder->where('post_status_id', PostStatus::PUBLISHED);
+            });
+        }
+    }
 
     /**
      * Get the route key for the model.

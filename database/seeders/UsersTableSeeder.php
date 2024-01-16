@@ -21,23 +21,18 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Victoria Etim',
                 'email' => 'vkeylicious@gmail.com',
                 'role_id' => ROLE_SUPER_ADMIN,
-                'password' => Str::password(10, true, true, false)
+                'password' => bcrypt('hamkke@password')
             ],
             [
                 'name' => 'Kemmieola',
                 'email' => 'kemmieola@gmail.com',
                 'role_id' => ROLE_SUPER_ADMIN,
-                'password' => Str::password(10, true, true, false)
+                'password' => bcrypt('hamkke@password')
             ]
         ];
 
         foreach($users as $user) {
-            $passwordString = $user['password'];
-            $user['password'] = bcrypt($user['password']);
-            $aUser = User::firstOrCreate(['email' => $user['email']], $user);
-            if($aUser->wasRecentlyCreated){
-                dump("Email: {$user['email']}, Password: {$passwordString}");
-            }
+            User::firstOrCreate(['email' => $user['email']], $user);
         }
     }
 }

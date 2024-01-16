@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\PostCategory;
 use App\Models\PostType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,11 +32,13 @@ class PagesController extends Controller
         $latestHallyuNews = clone $postsQuery->where('post_types.id', PostType::HALLYU)
             ->orderByDesc('posts.created_at')->limit(3)->get();
         $latestForumEntries = clone $postsQuery->where('post_types.id', PostType::FORUM)
-            ->orderByDesc('posts.created_at')->limit(3)
-            ->latest()->get();
+            ->orderByDesc('posts.created_at')->limit(3)->get();
+        $latestLearningEntries = PostCategory::where('post_type_id', PostType::LEARNING)
+            ->limit(3)->latest()->get();
         $postTypes = PostType::all();
-        $hallyuPostType = PostType::find(PostType::HALLYU);
-        return view('front-end.home', compact('postTypes', 'latestHallyuNews', 'latestForumEntries', 'hallyuPostType'));
+        $hallyuPostType = $postTypes->where('id',PostType::HALLYU)->first();
+        $podcastPostType = $postTypes->where('id',PostType::PODCAST)->first();
+        return view('front-end.home', compact('postTypes', 'latestHallyuNews', 'latestForumEntries', 'hallyuPostType', 'podcastPostType', 'latestLearningEntries'));
     }
 
     public function about()

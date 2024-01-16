@@ -310,10 +310,11 @@ function routeByName($name, $parameters = [], $absolute = false)
  * @param string $fieldName The name of the field in the request
  * @param string $storagePath Where do you want to store the file(s)
  * @param null $storeAsName Set this if you want the file to be stored as a particular name
+ * @param null $getAbsoluteUrl
  *
  * @return array|string An array of urls or a single url
  */
-function uploadFilesFromRequest(\Illuminate\Http\Request $request, $fieldName, $storagePath, $storeAsName = null)
+function uploadFilesFromRequest(\Illuminate\Http\Request $request, $fieldName, $storagePath, $storeAsName = null, $getAbsoluteUrl = true)
 {
     $fileNameToSet = cleanAlphanumericString($storeAsName);
     $documents = request($fieldName);
@@ -324,7 +325,11 @@ function uploadFilesFromRequest(\Illuminate\Http\Request $request, $fieldName, $
             foreach ($documents as $file) {
                 $filename = $fileNameToSet . time() . '.' . $file->getClientOriginalExtension();
                 $path = $file->storeAs($storagePath, $filename, ['disk' => 'public']);
-                array_push($uploadUrls, asset(Storage::url($path)));
+                if($getAbsoluteUrl) {
+                    $uploadUrls[] = getAbsoluteUrlFromPath($path);
+                } else {
+                    $uploadUrls[] = $path;
+                }
             }
         }
         return $uploadUrls;
@@ -333,8 +338,20 @@ function uploadFilesFromRequest(\Illuminate\Http\Request $request, $fieldName, $
     if (!empty($file)) {
         $filename = $fileNameToSet . time() . '.' . $file->getClientOriginalExtension();
         $path = $file->storeAs($storagePath, $filename, ['disk' => 'public']);
-        return asset(Storage::url($path));
+        if($getAbsoluteUrl) {
+            return getAbsoluteUrlFromPath($path);
+        }
+        return $path;
     }
+}
+
+/**
+ * @param $path
+ * @return string
+ */
+function getAbsoluteUrlFromPath($path)
+{
+    return asset(Storage::url($path));
 }
 
 function cleanAlphanumericString($subject)
@@ -598,4 +615,15 @@ function getFileSize($filePath)
 {
     $sizeInBytes = File::size($filePath);
     return $sizeInBytes * pow(10, -6); // Convert size to Megabytes(MB)
+}
+
+function getCorrectAbsolutePath($assetUrl)
+{
+
+    $path = preg_replace('/^http.*\/storage\//', '', $assetUrl);
+    if(!str_starts_with($path,'http')) {
+        return getAbsoluteUrlFromPath($path);
+    }
+    return $path;
+
 }

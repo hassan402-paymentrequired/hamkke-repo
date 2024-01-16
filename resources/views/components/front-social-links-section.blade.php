@@ -23,7 +23,7 @@
 @if($coreSiteDetails->getSocialLink(SOCIAL_LINK_YOUTUBE))
     <div class="icon-bg">
         <a target="_blank" href="{{ $coreSiteDetails->getSocialLink(SOCIAL_LINK_YOUTUBE) }}">
-            <img src="{{ asset('frontend-assets/linkedin.png') }}" alt="youtube icon"/>
+            <img src="{{ asset('frontend-assets/youtube.png') }}" alt="youtube icon"/>
         </a>
     </div>
 @endif
