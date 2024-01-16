@@ -20,3 +20,4 @@ yarn-error.log
 /app/GeneratedModels
 .DS_Store
 .scripts
+public/frontend-assets/.DS_Store
