@@ -619,7 +619,11 @@ function getFileSize($filePath)
 
 function getCorrectAbsolutePath($assetUrl)
 {
+
     $path = preg_replace('/^http.*\/storage\//', '', $assetUrl);
-    return getAbsoluteUrlFromPath($path);
+    if(!str_starts_with($path,'http')) {
+        return getAbsoluteUrlFromPath($path);
+    }
+    return $path;
 
 }
