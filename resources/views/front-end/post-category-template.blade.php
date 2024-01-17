@@ -9,7 +9,7 @@
                      aria-orientation="vertical">
                     <span class="sticky-top">
                         @foreach($postCategories as $category)
-                            <button class="nav-link {{ $loop->first ? 'active' : ''}} d-flex align-items-left align-items-center"
+                            <button class="nav-link {{ $category->id === $selectedCategory->id ? 'active' : ''}} d-flex align-items-left align-items-center"
                                     id="v-{{ $category->slug }}-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-{{ $category->slug }}"
                                     type="button" role="tab" aria-controls="v-{{ $category->slug }}"
@@ -37,7 +37,11 @@
                                             <div class="d-flex align-items-center">
                                                 <span>{{ $post->author_name }}</span>
                                                 <div class="comment-div">...
-                                                    Posted {{ $post->created_at->diffForHumans() }} ago
+                                                    @if(now()->subWeek()->timestamp > $post->created_at->timestamp)
+                                                        Posted {{ $post->created_at->format('F j, Y') }}
+                                                    @else
+                                                        Posted {{ $post->created_at->diffForHumans() }} ago
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

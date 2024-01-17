@@ -10,6 +10,7 @@
     <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('frontend-assets/css/styles.css') }}" type="text/css">
     <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('frontend-assets/css/custom-styles.css') }}" rel="stylesheet" type="text/css">
     <style>
         #mc_embed_signup {
             background: #fff;
