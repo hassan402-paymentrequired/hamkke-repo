@@ -63,8 +63,8 @@ Route::domain(config('app.default_domain'))->group( function () {
     Route::get('/', [PagesController::class, 'home'])->name('home');
     Route::get('/about-us', [PagesController::class, 'about'])->name('about_us');
     Route::post('/contact-us', [PagesController::class, 'submitContactRequest'])->name('contact_us');
-    Route::get('/pt/{post_type}', [FrontPostsController::class, 'postsByPostType'])->name('post_type.view');
-    Route::get('/category/{post_category}', [PagesController::class, 'home'])->name('post_category.view');
+    Route::get('/pt/{post_type}/{post_category?}', [FrontPostsController::class, 'postsByPostCategory'])->name('post_type.view');
+//    Route::get('/category/{post_category}', [FrontPostsController::class, 'postsByPostType'])->name('post_category.view');
     // Route::get('/tag/{post_tag}', [PagesController::class, 'home'])->name('post_type.view')
     Route::get('/posts', [PagesController::class, 'home'])->name('post.list');
     Route::get('/posts/{post}', [FrontPostsController::class, 'singlePost'])->name('post.view');
