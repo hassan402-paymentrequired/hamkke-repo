@@ -1,6 +1,8 @@
 @php
+    use App\Helpers\SiteSettings;
+
     /**
-     * @var \App\Helpers\SiteSettings $coreSiteDetails
+     * @var SiteSettings $coreSiteDetails
      */
 @endphp
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -33,11 +35,17 @@
 
             <div class="navbtn">
                 <button>
-                    <a class="nav-link" onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currectly unavailable').then(completeAction => false)" href="javascript:void(0)"><img src="{{ asset('frontend-assets/store.svg') }}" />Store</a>
+                    <a class="nav-link"
+                       onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currently unavailable', 'Oops!', 'info').then(completeAction => false)"
+                       href="javascript:void(0)">
+                        <img src="{{ asset('frontend-assets/store.svg') }}" alt="hamkke store - icon"/>Store
+                    </a>
                 </button>
 
                 <button>
-                    <a class="nav-link" onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currectly unavailable').then(completeAction => false)" href="javascript:void(0)"><img src="{{ asset('frontend-assets/cart.svg') }}" />Cart</a>
+                    <a class="nav-link"
+                       onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currectly unavailable', 'Oops!', 'info').then(completeAction => false)"
+                       href="javascript:void(0)"><img src="{{ asset('frontend-assets/cart.svg') }}" alt="Cart icon"/>Cart</a>
                 </button>
             </div>
         </div>

@@ -2,20 +2,23 @@
 
 @section('content')
 
-    <section class="section hallyu-div">
+    <section class="section category-posts-div">
         <div class="container">
             <div class="row marginX">
                 <div class="nav col-md-3 nav-pills paddingR sticky-top" id="v-pills-tab" role="tablist"
                      aria-orientation="vertical">
                     <span class="sticky-top">
                         @foreach($postCategories as $category)
-                            <button class="nav-link {{ $category->id === $selectedCategory->id ? 'active' : ''}} d-flex align-items-left align-items-center"
-                                    id="v-{{ $category->slug }}-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-{{ $category->slug }}"
-                                    type="button" role="tab" aria-controls="v-{{ $category->slug }}"
-                                    aria-selected="{{ $loop->first ? 'true' : 'false'}}">
-                                <img src="{{ $category->navigation_icon }}" alt="{{ $category->name }} nav icon"/>
-                                {{ $category->name }}
+                            <button
+                                class="nav-link {{ $category->id === $selectedCategory->id ? 'active' : ''}} d-flex align-items-left align-items-center"
+                                id="v-pills-{{ $category->slug }}-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-{{ $category->slug }}"
+                                type="button" role="tab" aria-controls="v-{{ $category->slug }}"
+                                aria-selected="{{ $loop->first ? 'true' : 'false'}}">
+                                <a  class="decoration-0" href="{{ route('post_type.view', ['post_type' => $postType->slug, 'post_category' => $category->slug]) }}">
+                                    <img src="{{ $category->navigation_icon }}" alt="{{ $category->name }} nav icon"/>
+                                    {{ $category->name }}
+                                </a>
                             </button>
 
                         @endforeach
@@ -23,54 +26,44 @@
                 </div>
 
                 <div class="col-md-9 paddingR tab-content" id="v-pills-tabContent">
-                    @foreach($postCategories as $category)
-                        <div class="tab-pane fade show {{ $loop->first ? 'active' : ''}}" id="v-{{ $category->slug }}" role="tabpanel"
-                             aria-labelledby="v-{{ $category->slug }}-tab">
-                            <div class="forum">
-                                @foreach($category->postsWithCommentsAndLikes() as $post)
-                                    <div
-                                        class="card d-flex align-items-center justify-content-between post-listing-card">
-                                        <img class="card-img-top" src="{{ getCorrectAbsolutePath($post->featured_image) }}"
+                    <div class="tab-pane fade show active" id="v-pills-{{ $category->slug }}" role="tabpanel"
+                         aria-labelledby="v-pills-{{ $category->slug }}-tab">
+                        <div class="forum">
+                            <div class="d-flex flex-row flex-wrap forum-row justify-content-between">
+                                @foreach($posts as $post)
+                                    <div class="card">
+                                        <img class="card-img-top"
+                                             src="{{ getCorrectAbsolutePath($post->featured_image) }}"
                                              alt="{{ $post->title }}"/>
-                                        <div class="d-flex profile-div justify-content-between align-items-center clearfix">
-                                            <h5 class="card-title">{{ $post->title }}</h5>
-                                            <div class="d-flex align-items-center">
+                                        <div class="space-div">
+                                            <div class="d-flex profile-div align-items-center">
+                                                <img src="{{ getCorrectAbsolutePath($post->author_avatar) }}"
+                                                     class="profile-img" alt="profile">
                                                 <span>{{ $post->author_name }}</span>
-                                                <div class="comment-div">...
-                                                    @if(now()->subWeek()->timestamp > $post->created_at->timestamp)
-                                                        Posted {{ $post->created_at->format('F j, Y') }}
-                                                    @else
-                                                        Posted {{ $post->created_at->diffForHumans() }} ago
-                                                    @endif
-                                                </div>
                                             </div>
-                                        </div>
-                                        <p class="card-text">{{ $post->summary }}
-                                            <span>
-                                                <a href="{{ route('post.view', compact('post')) }}">See More</a>
-                                            </span>
-                                        </p>
-
-                                        <div class="d-flex">
-                                            <div class="col-md-2 col-3 like-div">
-                                                <span>{{ $post->likes }}<img
-                                                        src="{{ asset('frontend-assets/likes.png') }}"
-                                                        alt="..."/></span>
+                                            <div class="row">
+                                                <div class="col-12"><h5 class="card-title">{{ $post->title }}</h5></div>
                                             </div>
-
-                                            <div class="col-md-10 col-9 dropdown">
-                                                <span class="dropdown-button">{{ $post->comments }}
-                                                    <img src="{{ asset('frontend-assets/comment.png') }}" alt="..."/>
+                                            <p class="card-text">
+                                                {{ \Str::limit($post->summary, 200) }} <br>
+                                                <span>
+                                                    <a href="{{ route('post.view', compact('post')) }}">See More</a>
                                                 </span>
-                                            </div>
+                                            </p>
 
+                                            <div class="like-div">
+                                                <span>{{ $post->likes }}</span>
+                                                <img src="{{ asset('frontend-assets/likes.png') }}" alt="...">
+                                                <span>{{ $post->comments }}</span>
+                                                <img src="{{ asset('frontend-assets/comment.png') }}" alt="...">
+                                                <span>Posted {{ $post->created_at->diffForHumans() }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
-
-                    @endforeach
+                    </div>
                 </div>
             </div>
         </div>

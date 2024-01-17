@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <section class="section hallyu-div">
+    <section class="section category-posts-div">
         <div class="container">
             <div class="row marginX">
                 <div class="nav col-md-3 nav-pills paddingR sticky-top" id="v-pills-tab" role="tablist"
@@ -10,7 +10,7 @@
                     <span class="sticky-top">
                         @foreach($postCategories as $category)
                             <button
-                                class="nav-link {{ $category->id === $selectedCategory->id ? 'active' : ''}} d-flex align-items-left align-items-center"
+                                class="nav-link {{ ($selectedCategory && $category->id === $selectedCategory->id) ? 'active' : ''}} d-flex align-items-left align-items-center"
                                 id="v-pills-{{ $category->slug }}-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-{{ $category->slug }}"
                                 type="button" role="tab" aria-controls="v-{{ $category->slug }}"
@@ -20,14 +20,13 @@
                                     {{ $category->name }}
                                 </a>
                             </button>
-
                         @endforeach
                     </span>
                 </div>
 
                 <div class="col-md-9 paddingR tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-{{ $category->slug }}" role="tabpanel"
-                         aria-labelledby="v-pills-{{ $category->slug }}-tab">
+                    <div class="tab-pane fade show active" id="v-pills-{{ $selectedCategory ? $selectedCategory->slug : '' }}" role="tabpanel"
+                         aria-labelledby="v-pills-{{ $selectedCategory ? $selectedCategory->slug : '' }}-tab">
                         <div class="forum">
                             <div class="d-flex flex-row flex-wrap forum-row justify-content-between">
                                 @foreach($posts as $post)
