@@ -49,8 +49,8 @@ const HamkkeJsHelpers = {
             showCancelButton: true,
             confirmButtonText: 'Yes',
             customClass: {
-              confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
-              cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                cancelButton: 'btn btn-label-secondary waves-effect waves-light'
             },
             buttonsStyling: false
         })
@@ -188,7 +188,7 @@ const HamkkeJsHelpers = {
      * @param show {boolean} Defaults to true, determines whether show or hide the loader
      * @param loading_text {string} Text to display in the loader
      */
-    dataLoading: function ({ wrapper = '', show = true, loading_text = "Fetching Data" }) {
+    dataLoading: function ({wrapper = '', show = true, loading_text = "Fetching Data"}) {
         if (show) {
             const loader = document.querySelector('#preloader-template').content.cloneNode(true);
             $(loader).find('#loading-message')[0].textContent = loading_text;
@@ -226,7 +226,7 @@ const HamkkeJsHelpers = {
             minimumFractionDigits = maximumFractionDigits;
         }
         const options = moreOptions;
-        Object.assign(options, { maximumFractionDigits, minimumFractionDigits });
+        Object.assign(options, {maximumFractionDigits, minimumFractionDigits});
         return Number(number).toLocaleString(undefined, options)
     },
 
@@ -236,7 +236,7 @@ const HamkkeJsHelpers = {
                 let subjectField = $(`#${subjectFormID} [name=${item}]`);
                 let namedDataValue = (namedData[item] == null) ? "" : namedData[item];
                 if (Array.isArray(namedDataValue)) {
-                    console.log({ fieldName: item, namedDataValue });
+                    console.log({fieldName: item, namedDataValue});
                     subjectField = $(`#${subjectFormID} [name="${item}[]"]`);
                     subjectField.val(namedDataValue).trigger('change');
                 } else if (subjectField.is('input[type=checkbox]')) {
@@ -321,7 +321,7 @@ const HamkkeJsHelpers = {
 
     stringIsValidJson(subjectString) {
         return (/^[\],:{}\s]*$/.test(
-            subjectString.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))
+                subjectString.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))
         );
     },
 
@@ -361,7 +361,7 @@ const HamkkeJsHelpers = {
 
     validateUploadSize(file, max_size) {
         const FileSize = file.files[0].size / 1024 / 1024; // in MB
-        console.log({ FileSize });
+        console.log({FileSize});
         return (FileSize <= max_size);
     },
 
@@ -394,8 +394,7 @@ const HamkkeJsHelpers = {
         return callback(response);
     },
 
-    uploadAndPreviewImage(displayContainerSelector, inputFieldSelector, resetButtonSelector)
-    {
+    uploadAndPreviewImage(displayContainerSelector, inputFieldSelector, resetButtonSelector) {
         let displayContainer = document.querySelector(displayContainerSelector);
         const fileInput = document.querySelector(inputFieldSelector),
             resetFileInput = document.querySelector(resetButtonSelector);
@@ -412,14 +411,46 @@ const HamkkeJsHelpers = {
                 displayContainer.src = resetImage;
             };
         }
-    }
-};
+    },
 
-let isRtl = window.Helpers.isRtl(),
-    isDarkStyle = window.Helpers.isDarkStyle(),
-    menu,
-    animate,
-    isHorizontalLayout = false;
+    /**
+     * Calculates the estimated reading time for a given text.
+     *
+     * @param {string} text - The input text to calculate reading time for.
+     * @returns {string} - Formatted reading time.
+     */
+    readingTime(text) {
+        // Constants
+        const AVERAGE_WPM = 250;
+        const WORD_LENGTH_DIVISOR = 5;
+
+        // Error handling
+        if (!text || typeof text !== 'string') {
+            return "Invalid input";
+        }
+
+        // Remove duplicate characters and sentences
+        const adjustedText = text.replace(/(.)\1+/g, '$1').replace(/([.!?])\s*\1+/g, '$1');
+
+        // Count characters and words
+        const adjustedCharCount = adjustedText.length;
+        const adjustedWords = adjustedText.trim().split(/\s+/);
+        const adjustedWordCount = adjustedWords.length;
+        const averageWordLength = adjustedCharCount / adjustedWordCount;
+
+        // Calculate adjusted reading time
+        const adjustedTime = (adjustedCharCount / AVERAGE_WPM) * (averageWordLength / WORD_LENGTH_DIVISOR);
+
+        // Formatted reading time
+        return adjustedTime > 1 ? Math.round(adjustedTime) + " min" : "Less than 1 min";
+    }
+}
+
+// let isRtl = window.Helpers.isRtl(),
+//     isDarkStyle = window.Helpers.isDarkStyle(),
+//     menu,
+//     animate,
+//     isHorizontalLayout = false;
 
 if (document.getElementById('layout-menu')) {
     isHorizontalLayout = document.getElementById('layout-menu').classList.contains('menu-horizontal');

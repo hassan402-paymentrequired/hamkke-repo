@@ -97,4 +97,13 @@ class Post extends Model
     {
         return $this->hasMany(PostLike::class, 'post_id');
     }
+
+    public static function withCategoryCommentsAndLikes()
+    {
+        return self::join('post_categories', 'post_categories.id', '=', 'posts.post_category_id')
+            ->join('post_types', 'post_types.id', '=', 'post_categories.post_type_id')
+            ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
+            ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id')
+            ->leftJoin('users', 'users.id', '=', 'posts.post_author');
+    }
 }
