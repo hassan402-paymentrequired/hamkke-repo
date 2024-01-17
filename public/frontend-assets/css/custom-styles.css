@@ -1,0 +1,48 @@
+
+
+.forum-div .card-text span, .learnkorean-div .card-text span .store-div .card-text span, .hallyu-div .card-text span {
+    font-size: 14px;
+    margin-left: 0;
+}
+
+.forum-div .nav-link, .learnkorean-div .nav-link, .store-div .nav-link, .hallyu-div .nav-link{
+    width: 100%;
+    color: #404040;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 400;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    text-align: left;
+}
+.forum-div .nav-link a, .learnkorean-div .nav-link a, .store-div .nav-link a, .hallyu-div .nav-link a {
+    padding: 20px;
+    width: 100%;
+    color: #404040;
+    text-decoration: none;
+}
+
+
+.about-div {
+    background-image: url('/frontend-assets/about-us.png');
+}
+
+.article-div img{
+    max-width: 100%;
+}
+
+@media (max-width: 767px) and (min-width: 575px) {
+    .profile-div{
+        text-align: justify;
+    }
+
+    .row>.post-impression {
+        width: inherit;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .about-div {
+        padding: 50px 0;
+    }
+}

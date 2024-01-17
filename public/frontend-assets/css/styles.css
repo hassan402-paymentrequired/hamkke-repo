@@ -199,7 +199,6 @@
 .card-box img{
     height: 100%;
     width: 100%;
-    border-radius: 10px;
 }
 
 .card-box .overlay {
@@ -210,8 +209,8 @@
     height: 120px;
     /* background-color: #ffffff; */
     background: rgba(34, 34, 34, 0.9);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    /* border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; */
 }
 
 .overlay p{
@@ -243,8 +242,9 @@
 
 .card{
     border: 0.5px solid #fafafa;
-    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px; */
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 0;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
 }
 
 .group2 .card{
@@ -268,6 +268,10 @@
     margin-top: 10px;
 }
 
+.profile-div{
+    margin-bottom: 20px;
+}
+
 .profile-img{
     width: 40px;
     height: 40px;
@@ -287,17 +291,26 @@
     margin-top: 15px;
 }
 
-.like-div img{
-    width: 18px;
-    margin-right: 20px;
-    margin: 0 20px 0 10px;
+.article-div .like-div{
+    margin-bottom: 20px;
 }
 
-.like-div span{
+.like-div img, .dropdown-button img{
+    width: 18px;
+    margin-right: 20px;
+    margin: 0 20px 0 5px;
+}
+
+.like-div span, .dropdown span{
     font-size: 14px;
-    color: #a8a8a8;
+    color: #707070;
     margin-right: 5px;
     font-weight: 300;
+}
+
+.like-div span .text, .dropdown span .text{
+    font-size: 14px;
+    color: #404040;
 }
 
 .comment-div{
@@ -412,6 +425,15 @@
     margin: 50px 0 100px 0;
 }
 
+.forum-row .card{
+    width: 48%;
+    margin-bottom: 40px;
+}
+
+.related-div .card {
+    width: 32%;
+}
+
 .forum-title{
     font-size: 20px;
     font-weight: 600;
@@ -419,22 +441,16 @@
 }
 
 .forum-body, .article-body, .cart-body, .about-body, .hallyu-body, .learn-body, .podcast-body, .store-body{
-    background-color: #FCFBFB;
+    background-color: #FFFFFF;
 }
 
 .forum{
-    /*padding: 30px;*/
+    padding: 0 30px;
     background-color: #ffffff;
 }
 
-.forum .card{
-    padding: 30px;
+.forum .card, .related-div .card{
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
-    margin-top: 25px;
-}
-
-.forum .card:nth-child(1){
-    margin-top: 0;
 }
 
 .forum button img{
@@ -450,23 +466,25 @@
     font-weight: 500;
     color: #404040;
     margin: 0 0 15px 0;
-    height: 55px;
 }
 
-.forum .card-text{
+.forum .card-text, .related-div .card-text{
     font-size: 16px;
     font-weight: 300;
-    margin: 0 0 10px 0;
-    color: #707070;
-    line-height: 25px;
-    height: 110px;
+    margin: 0 0 20px 0;
+    color: #404040;
+    line-height: 30px;
 }
 
 .card-img-top{
     height: auto;
     width: 100%;
-    margin-bottom: 20px;
-    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.space-div{
+    padding: 20px;
 }
 
 .forum .card .col-md-2{
@@ -512,7 +530,7 @@
 }
 
 .searchbox .card-text{
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     margin-bottom: 5px;
     width: auto;
@@ -541,10 +559,6 @@
     margin-bottom: 10px;
 }
 
-.like-div img{
-    margin: 0 0px 0 5px;
-}
-
 .forum li{
     transform: none;
 }
@@ -563,10 +577,6 @@
     margin-top: 15px;
 }
 
-.dropdown-button img{
-    width: 18px;
-    margin: 0 0 0 5px ;
-}
 
 .dropdown-button{
     color: #a8a8a8;
@@ -585,15 +595,11 @@
     margin-right: 10px;
 }
 
-/* .margin-top{
-    margin-top: 25px;
-} */
-
 .add-comment{
-    margin-left: 20px;
     font-size: 14px;
     font-weight: 400;
-    color: #707070;
+    color: #4F4754;
+    margin-left: 30px;
 }
 
 .tabs-div button{
@@ -638,8 +644,9 @@
     font-size: 16px;
     font-weight: 400;
     background-color: #ffffff;
-    padding-left: 40px;
+    padding-left: 20px;
     border: 1px solid #ffffff;
+    text-align: left;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
@@ -673,7 +680,7 @@
 
 .material-card{
     background-color: #ffffff;
-    border: 1px solid #e9e9e9;
+    border: 1px solid #F4F4F4;
     width: 300px;
     border-radius: 4px;
     padding: 0;
@@ -952,8 +959,6 @@
 
 .article-div{
     background-color: #ffffff;
-    margin: auto 200px;
-    padding: 50px;
 }
 
 .article-div p{
@@ -963,21 +968,19 @@
     line-height: 36px;
 }
 
-.article-div img{
-    max-width: 100%;
+.article-div .card-img-top{
+    margin-bottom: 40px;
 }
 
 .article-top-bg{
     background-color: #ffffff;
-    border-bottom: 1px solid #F7F7F7;
-    margin: auto 200px;
-    padding: 50px;
 }
 
-.article-top-bg h4{
+.article-div h4{
     font-size: 30px;
     font-weight: 600;
-    color: #4F4754;
+    color: #404040;
+    margin-bottom: 30px;
 }
 
 .article-top-bg button{
@@ -986,10 +989,17 @@
     outline: none;
     font-size: 16px;
     font-weight: 400;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 10px 20px;
     color: #404040;
     border-radius: 5px;
+}
+
+.related-div h4{
+    font-size: 30px;
+    font-weight: 600;
+    color: #404040;
+    margin: 80px 0 30px 0;
 }
 
 /* CART */
@@ -1246,10 +1256,6 @@ footer{
 
     /* Article */
 
-    .article-div, .article-top-bg {
-        margin: auto 100px;
-    }
-
     /* Order Div */
 
     .price-div div {
@@ -1307,6 +1313,10 @@ footer{
 
     .forum .card .col-md-2{
         width: 12%;
+    }
+
+    .forum .card-title {
+        font-size: 20px;
     }
 
     /* Article */
@@ -1464,7 +1474,7 @@ footer{
         width: 48%;
     }
 
-    .forum-div .col-md-3, .learnkorean-div .col-md-3, .store-div .col-md-3, .forum-div .col-md-9, .learnkorean-div .col-md-9, .store-div .col-md-9 {
+    .forum-div .col-md-3, .hallyu-div .col-md-3, .learnkorean-div .col-md-3, .store-div .col-md-3, .forum-div .col-md-9, .learnkorean-div .col-md-9, .store-div .col-md-9, .hallyu-div .col-md-9 {
         width: 100%;
     }
 
@@ -1474,16 +1484,12 @@ footer{
         padding: 0;
     }
 
-    .forum .card {
-        padding: 25px;
-    }
-
     .comment {
         padding: 20px;
     }
 
     .forum .card-title {
-        width: 100%;
+        font-size: 20px;
     }
 
     .profile-div{
@@ -1496,11 +1502,22 @@ footer{
     }
 
     .profile-div span, .comment-div {
-        font-size: 12px;
+        font-size: 14px;
+    }
+
+    .profile-img {
+        width: 30px;
+        height: 30px;
     }
 
     .forum .card .col-md-2{
         width: 10%;
+    }
+
+
+    .like-div span:nth-of-type(3) {
+        display: block;
+        margin-top: 10px;
     }
 
 
@@ -1514,11 +1531,6 @@ footer{
 
     .text-bg {
         width: auto;
-    }
-
-    .article-div, .article-top-bg {
-        margin: auto 0;
-        padding: 30px;
     }
 
     /* About Us */
@@ -1693,20 +1705,17 @@ footer{
         padding: 0;
     }
 
-    .forum .card {
-        padding: 20px;
-    }
-
     .comment {
         padding: 20px;
     }
 
-    .forum .card-title {
-        width: 100%;
-    }
-
     .profile-div{
         display: block !important
+    }
+
+    .profile-img {
+        width: 30px;
+        height: 30px;
     }
 
     .forum .card-text {
@@ -1722,6 +1731,15 @@ footer{
         width: 15%;
     }
 
+    .forum .card-title {
+        font-size: 18px;
+    }
+
+    .like-div span:nth-of-type(3) {
+        display: block;
+        margin-top: 10px;
+    }
+
 
     /* Podcast */
 
@@ -1731,11 +1749,6 @@ footer{
 
 
     /* Article */
-
-    .article-div, .article-top-bg {
-        margin: auto 0;
-        padding: 30px;
-    }
 
     /* About Us */
 
@@ -1942,27 +1955,21 @@ footer{
         padding: 0;
     }
 
-    .forum .card {
-        padding: 20px;
-    }
-
     .comment {
         padding: 20px;
     }
 
-    .forum .card-title {
-        width: 100%;
-    }
-
     .profile-div{
-        display: block !important;
-        text-align: justify;
+        display: block !important
     }
 
-    .row>.post-impression {
-        width: inherit;
-        padding-right: 0 !important;
-        padding-left: 0 !important;
+    .profile-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .forum .card-title {
+        font-size: 18px;
     }
 
     .forum .card-text {
@@ -1978,6 +1985,15 @@ footer{
         width: 15%;
     }
 
+    .forum-row .card {
+        width: 100%;
+    }
+
+    .like-div span:nth-of-type(3) {
+        display: block;
+        margin-top: 10px;
+    }
+
 
     /* Podcast */
 
@@ -1986,11 +2002,6 @@ footer{
     }
 
     /* Article */
-
-    .article-div, .article-top-bg {
-        margin: auto 0;
-        padding: 30px;
-    }
 
      /* About Us */
 
@@ -2168,6 +2179,3 @@ footer{
     }
 
 }
-
-
-

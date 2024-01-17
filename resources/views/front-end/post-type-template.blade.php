@@ -10,13 +10,15 @@
                     <span class="sticky-top">
                         @foreach($postCategories as $category)
                             <button
-                                class="nav-link {{ $loop->first ? 'active' : ''}} d-flex align-items-left align-items-center"
-                                id="v-{{ $category->slug }}-tab" data-bs-toggle="pill"
+                                class="nav-link {{ $category->id === $selectedCategory->id ? 'active' : ''}} d-flex align-items-left align-items-center"
+                                id="v-pills-{{ $category->slug }}-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-{{ $category->slug }}"
                                 type="button" role="tab" aria-controls="v-{{ $category->slug }}"
                                 aria-selected="{{ $loop->first ? 'true' : 'false'}}">
-                                <img src="{{ $category->navigation_icon }}" alt="{{ $category->name }} nav icon"/>
-                                {{ $category->name }}
+                                <a  class="decoration-0" href="{{ route('post_type.view', ['post_type' => $postType->slug, 'post_category' => $category->slug]) }}">
+                                    <img src="{{ $category->navigation_icon }}" alt="{{ $category->name }} nav icon"/>
+                                    {{ $category->name }}
+                                </a>
                             </button>
 
                         @endforeach
@@ -24,42 +26,43 @@
                 </div>
 
                 <div class="col-md-9 paddingR tab-content" id="v-pills-tabContent">
-                    <div class="row">
-                        @foreach($posts as $post)
-                            <div class="col-md-6 mb-3">
-                                <div class="forum">
-                                    <div class="card d-flex justify-content-between post-listing-card">
-                                        <img class="card-img-top" src="{{ getCorrectAbsolutePath($post->featured_image) }}"
+                    <div class="tab-pane fade show active" id="v-pills-{{ $category->slug }}" role="tabpanel"
+                         aria-labelledby="v-pills-{{ $category->slug }}-tab">
+                        <div class="forum">
+                            <div class="d-flex flex-row flex-wrap forum-row justify-content-between">
+                                @foreach($posts as $post)
+                                    <div class="card">
+                                        <img class="card-img-top"
+                                             src="{{ getCorrectAbsolutePath($post->featured_image) }}"
                                              alt="{{ $post->title }}"/>
-                                        <h5 class="card-title">{{ $post->title }}</h5>
-                                        <div class="d-flex profile-div justify-content-between mb-1">
-                                            <span>{{ $post->author_name }}</span>
-                                            <div class="comment-div">...
-                                                Posted {{ $post->created_at->diffForHumans() }}
+                                        <div class="space-div">
+                                            <div class="d-flex profile-div align-items-center">
+                                                <img src="{{ getCorrectAbsolutePath($post->author_avatar) }}"
+                                                     class="profile-img" alt="profile">
+                                                <span>{{ $post->author_name }}</span>
                                             </div>
-                                        </div>
-                                        <p class="card-text post-summary">{{ \Str::limit($post->summary, 200) }}
-                                            <span>
+                                            <div class="row">
+                                                <div class="col-12"><h5 class="card-title">{{ $post->title }}</h5></div>
+                                            </div>
+                                            <p class="card-text">
+                                                {{ \Str::limit($post->summary, 200) }} <br>
+                                                <span>
                                                     <a href="{{ route('post.view', compact('post')) }}">See More</a>
                                                 </span>
-                                        </p>
-                                        <div class="row">
-                                            <div class="col-md-3 like-div post-impression">
-                                                <span>{{ $post->likes }}<img
-                                                        src="{{ asset('frontend-assets/likes.png') }}"
-                                                        alt="..."/></span>
-                                            </div>
-                                            <div class="col-md-9 dropdown post-impression">
-                                                <span class="dropdown-button">{{ $post->comments }}
-                                                    <img src="{{ asset('frontend-assets/comment.png') }}" alt="..."/>
-                                                </span>
-                                            </div>
+                                            </p>
 
+                                            <div class="like-div">
+                                                <span>{{ $post->likes }}</span>
+                                                <img src="{{ asset('frontend-assets/likes.png') }}" alt="...">
+                                                <span>{{ $post->comments }}</span>
+                                                <img src="{{ asset('frontend-assets/comment.png') }}" alt="...">
+                                                <span>Posted {{ $post->created_at->diffForHumans() }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
