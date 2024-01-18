@@ -447,10 +447,10 @@ const HamkkeJsHelpers = {
 }
 
 // let isRtl = window.Helpers.isRtl(),
-//     isDarkStyle = window.Helpers.isDarkStyle(),
-//     menu,
-//     animate,
-//     isHorizontalLayout = false;
+let isDarkStyle = window.Helpers.isDarkStyle(),
+    menu,
+    animate,
+    isHorizontalLayout = false;
 
 if (document.getElementById('layout-menu')) {
     isHorizontalLayout = document.getElementById('layout-menu').classList.contains('menu-horizontal');
