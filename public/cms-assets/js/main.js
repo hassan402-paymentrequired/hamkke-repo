@@ -446,8 +446,8 @@ const HamkkeJsHelpers = {
     }
 }
 
-// let isRtl = window.Helpers.isRtl(),
-let isDarkStyle = window.Helpers.isDarkStyle(),
+let isRtl = window.Helpers.isRtl(),
+    isDarkStyle = window.Helpers.isDarkStyle(),
     menu,
     animate,
     isHorizontalLayout = false;

@@ -30,7 +30,7 @@ class PagesController extends Controller
                 DB::raw('COUNT(post_likes.customer_id) as likes')
             ]);
         $latestHallyuNews = clone $postsQuery->where('post_types.id', PostType::HALLYU)
-            ->orderByDesc('posts.created_at')->limit(3)->get();
+            ->orderByDesc('posts.created_at')->limit(2)->get();
         $latestForumEntries = clone $postsQuery->where('post_types.id', PostType::FORUM)
             ->orderByDesc('posts.created_at')->limit(3)->get();
         $latestLearningEntries = PostCategory::where('post_type_id', PostType::LEARNING)
