@@ -1,3 +1,6 @@
+.text-hamkke-purple{
+    color: #662687;
+}
 
 .card-text span {
     font-size: 14px !important;
@@ -75,6 +78,109 @@
 .card-box img {
     height: auto;
     width: 100%;
+}
+
+
+.comment-form{
+    margin: 0 0 30px 0;
+}
+
+.comment-form textarea{
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    background-color: #F3F4F6;
+    width: 100%;
+    padding: 15px 25px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #404040;
+}
+
+.comment-form input {
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    background-color: #F3F4F6;
+    width: 100%;
+    padding: 15px 25px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #404040;
+    margin-bottom: 0.25rem;
+}
+
+.comment-form input::placeholder{
+    color: #a8a8a8;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.comment-section span{
+    color: #662687;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.comment-form p{
+    font-size: 10px;
+    font-weight: 300;
+    width: auto;
+}
+
+.comment-form .card-text{
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    width: auto;
+}
+
+.comment-form .nav button {
+    padding: 15px 30px;
+    border-radius: 5px 5px 0 0;
+    color: #662687;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.comment-form button[type=submit] {
+    padding: 15px 30px;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background-color: #662687;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.comment-form button:disabled {
+    background-color: #662687;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+
+
+.comment-form .form-check {
+    margin: 0.5em 0;
+}
+
+.form-check-input {
+    margin-right: 0.5em;
+    margin-left: -1.5em !important;
+}
+
+.form-check-label {
+    margin: 0.5em 0;
+    line-height: inherit;
+}
+
+#customerAuthForm{
+    display: none;
+}
+
+#customerAuthForm.open{
+    display: block;
 }
 
 @media (max-width: 991px) and (min-width: 768px) {

@@ -45,14 +45,8 @@
                 </div>
 
                 @foreach ($latestHallyuNews as $post)
-                    <div class="col-md-4">
-                        <div class="card-box">
-                            <div class="overlay">
-                                <p>{{ $post->title }}</p>
-                            </div>
-                            <img src="{{ getCorrectAbsolutePath($post->featured_image) }}" alt="Featured Image - {{ $post->title }}"/>
-                        </div>
-                    </div>
+                    @component('components.posts.post-preview-card-box-title-one', compact('post'))
+                    @endcomponent
                 @endforeach
             </div>
         </div>
