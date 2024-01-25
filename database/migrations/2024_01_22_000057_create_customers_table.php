@@ -11,11 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('customers');
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable()->fulltext();
             $table->string('username')->nullable()->unique();
             $table->string('email')->nullable()->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password')->nullable();
+            $table->rememberToken();
+            $table->boolean('subscribe')->default(false)->index();
+            $table->string('avatar', 2048)->nullable();
             $table->timestamp('created_at')->useCurrent()->index();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate()->index();
             $table->softDeletes();

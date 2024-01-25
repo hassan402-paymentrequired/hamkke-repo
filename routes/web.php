@@ -67,5 +67,7 @@ Route::domain(config('app.default_domain'))->group( function () {
     // Route::get('/tag/{post_tag}', [PagesController::class, 'home'])->name('post_type.view')
     Route::get('/posts', [PagesController::class, 'home'])->name('post.list');
     Route::get('/posts/{post}', [FrontPostsController::class, 'singlePost'])->name('post.view');
+
+    Route::post('/comment/{post}', [FrontPostsController::class, 'postComment'])->name('post.comment.add');
 });
 
