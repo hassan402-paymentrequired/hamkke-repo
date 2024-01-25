@@ -627,3 +627,11 @@ function getCorrectAbsolutePath($assetUrl)
     return $path;
 
 }
+
+/**
+ * @return bool
+ */
+function customerIsLoggedIn() : bool
+{
+    return auth(CUSTOMER_GUARD_NAME)->check();
+}

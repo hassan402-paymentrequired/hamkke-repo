@@ -7,9 +7,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * Class Customer
@@ -18,6 +22,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $name
  * @property string|null $username
  * @property string|null $email
+ * @property Carbon|null $email_verified_at
+ * @property string|null $password
+ * @property string|null $remember_token
+ * @property string|null $avatar
  * @property Carbon $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
@@ -25,16 +33,31 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property PostComment[]|Collection $comments
  * @package App\Models
  */
-class Customer extends Model
+class Customer extends Authenticatable
 {
-	use SoftDeletes;
-	protected $table = 'customers';
+    use SoftDeletes, HasApiTokens, HasFactory,
+        Notifiable, MustVerifyEmail;
 
-	protected $fillable = [
-		'name',
-		'username',
-		'email'
-	];
+    protected $table = 'customers';
+
+    protected $casts = [
+        'email_verified_at' => 'datetime'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token'
+    ];
+
+    protected $fillable = [
+        'name',
+        'username',
+        'email',
+        'email_verified_at',
+        'password',
+        'remember_token',
+        'avatar'
+    ];
 
     public function comments()
     {

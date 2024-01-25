@@ -3,6 +3,7 @@
  */
 'use strict';
 const HamkkeJsHelpers = {
+    sitewideForm:  $('#site-wide-action-form'),
     submitLogoutForm() {
         return HamkkeJsHelpers.confirmationAlert(
             'You will be required to login to perfome any actions after',
@@ -82,12 +83,11 @@ const HamkkeJsHelpers = {
     },
 
     submitActionForm: (url, message, method = 'POST', alertTitle = "Are you sure?") => {
-        const formRef = $('#site-wide-action-form');
         HamkkeJsHelpers.confirmationAlert(message, alertTitle)
             .then((continueAction) => {
                 if (continueAction) {
-                    formRef.attr('action', url).attr('method', method);
-                    formRef.submit();
+                    this.sitewideForm.attr('action', url).attr('method', method);
+                    this.sitewideForm.submit();
                 }
             });
     },

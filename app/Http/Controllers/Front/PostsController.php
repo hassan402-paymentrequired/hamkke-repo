@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostCommentRequest;
+use App\Models\Customer;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\PostComment;
 use App\Models\PostType;
+use App\Models\User;
+use App\Notifications\CustomerWelcomeNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 
@@ -36,12 +41,13 @@ class PostsController extends Controller
     public function singlePost(Post $post)
     {
         $postAuthor = $post->author;
-        $postComments = $post->comments()->leftJoin('customers', 'customers.id', 'post_comments.customer_id')
+        $postComments = PostComment::leftJoin('customers', 'customers.id', 'post_comments.customer_id')
+            ->where('post_comments.post_id', $post->id)
             ->select([
                 'post_comments.*',
-                'customer.name as customer_name',
-                'customer.username as customer_usernames'
-            ]);
+                'customers.name as customer_name',
+                'customers.username as username'
+            ])->get();
         $postCategory = $post->post_category;
         $relatedPosts = Post::withCategoryCommentsAndLikes()
             ->where('posts.id', '!=', $post->id)
@@ -93,4 +99,97 @@ class PostsController extends Controller
         ->paginate(10);
         return view('front-end.post-type-template', compact('posts', 'postType', 'postCategories', 'selectedCategory', 'selectedCategory'));
     }
+
+    public function postComment(PostCommentRequest $request, Post $post)
+    {
+        if(auth(CUSTOMER_GUARD_NAME)->check()){
+            $post->comments()->create([
+                'customer_id' => auth()->guard('customer')->id(),
+                'reply_to' => $request->reply_to,
+                'body' => $request->comment
+            ]);
+            flashSuccessMessage('Comment sent successfully');
+            return back();
+        }
+        /**
+         * @var User $authUser
+         */
+        $loginAttemptPassed = false;
+        if($request->get('registration_request') === 'yes'){
+            $authUser = Customer::create([
+                'name' => $request->name,
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => bcrypt($request->register_password)
+            ]);
+            $authUser->notify(new CustomerWelcomeNotification());
+            $loginAttemptPassed = Auth::guard(CUSTOMER_GUARD_NAME)->attempt([
+                'email' => $request->email,
+                'password' => $request->password
+            ], $request->get('remember_me') === 'on');
+        } elseif ($request->get('login_request') === 'yes') {
+            $loginAttemptPassed = Auth::guard(CUSTOMER_GUARD_NAME)->attempt([
+                'email' => $request->email,
+                'password' => $request->password
+            ], $request->get('remember_me') === 'on');
+        }
+        if($loginAttemptPassed){
+            $request->session()->regenerate();
+            $post->comments()->create([
+                'customer_id' => auth(CUSTOMER_GUARD_NAME)->id(),
+                'reply_to' => $request->reply_to,
+                'body' => $request->comment
+            ]);
+            flashSuccessMessage('Comment sent successfully');
+        } else {
+            flashErrorMessage('Invalid credentials');
+        }
+        return back();
+
+    }
+//    public function likePost(PostCommentRequest $request, Post $post)
+//    {
+//        if(auth(CUSTOMER_GUARD_NAME)->check()){
+//            $post->likes()->create([
+//                'customer_id' => auth(CUSTOMER_GUARD_NAME)->id(),
+//            ]);
+//            flashSuccessMessage('Comment sent successfully');
+//            return back();
+//        }
+//        /**
+//         * @var User $authUser
+//         */
+//        $loginAttemptPassed = false;
+//        if($request->get('registration_request') === 'yes'){
+//            $authUser = Customer::create([
+//                'name' => $request->name,
+//                'username' => $request->username,
+//                'email' => $request->email,
+//                'password' => bcrypt($request->register_password)
+//            ]);
+//            $authUser->notify(new CustomerWelcomeNotification());
+//            $loginAttemptPassed = Auth::guard(CUSTOMER_GUARD_NAME)->attempt([
+//                'email' => $request->email,
+//                'password' => $request->password
+//            ], $request->get('remember_me') === 'on');
+//        } elseif ($request->get('login_request') === 'yes') {
+//            $loginAttemptPassed = Auth::guard(CUSTOMER_GUARD_NAME)->attempt([
+//                'email' => $request->email,
+//                'password' => $request->password
+//            ], $request->get('remember_me') === 'on');
+//        }
+//        if($loginAttemptPassed){
+//            $request->session()->regenerate();
+//            $post->comments()->create([
+//                'customer_id' => auth(CUSTOMER_GUARD_NAME)->id(),
+//                'reply_to' => $request->reply_to,
+//                'body' => $request->comment
+//            ]);
+//            flashSuccessMessage('Comment sent successfully');
+//        } else {
+//            flashErrorMessage('Invalid credentials');
+//        }
+//        return back();
+//
+//    }
 }
