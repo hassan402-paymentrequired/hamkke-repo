@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6cc5967338ca7517a75f53e61f2da9c",
+    "content-hash": "fd880155e8c1efcdfd042c6f26ce2612",
     "packages": [
         {
             "name": "brick/math",
@@ -844,6 +844,105 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "everyday/html-to-quill",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/everyday-as/html-to-quill.git",
+                "reference": "01c359aa23a340db23893fdd2524c0e47edd9738"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/everyday-as/html-to-quill/zipball/01c359aa23a340db23893fdd2524c0e47edd9738",
+                "reference": "01c359aa23a340db23893fdd2524c0e47edd9738",
+                "shasum": ""
+            },
+            "require": {
+                "everyday/php-quill-delta": "^0.1.6",
+                "ext-dom": "*",
+                "ext-json": "*",
+                "php": ">=8.0",
+                "symfony/dom-crawler": "^v6.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Everyday\\HtmlToQuill\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Everyday AS",
+                    "email": "system@everyday.no",
+                    "homepage": "https://everyday.no"
+                }
+            ],
+            "description": "PHP HTML to Quill Delta converter",
+            "homepage": "https://github.com/Everyday-AS/html-to-quill",
+            "keywords": [
+                "convert",
+                "delta",
+                "html",
+                "quill"
+            ],
+            "support": {
+                "issues": "https://github.com/everyday-as/html-to-quill/issues",
+                "source": "https://github.com/everyday-as/html-to-quill/tree/0.4.0"
+            },
+            "time": "2022-02-23T17:16:29+00:00"
+        },
+        {
+            "name": "everyday/php-quill-delta",
+            "version": "0.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/everyday-as/php-quill-delta.git",
+                "reference": "9e17f43d9efb0309418f83b4f54cff64363e78b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/everyday-as/php-quill-delta/zipball/9e17f43d9efb0309418f83b4f54cff64363e78b7",
+                "reference": "9e17f43d9efb0309418f83b4f54cff64363e78b7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Everyday\\QuillDelta\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Everyday AS",
+                    "email": "system@everyday.no",
+                    "homepage": "https://everyday.no"
+                }
+            ],
+            "description": "PHP library with types for representing quill deltas",
+            "homepage": "https://github.com/Everyday-AS/php-quill-delta",
+            "keywords": [
+                "delta",
+                "quill"
+            ],
+            "support": {
+                "issues": "https://github.com/everyday-as/php-quill-delta/issues",
+                "source": "https://github.com/everyday-as/php-quill-delta/tree/0.1.9"
+            },
+            "time": "2022-04-29T01:22:55+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -2364,6 +2463,128 @@
             "time": "2023-10-17T14:13:20+00:00"
         },
         {
+            "name": "mailchimp/marketing",
+            "version": "3.0.80",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mailchimp/mailchimp-marketing-php.git",
+                "reference": "c1a38f7248d8de7de412418fed8dae759b9e4b97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mailchimp/mailchimp-marketing-php/zipball/c1a38f7248d8de7de412418fed8dae759b9e4b97",
+                "reference": "c1a38f7248d8de7de412418fed8dae759b9e4b97",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "^6.4 || ^7.2",
+                "guzzlehttp/psr7": "^1.7 || ^2.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.12",
+                "phpunit/phpunit": "^7",
+                "squizlabs/php_codesniffer": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MailchimpMarketing\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mailchimp",
+                    "homepage": "https://github.com/mailchimp/mailchimp-marketing-php"
+                }
+            ],
+            "homepage": "http://swagger.io",
+            "keywords": [
+                "api",
+                "php",
+                "sdk",
+                "swagger"
+            ],
+            "support": {
+                "source": "https://github.com/mailchimp/mailchimp-marketing-php/tree/v3.0.80"
+            },
+            "time": "2022-11-02T19:19:48+00:00"
+        },
+        {
+            "name": "masterminds/html5",
+            "version": "2.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Masterminds/html5-php.git",
+                "reference": "f47dcf3c70c584de14f21143c55d9939631bc6cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Masterminds/html5-php/zipball/f47dcf3c70c584de14f21143c55d9939631bc6cf",
+                "reference": "f47dcf3c70c584de14f21143c55d9939631bc6cf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35 || ^5.7.21 || ^6 || ^7 || ^8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Masterminds\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Butcher",
+                    "email": "technosophos@gmail.com"
+                },
+                {
+                    "name": "Matt Farina",
+                    "email": "matt@mattfarina.com"
+                },
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                }
+            ],
+            "description": "An HTML5 parser and serializer.",
+            "homepage": "http://masterminds.github.io/html5-php",
+            "keywords": [
+                "HTML5",
+                "dom",
+                "html",
+                "parser",
+                "querypath",
+                "serializer",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/Masterminds/html5-php/issues",
+                "source": "https://github.com/Masterminds/html5-php/tree/2.8.1"
+            },
+            "time": "2023-05-10T11:58:31+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "3.5.0",
             "source": {
@@ -2463,6 +2684,69 @@
                 }
             ],
             "time": "2023-10-27T15:32:31+00:00"
+        },
+        {
+            "name": "nadar/quill-delta-parser",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nadar/quill-delta-parser.git",
+                "reference": "6881d5b0607836a961b756ee262f5b6c43852e0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nadar/quill-delta-parser/zipball/6881d5b0607836a961b756ee262f5b6c43852e0c",
+                "reference": "6881d5b0607836a961b756ee262f5b6c43852e0c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.2",
+                "phpstan/phpstan": "^1.7",
+                "phpunit/phpunit": "^8.0",
+                "rector/rector": "^0.14.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "nadar\\quill\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Basil Suter",
+                    "email": "git@nadar.io"
+                }
+            ],
+            "description": "A PHP library to parse Quill WYSIWYG editor deltas into HTML - flexible and extendible for custom elements.",
+            "keywords": [
+                "delta",
+                "html",
+                "parser",
+                "quill",
+                "quill-delta",
+                "quill-editor",
+                "quilljs",
+                "renderer"
+            ],
+            "support": {
+                "issues": "https://github.com/nadar/quill-delta-parser/issues",
+                "source": "https://github.com/nadar/quill-delta-parser/tree/3.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/nadar",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-09-14T13:12:25+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -4063,6 +4347,73 @@
                 }
             ],
             "time": "2023-05-23T14:45:45+00:00"
+        },
+        {
+            "name": "symfony/dom-crawler",
+            "version": "v6.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "14ff4fd2a5c8969d6158dbe7ef5b17d6a9c6ba33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/14ff4fd2a5c8969d6158dbe7ef5b17d6a9c6ba33",
+                "reference": "14ff4fd2a5c8969d6158dbe7ef5b17d6a9c6ba33",
+                "shasum": ""
+            },
+            "require": {
+                "masterminds/html5": "^2.6",
+                "php": ">=8.1",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "^5.4|^6.0|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Eases DOM navigation for HTML and XML documents",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/dom-crawler/tree/v6.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-11-20T16:41:16+00:00"
         },
         {
             "name": "symfony/error-handler",

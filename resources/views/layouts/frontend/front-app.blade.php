@@ -125,8 +125,8 @@
 <script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
-<script src="{{ asset('cms-assets/js/main.js') }}"></script>
-
+<script src="{{ asset('js/hamkke-custom-helpers.js') }}"></script>
+@component('components.frontend-alerts') @endcomponent
 @yield('more-scripts')
 </body>
 

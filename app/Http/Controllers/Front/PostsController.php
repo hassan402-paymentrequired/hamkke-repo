@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helpers\PostParser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCommentRequest;
 use App\Models\Customer;
@@ -11,10 +12,13 @@ use App\Models\PostComment;
 use App\Models\PostType;
 use App\Models\User;
 use App\Notifications\CustomerWelcomeNotification;
+use Everyday\HtmlToQuill\HtmlConverter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Session;
+use nadar\quill\Lexer;
 
 class PostsController extends Controller
 {
@@ -69,7 +73,8 @@ class PostsController extends Controller
             ])
             ->latest()
             ->limit(3)->get();
-        return view('front-end.single-post', compact('post', 'postComments', 'postAuthor', 'relatedPosts'));
+        $parsedPostBody = (new PostParser($post))->parsePostBody()->render();
+        return view('front-end.single-post', compact('post', 'postComments', 'postAuthor', 'relatedPosts', 'parsedPostBody'));
     }
 
     public function postsByPostCategory(PostType $post_type, PostCategory $post_category = null)
@@ -116,16 +121,16 @@ class PostsController extends Controller
          */
         $loginAttemptPassed = false;
         if($request->get('registration_request') === 'yes'){
-            $authUser = Customer::create([
+            $customer = Customer::create([
                 'name' => $request->name,
                 'username' => $request->username,
                 'email' => $request->email,
                 'password' => bcrypt($request->register_password)
             ]);
-            $authUser->notify(new CustomerWelcomeNotification());
+            $customer->notify(new CustomerWelcomeNotification());
             $loginAttemptPassed = Auth::guard(CUSTOMER_GUARD_NAME)->attempt([
                 'email' => $request->email,
-                'password' => $request->password
+                'password' => $request->register_password
             ], $request->get('remember_me') === 'on');
         } elseif ($request->get('login_request') === 'yes') {
             $loginAttemptPassed = Auth::guard(CUSTOMER_GUARD_NAME)->attempt([

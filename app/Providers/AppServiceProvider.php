@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('*', function(View $view) {
             $view->with('authUser', Auth::user())
+                ->with('customerAuthUser', Auth::guard(CUSTOMER_GUARD_NAME)->user())
                 ->with('coreSiteDetails', new SiteSettings());
         });
     }

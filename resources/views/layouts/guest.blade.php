@@ -100,6 +100,7 @@
 	<script src="{{ asset('cms-assets/vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js') }}"></script>
 
 	<!-- Main JS -->
+    <script src="{{ asset('js/hamkke-custom-helpers.js') }}"></script>
 	<script src="{{ asset('cms-assets/js/main.js') }}"></script>
 
 	<!-- Page JS -->

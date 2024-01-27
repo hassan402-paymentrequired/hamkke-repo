@@ -26,17 +26,18 @@
                              alt="{{ $post->title }} - featured image"/>
 
                         <h4>{{ $post->title }}</h4>
-                        <div id="postContent">
-
-                        </div>
+{{--                        <span class="card-text">--}}
+{{--                            {{ calculateReadingTime($parsedPostBody) }} read--}}
+{{--                        </span>--}}
+                        <div id="postContent">{!! $parsedPostBody !!}</div>
 
 
                         <div class="like-div">
-                             TODO:: Allow logged-in customers like the post and clicking again should remove the like :)
+                            {{-- TODO:: Allow logged-in customers like the post and clicking again should remove the like :) --}}
                             <span>
                                 {{ $post->likes()->count() }}
                                 <a href="javascript:void(0);" class="text-decoration-none" id="like-button"
-                                    data-post-id="{{ $post->slug }}">
+                                   data-post-id="{{ $post->slug }}">
                                     <img src="{{ asset('frontend-assets/likes.png') }}" alt="..."/>
                                 </a>
                                 <span class="text">Likes</span>
@@ -55,11 +56,11 @@
 
                                 <div class="post-comment-content">
                                     <div class="comment">
-                                        @component('components.alerts') @endcomponent
                                         <div class="comment-form">
                                             <label class="card-text" for="comment-textarea">Leave a Comment</label>
-                                            <textarea name="comment" @if(old('comment')) autofocus @endif type="search" id="comment-textarea"
-                                                      placeholder="Write a comment">{{ old('comment') }}</textarea>
+                                            <textarea name="comment" @if(old('comment')) autofocus @endif type="search"
+                                                      id="comment-textarea"
+                                                      placeholder="Write a comment{{ customerIsLoggedIn() ? " as {$customerAuthUser->username}": '' }}">{{ old('comment') }}</textarea>
                                             @if(!customerIsLoggedIn())
                                                 <div class="card" id="customerAuthForm">
                                                     <hr>
@@ -180,7 +181,8 @@
                                                 </div>
                                             @else
                                                 <hr>
-                                                <button class="btn btn-primary pull-right comment-submit-btn" disabled type="button"
+                                                <button class="btn btn-primary pull-right comment-submit-btn" disabled
+                                                        type="button"
                                                         data-form-action="{{ route('post.comment.add', $post) }}"
                                                         id="submit-comment">Submit
                                                 </button>
@@ -190,7 +192,8 @@
                                         <div class="title">Comments</div>
                                         @foreach($postComments as $postComment)
                                             <div class="comment-section @if(!$loop->first) top-line @endif">
-                                                <span class="font-bold">{{ $postComment->customer_name ?: $postComment->username }}</span>
+                                                <span
+                                                    class="font-bold">{{ $postComment->customer_name ?: $postComment->username }}</span>
                                                 <p class="card-text">{{ $postComment->body }}</p>
                                             </div>
                                         @endforeach
@@ -206,8 +209,8 @@
                         <h4>Related Posts</h4>
 
                         <div class="d-flex flex-row flex-wrap forum-row justify-content-between">
-                            @foreach ($relatedPosts as $post)
-                                @component('components.posts.post-preview-card-box-title-one', compact('post'))
+                            @foreach ($relatedPosts as $relatedPost)
+                                @component('components.posts.post-preview-card-box-title-one', ['post' => $relatedPost])
                                 @endcomponent
                             @endforeach
                         </div>
@@ -224,12 +227,6 @@
 @section('more-scripts')
     <script>
         (function ($) {
-            const postContent = @json($post->body);
-            HamkkeJsHelpers.convertQuillDeltaToHTML('#postContent', postContent);
-            const articleText = document.getElementById("postContent").innerText;
-            console.log({articleText});
-            const estimatedReadingTime = HamkkeJsHelpers.readingTime(articleText);
-            console.log({estimatedReadingTime});
 
             $('#comment-textarea').on('input', function (e) {
                 console.log('I was triggered');

@@ -1,3 +1,9 @@
+body{
+    min-width: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 /* NAVBAR */
 
 .navbar .navbar-brand {
@@ -88,6 +94,44 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* FORUM NAVBAR */
+
+section .navbar {
+    background-color: #ffffff;
+}
+
+section .navbar-nav {
+    margin-right: 0;
+}
+
+section .navbar-expand-lg .navbar-collapse {
+    justify-content: flex-start;
+}
+
+section .nav-item {
+    margin-right: 0;
+}
+
+section .navbar-light .navbar-toggler {
+    color: #404040;
+    border-color: none;
+}
+
+section .navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: none;
+}
+
+section .nav-pills button img {
+    width: 28px;
+    margin-right: 10px;
+}
+
+section .navbar-toggler {
+    padding: 10px;
 }
 
 
@@ -269,13 +313,11 @@
 }
 
 .profile-div{
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
-.profile-img{
+.profile-div img{
     width: 40px;
-    height: 40px;
-    border-radius: 30px;
     margin-right: 15px;
 }
 
@@ -293,6 +335,11 @@
 
 .article-div .like-div{
     margin-bottom: 20px;
+}
+
+.related-div .like-div .post-time{
+    display: block;
+    margin-top: 10px;
 }
 
 .like-div img, .dropdown-button img{
@@ -317,6 +364,12 @@
     font-size: 14px;
     color: #a8a8a8;
     font-weight: 400;
+}
+
+.dropdown span .text .comment-link{
+    font-weight: 500;
+    color: #404040;
+    text-decoration: underline;
 }
 
 /* SECTION3 */
@@ -445,7 +498,6 @@
 }
 
 .forum{
-    padding: 0 30px;
     background-color: #ffffff;
 }
 
@@ -500,15 +552,15 @@
 }
 
 .searchbox input{
-   border-radius: 50px;
-   outline: none;
-   border: none;
-   background-color: #F3F4F6;
-   width: 100%;
-   padding: 15px 25px;
-   font-size: 14px;
-   font-weight: 400;
-   color: #404040;
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    background-color: #F3F4F6;
+    width: 100%;
+    padding: 15px 25px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #404040;
 }
 
 .searchbox input::placeholder{
@@ -627,7 +679,7 @@
     margin-right: 14px;
 }
 
-.forum-div .nav, .learnkorean-div .nav, .store-div .nav, .hallyu-div .nav{
+.forum-div .nav, .learnkorean-div .nav, .store-div .nav, .hallyu-div .nav, .post-div .nav{
     display: block;
     margin-bottom: 20px;
 }
@@ -637,7 +689,7 @@
     margin-left: 10px;
 }
 
-.forum-div .nav-link, .learnkorean-div .nav-link, .store-div .nav-link, .hallyu-div .nav-link{
+.forum-div .nav-link, .learnkorean-div .nav-link, .store-div .nav-link, .hallyu-div .nav-link, .post-div .nav-link{
     width: 100%;
     color: #404040;
     padding: 20px;
@@ -649,6 +701,10 @@
     text-align: left;
 }
 
+.forum-div .nav button:nth-child(5){
+    border-bottom: 1px solid #e9e9e9;
+}
+
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #404040;
     background-color: #F7F7F7;
@@ -656,6 +712,55 @@
 
 .nav-pills .nav-link{
     border-radius: 0;
+}
+
+.forum.card{
+    width: 100%;
+    padding: 20px;
+}
+
+.post-box{
+    border-bottom: 0.5px solid #e9e9e9;
+    margin-bottom: 50px;
+    background-color: #ffffff;
+}
+
+.forum.card a, .card a{
+    text-decoration: none;
+    color: #404040;
+}
+
+.post-box p, .post-div .post-box p{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.post-box input{
+    width: 100%;
+    padding: 20px;
+    outline: none;
+    border: 1px solid #e9e9e9;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.post-box input::placeholder{
+    font-size: 16px;
+    font-weight: 300;
+    color: #404040;
+}
+
+.post-box button{
+    margin-bottom: 50px;
+    padding: 12px 30px;
+    outline: none;
+    border: 1px solid #662687;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #662687;
+    background-color: #ffffff;
+    width: 120px;
 }
 
 /* STUDY CARDS */
@@ -863,7 +968,7 @@
 /* ABOUT US - CONTACT US */
 
 .about-div{
-    background-image: url(/frontend-assets/about-us.png);
+    background-image: url(Assets/AboutUs-img.jpg);
     background-size: cover;
     height: auto;
     padding: 50px;
@@ -983,7 +1088,46 @@
     margin-bottom: 30px;
 }
 
+.article-top-bg img{
+    width: 25px;
+    margin-right: 10px;
+}
+
 .article-top-bg button{
+    outline: none;
+    border: none;
+    background-color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 20px 0;
+    color: #404040;
+}
+
+.article-top-bg button a{
+    text-decoration: none;
+    color: #404040;
+}
+
+.article-body .profile-div h6{
+    font-size: 16px;
+    font-weight: 500;
+    color: #404040;
+    margin-top: 10px;
+}
+
+.more{
+    margin-top: 30px;
+}
+
+.more p{
+    font-size: 16px;
+    font-weight: 400;
+    color: #707070;
+    margin-bottom: 20px;
+
+}
+
+.more button{
     background-color: #ffffff;
     border: 1px solid #404040;
     outline: none;
@@ -996,10 +1140,10 @@
 }
 
 .related-div h4{
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 600;
     color: #404040;
-    margin: 80px 0 30px 0;
+    margin: 60px 0 30px 0;
 }
 
 /* CART */
@@ -1043,6 +1187,16 @@
 .form-select {
     font-size: 20px;
     font-weight: 400;
+}
+
+.form-select{
+    border-radius: 0;
+    margin-bottom: 10px;
+    border: 1px solid #a8a8a8;
+    font-size: 16px;
+    font-weight: 300;
+    color: #404040;
+    padding: 10px 20px;
 }
 
 .price-div div{
@@ -1176,6 +1330,7 @@
 footer{
     background-color: #662687;
     padding: 50px;
+    margin-top: 155px;
 }
 
 .footer-brand{
@@ -1205,15 +1360,23 @@ footer{
 }
 
 
-@media (max-width: 1399px) and (min-width: 1200px) {
+@media (min-width: 1200px) {
+
+    /* FORUM NAVBAR */
+
+    section .navbar-expand-lg .navbar-nav {
+        flex-direction: column;
+    }
+
+    section .navbar-expand-lg .navbar-collapse {
+        display: block!important;
+    }
+
 
     /* Homepage */
 
     .navbar .navbar-brand {
         margin-right: 30px;
-    }
-
-    .navbar .navbar-brand {
         font-size: 20px;
     }
 
@@ -1245,16 +1408,24 @@ footer{
     }
 
     .material-card {
-        width: 260px
+        width: 32%;
     }
 
     /* Podcast */
 
     .podcast-row .card, .space-card {
-        width: 350px;
+        width: 24%;
     }
 
     /* Article */
+
+    .related-div .card {
+        width: 48%;
+    }
+
+    .related-div .card:nth-child(3){
+        display: none;
+    }
 
     /* Order Div */
 
@@ -1269,6 +1440,16 @@ footer{
 }
 
 @media (max-width: 1199px) and (min-width: 992px) {
+
+    /* FORUM NAVBAR */
+
+    section .navbar-expand-lg .navbar-nav {
+        flex-direction: column;
+    }
+
+    section .navbar-expand-lg .navbar-collapse {
+        display: block!important;
+    }
 
     /* Homepage */
 
@@ -1325,6 +1506,14 @@ footer{
         margin: auto 0;
     }
 
+    .related-div .card {
+        width: 48%;
+    }
+
+    .related-div .card:nth-child(3){
+        display: none;
+    }
+
     /* Checkout */
 
     .info-form form .d-flex, .form-check form .d-flex{
@@ -1359,6 +1548,12 @@ footer{
 }
 
 @media (max-width: 991px) and (min-width: 768px) {
+
+    /* FORUM NAVBAR */
+
+    section .navbar-expand-lg .navbar-nav {
+        flex-direction: column;
+    }
 
     /* Homepage */
 
@@ -1474,7 +1669,7 @@ footer{
         width: 48%;
     }
 
-    .forum-div .col-md-3, .hallyu-div .col-md-3, .learnkorean-div .col-md-3, .store-div .col-md-3, .forum-div .col-md-9, .learnkorean-div .col-md-9, .store-div .col-md-9, .hallyu-div .col-md-9 {
+    .forum-div .col-md-3, .hallyu-div .col-md-3, .article-body .col-md-3, .learnkorean-div .col-md-3, .store-div .col-md-3, .forum-div .col-md-9, .learnkorean-div .col-md-9, .store-div .col-md-9, .hallyu-div .col-md-9, .article-body .col-md-9 {
         width: 100%;
     }
 
@@ -1502,7 +1697,7 @@ footer{
     }
 
     .profile-div span, .comment-div {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .profile-img {
@@ -1531,6 +1726,14 @@ footer{
 
     .text-bg {
         width: auto;
+    }
+
+    .related-div .card {
+        width: 48%;
+    }
+
+    .related-div .card:nth-child(3){
+        display: none;
     }
 
     /* About Us */
@@ -1724,7 +1927,7 @@ footer{
     }
 
     .profile-div span, .comment-div {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .forum .card .col-3{
@@ -1749,6 +1952,14 @@ footer{
 
 
     /* Article */
+
+    .related-div .card {
+        width: 100%;
+    }
+
+    .profile-div {
+        margin-bottom: 10px;
+    }
 
     /* About Us */
 
@@ -1978,7 +2189,7 @@ footer{
     }
 
     .profile-div span, .comment-div {
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .forum .card .col-3{
@@ -2003,13 +2214,13 @@ footer{
 
     /* Article */
 
-     /* About Us */
+    /* About Us */
 
-     .about-div {
+    .about-div {
         padding: 50px 0;
     }
 
-     .text-bg {
+    .text-bg {
         width: auto;
     }
 
