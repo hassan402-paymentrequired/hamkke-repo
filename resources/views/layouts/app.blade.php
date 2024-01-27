@@ -125,6 +125,7 @@
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
 
 <!-- Main JS -->
+<script src="{{ asset('js/hamkke-custom-helpers.js') }}"></script>
 <script src="{{ asset('cms-assets/js/main.js') }}"></script>
 
 @yield('more-scripts')

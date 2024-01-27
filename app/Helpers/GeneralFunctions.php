@@ -635,3 +635,21 @@ function customerIsLoggedIn() : bool
 {
     return auth(CUSTOMER_GUARD_NAME)->check();
 }
+
+/**
+ * @param string $htmlContent
+ * @param int $wordsPerMinute
+ * @return string
+ */
+function calculateReadingTime(string $htmlContent, int $wordsPerMinute = 200): string
+{
+    // Strip HTML tags and extract text content
+    $textContent = strip_tags($htmlContent);
+
+    // Count the number of words
+    $wordCount = str_word_count($textContent);
+
+    // Calculate reading time in minutes
+    $readingTime = ceil($wordCount / $wordsPerMinute);
+    return "$readingTime" . \Illuminate\Support\Str::plural('min', $readingTime);
+}
