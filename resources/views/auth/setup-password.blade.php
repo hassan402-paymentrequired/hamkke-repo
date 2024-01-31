@@ -1,4 +1,4 @@
-@extends('layouts.guest', ['pageTitle' => 'Reset Password'])
+@extends('layouts.guest', ['pageTitle' => 'Setup Password'])
 
 @section('content')
     <h4 class="mb-1 pt-2">Setup Password 🔒</h4>
