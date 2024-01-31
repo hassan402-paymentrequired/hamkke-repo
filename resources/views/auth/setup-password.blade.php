@@ -1,7 +1,7 @@
-@extends('layouts.guest', ['pageTitle' => 'Reset Password'])
+@extends('layouts.guest', ['pageTitle' => 'Setup Password'])
 
 @section('content')
-    <h4 class="mb-1 pt-2">Reset Password 🔒</h4>
+    <h4 class="mb-1 pt-2">Setup Password 🔒</h4>
     <form id="formAuthentication" action="{{ route('password.store') }}" method="POST">
         @csrf
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
@@ -36,7 +36,7 @@
                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
             </div>
         </div>
-        <button class="btn btn-primary d-grid w-100 mb-3">Set new password</button>
+        <button class="btn btn-primary d-grid w-100 mb-3">Continue</button>
         <div class="text-center">
             <a href="{{ route('login') }}">
                 <i class="ti ti-chevron-left scaleX-n1-rtl"></i>

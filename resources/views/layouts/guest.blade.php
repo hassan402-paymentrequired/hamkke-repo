@@ -7,7 +7,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-        <title>{{ $pageTitle ? "{$pageTitle} - " : '' }}{{ config('app.name', 'Hamkke') }}</title>
+        <title>{{ isset($pageTitle) ? "{$pageTitle} - " : '' }}{{ config('app.name', 'Hamkke') }}</title>
 
 
 	<meta name="description" content="" />
@@ -62,13 +62,14 @@
 					<div class="card-body">
 						<!-- Logo -->
 						<div class="app-brand justify-content-center mb-4 mt-2">
-							<a href="index.html" class="app-brand-link gap-2">
+							<a href="{{ url('/') }}" class="app-brand-link gap-2">
 								<span class="app-brand-logo demo">
 									@include('components.application-logo')
 								</span>
 								<span class="app-brand-text demo text-body fw-bold ms-1">HAMKKE</span>
 							</a>
 						</div>
+                        @include('components.alerts')
 						@yield('content')
 					</div>
 				</div>

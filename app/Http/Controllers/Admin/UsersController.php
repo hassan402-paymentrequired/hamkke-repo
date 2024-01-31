@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrCreateUser;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -27,14 +25,13 @@ class UsersController extends Controller
             $roles = Role::all();
             return view('users.create-user', compact('roles'));
         }
-        $userPassword = Str::password(10,symbols: false);
         $user = new User([
             'name' => $request->get('name'),
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'role_id' => $request->get('role'),
             'author_bio' => $request->get('author_bio'),
-            'password' => bcrypt($userPassword)
+            'password' => null
         ]);
         if($request->user_avatar) {
             $user->avatar = uploadFilesFromRequest(
@@ -45,7 +42,8 @@ class UsersController extends Controller
             );
         }
         $user->save();
-        flashSuccessMessage("User: @{$user->username} created successfully, Password: {$userPassword}");
+        $user->sendPasswordSetupNotification();
+        flashSuccessMessage("User: '{$user->name}' created successfully.");
         return redirect()->route('admin.user.list');
     }
 
