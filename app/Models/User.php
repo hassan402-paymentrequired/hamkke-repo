@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Notifications\AdminSetupNotification;
 use Carbon\Carbon;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -88,5 +90,24 @@ class User extends Authenticatable
         });
         $roleInstance = new Role($role); $roleInstance->id = $role['id'];
         return $roleInstance;
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return string
+     */
+    public function broker(){
+        return Password::broker('users');
+    }
+
+    public function getResetToken()
+    {
+        return $this->broker()->getRepository()->create($this);
+    }
+    public function sendPasswordSetupNotification()
+    {
+        $token = $this->getResetToken();
+        $this->notify(new AdminSetupNotification($token));
     }
 }
