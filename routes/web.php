@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::domain(config('app.admin_domain'))->group( function () {
-    Route::get('/', [DashboardController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
+$adminRoutes = function () {
+    Route::get('/dashboard', [DashboardController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::middleware('auth')->group(function () {
         Route::match(['GET', 'POST'], '/site-settings', [GeneralSettingsController::class, 'siteSettings'])
@@ -56,9 +56,10 @@ Route::domain(config('app.admin_domain'))->group( function () {
     });
 
     require __DIR__.'/auth.php';
-});
+};
+Route::domain(config('app.admin_domain'))->group( $adminRoutes );
 
-Route::domain(config('app.default_domain'))->group( function () {
+Route::domain(config('app.default_domain'))->group( function () use ($adminRoutes) {
     Route::get('/', [PagesController::class, 'home'])->name('home');
     Route::get('/about-us', [PagesController::class, 'about'])->name('about_us');
     Route::post('/contact-us', [PagesController::class, 'submitContactRequest'])->name('contact_us');
@@ -69,5 +70,6 @@ Route::domain(config('app.default_domain'))->group( function () {
     Route::get('/posts/{post}', [FrontPostsController::class, 'singlePost'])->name('post.view');
 
     Route::post('/comment/{post}', [FrontPostsController::class, 'postComment'])->name('post.comment.add');
+    Route::prefix('admin')->group($adminRoutes);
 });
 

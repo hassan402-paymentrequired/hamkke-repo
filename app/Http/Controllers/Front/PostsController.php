@@ -12,13 +12,8 @@ use App\Models\PostComment;
 use App\Models\PostType;
 use App\Models\User;
 use App\Notifications\CustomerWelcomeNotification;
-use Everyday\HtmlToQuill\HtmlConverter;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Session;
-use nadar\quill\Lexer;
 
 class PostsController extends Controller
 {
@@ -79,6 +74,9 @@ class PostsController extends Controller
 
     public function postsByPostCategory(PostType $post_type, PostCategory $post_category = null)
     {
+        if($post_type->id === PostType::FORUM){
+            return $this->getForumPosts($post_category);
+        }
         $postType = $post_type;
         $postCategories = $postType->post_categories;
         $selectedCategory = $post_category;
@@ -105,6 +103,10 @@ class PostsController extends Controller
         return view('front-end.post-type-template', compact('posts', 'postType', 'postCategories', 'selectedCategory', 'selectedCategory'));
     }
 
+    public function getForumPosts(PostCategory $postCategory = null)
+    {
+
+    }
     public function postComment(PostCommentRequest $request, Post $post)
     {
         if(auth(CUSTOMER_GUARD_NAME)->check()){

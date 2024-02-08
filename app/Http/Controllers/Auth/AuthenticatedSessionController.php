@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended($this->getAdminHome());
     }
 
     /**
@@ -43,6 +43,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect($this->getAdminHome());
+    }
+
+    private function getAdminHome(): string
+    {
+        return isCurrentDomain(config('app.default_domain')) ? RouteServiceProvider::ADMIN_HOME : RouteServiceProvider::HOME;
     }
 }
