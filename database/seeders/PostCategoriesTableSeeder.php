@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\PostCategory;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -14,10 +14,10 @@ class PostCategoriesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (PostCategory::seedData() as $postCategory)
+        foreach (Category::seedData() as $postCategory)
         {
             $postCategory['slug'] = Str::slug($postCategory['name']);
-            PostCategory::firstOrCreate([
+            Category::firstOrCreate([
                 'id'=> $postCategory['id']
             ], $postCategory);
         }

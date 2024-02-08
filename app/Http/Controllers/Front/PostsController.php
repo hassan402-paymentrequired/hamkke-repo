@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCommentRequest;
 use App\Models\Customer;
 use App\Models\Post;
-use App\Models\PostCategory;
+use App\Models\Category;
 use App\Models\PostComment;
 use App\Models\PostType;
 use App\Models\User;
@@ -23,8 +23,8 @@ class PostsController extends Controller
             ->groupBy('posts.id')
             ->select([
                 'posts.*',
-                'post_categories.name as post_category',
-                'post_categories.slug as post_category_slug',
+                'categories.name as post_category',
+                'categories.slug as post_category_slug',
                 'post_types.name as post_type',
                 'post_types.slug as post_type_slug',
                 'users.id as author_id',
@@ -51,14 +51,14 @@ class PostsController extends Controller
         $relatedPosts = Post::withCategoryCommentsAndLikes()
             ->where('posts.id', '!=', $post->id)
             ->where(function ($q) use ($postCategory) {
-                $q->where('post_categories.id', $postCategory->id)
+                $q->where('categories.id', $postCategory->id)
                     ->orWhere('post_types.id', $postCategory->post_type_id);
             })
             ->groupBy('posts.id')
             ->select([
                 'posts.*',
-                'post_categories.name as post_category',
-                'post_categories.slug as post_category_slug',
+                'categories.name as post_category',
+                'categories.slug as post_category_slug',
                 'post_types.name as post_type',
                 'post_types.slug as post_type_slug',
                 'users.id as author_id',
@@ -72,7 +72,7 @@ class PostsController extends Controller
         return view('front-end.single-post', compact('post', 'postComments', 'postAuthor', 'relatedPosts', 'parsedPostBody'));
     }
 
-    public function postsByPostCategory(PostType $post_type, PostCategory $post_category = null)
+    public function postsByPostCategory(PostType $post_type, Category $post_category = null)
     {
         if($post_type->id === PostType::FORUM){
             return $this->getForumPosts($post_category);
@@ -80,18 +80,18 @@ class PostsController extends Controller
         $postType = $post_type;
         $postCategories = $postType->post_categories;
         $selectedCategory = $post_category;
-        $postsQuery = Post::join('post_categories', 'post_categories.id', '=', 'posts.post_category_id')
+        $postsQuery = Post::join('categories', 'categories.id', '=', 'posts.post_category_id')
             ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
             ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id')
             ->leftJoin('users', 'users.id', '=', 'posts.post_author')
-            ->where('post_categories.post_type_id', $postType->id);
+            ->where('categories.post_type_id', $postType->id);
         if($selectedCategory) {
             $postsQuery->where('posts.post_category_id', $selectedCategory->id);
         }
         $posts = $postsQuery->groupBy('posts.id')->select([
             'posts.*',
-            'post_categories.name as post_category',
-            'post_categories.slug as post_category_slug',
+            'categories.name as post_category',
+            'categories.slug as post_category_slug',
             'users.id as author_id',
             'users.name as author_name',
             'users.avatar as author_avatar',
@@ -103,7 +103,7 @@ class PostsController extends Controller
         return view('front-end.post-type-template', compact('posts', 'postType', 'postCategories', 'selectedCategory', 'selectedCategory'));
     }
 
-    public function getForumPosts(PostCategory $postCategory = null)
+    public function getForumPosts(Category $postCategory = null)
     {
 
     }

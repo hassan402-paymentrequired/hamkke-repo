@@ -24,8 +24,8 @@ class DashboardController extends Controller
             ->groupBy('posts.id')
             ->select([
                 'posts.*',
-                'post_categories.name as post_category',
-                'post_categories.slug as post_category_slug',
+                'categories.name as post_category',
+                'categories.slug as post_category_slug',
                 'post_types.name as post_type',
                 'post_types.slug as post_type_slug',
                 DB::raw('COUNT(post_comments.id) as comments'),

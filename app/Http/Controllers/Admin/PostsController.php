@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrCreateCategory;
 use App\Http\Requests\UpdateOrCreatePost;
 use App\Models\Post;
-use App\Models\PostCategory;
+use App\Models\Category;
 use App\Models\PostType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,17 +18,17 @@ class PostsController extends Controller
     public function index(Request $request)
     {
         $postTypes = PostType::all();
-        $postCategories = PostCategory::all();
+        $postCategories = Category::all();
         $postStatuses = PostStatus::cases();
-        $postsQuery = Post::join('post_categories', 'post_categories.id', '=', 'posts.post_category_id')
-                ->join('post_types', 'post_types.id', '=', 'post_categories.post_type_id')
+        $postsQuery = Post::join('categories', 'categories.id', '=', 'posts.post_category_id')
+                ->join('post_types', 'post_types.id', '=', 'categories.post_type_id')
                 ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
                 ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id');
         if($request->post_type) {
             $postsQuery->where('post_types.id', $request->post_type);
         }
         if($request->post_category){
-            $postsQuery->where('post_categories.id', $request->post_category);
+            $postsQuery->where('categories.id', $request->post_category);
         }
         if($request->post_status){
             $postsQuery->where('posts.post_status_id', $request->post_status);
@@ -36,8 +36,8 @@ class PostsController extends Controller
         $posts = $postsQuery->groupBy('posts.id')
             ->select([
                 'posts.*',
-                'post_categories.name as post_category',
-                'post_categories.slug as post_category_slug',
+                'categories.name as post_category',
+                'categories.slug as post_category_slug',
                 'post_types.name as post_type',
                 'post_types.slug as post_type_slug',
                 DB::raw('COUNT(post_comments.id) as comments'),
@@ -50,7 +50,7 @@ class PostsController extends Controller
     {
         if(request()->isMethod('GET')){
             $postTypes = PostType::all();
-            $postCategories = PostCategory::all();
+            $postCategories = Category::all();
             $postStatuses = PostStatus::cases();
             return view('posts.create', compact('postTypes', 'postCategories', 'postStatuses'));
         }
@@ -82,7 +82,7 @@ class PostsController extends Controller
     {
         if(request()->isMethod('GET')){
             $postTypes = PostType::all();
-            $postCategories = PostCategory::all();
+            $postCategories = Category::all();
             $postStatuses = PostStatus::cases();
             return view('posts.edit', compact('postTypes', 'postCategories', 'postStatuses', 'post'));
         }
@@ -119,7 +119,7 @@ class PostsController extends Controller
 
     public function categories()
     {
-        $postCategories = PostCategory::all();
+        $postCategories = Category::all();
         $postTypes = PostType::all();
         return view('posts.list-categories', compact('postCategories', 'postTypes'));
     }
@@ -131,7 +131,7 @@ class PostsController extends Controller
         if($request->navigation_icon) {
             $navigationIcon = uploadFilesFromRequest($request, 'navigation_icon', 'categories-navigation-icon', strtolower("{$categorySlug}_navigation_icon"));
         }
-        $category = PostCategory::create([
+        $category = Category::create([
             'post_type_id' => $request->get('post_type'),
             'name' => $request->get('name'),
             'slug' => $categorySlug,
@@ -142,7 +142,7 @@ class PostsController extends Controller
         return back();
     }
 
-    public function updateCategory(UpdateOrCreateCategory $request, PostCategory $category)
+    public function updateCategory(UpdateOrCreateCategory $request, Category $category)
     {
         $categorySlug = Str::slug($request->get('edit_category_name'));
         $navigationIcon = null;
@@ -160,7 +160,7 @@ class PostsController extends Controller
         return back();
     }
 
-    public function deleteCategory(PostCategory $category)
+    public function deleteCategory(Category $category)
     {
         $categoryName = $category->name;
         $postsCount = $category->posts()->count();

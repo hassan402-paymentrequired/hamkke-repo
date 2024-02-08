@@ -34,7 +34,7 @@ class UpdateOrCreatePost extends FormRequest
                 'post_title' => ['required', Rule::unique('posts','title')->ignore($post)
                     ->whereNull('deleted_at')],
                 'post_type' => ['required', 'exists:post_types,id'],
-                'post_category' => ['required', 'exists:post_categories,id'],
+                'post_category' => ['required', 'exists:categories,id'],
                 'post_summary' => 'required',
                 'post_content' => ['required'],
                 'post_status' => ['required', Rule::in(PostStatus::getValues())]
@@ -43,7 +43,7 @@ class UpdateOrCreatePost extends FormRequest
         return [
             'post_title' => ['required', Rule::unique('posts','title')->whereNull('deleted_at')],
             'post_type' => ['required', 'exists:post_types,id'],
-            'post_category' => ['required', 'exists:post_categories,id'],
+            'post_category' => ['required', 'exists:categories,id'],
             'post_summary' => 'required',
             'post_content' => ['required']
         ];
