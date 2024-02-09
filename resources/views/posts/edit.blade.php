@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4 mb-3">
                             <img src="{{ getCorrectAbsolutePath($post->featured_image) }}" alt="featured-image"
-                                 class="d-block h-300 rounded" id="uploadedFeaturedImage"/>
+                                 class="d-block w-px-100 h-px-100 rounded" id="uploadedFeaturedImage"/>
                         </div>
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                             <div class="button-wrapper">
@@ -61,40 +61,53 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-
-                    <div class="mb-3">
-                        <label for="postStatus" class="form-label">Post Status</label>
-                        <select required class="form-select" id="postStatus" name="post_status"
-                                aria-label="Post Status Selection">
-                            @foreach($postStatuses as $postStatus)
-                                <option value="{{ $postStatus->value }}"
-                                    {{ old('post_status', $post->post_status_id) == $postStatus->value ? 'selected' : '' }}>
-                                    {{ $postStatus->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="postType" class="form-label">Post Type</label>
-                        <select class="form-select" id="postType" name="post_type" aria-label="Post Type Selection">
-                            @foreach($postTypes as $postType)
-                                <option value="{{ $postType->id }}"
-                                    {{ old('post_type', $post->post_category->post_type_id) == $postType->id ? 'selected' : '' }}>
-                                    {{ $postType->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="postCategory" class="form-label">Post Category</label>
-                        <select class="form-select" id="postCategory" name="post_category"
-                                aria-label="Post Category Selection">
-                            <option value="">Select Post Type</option>
-                            @foreach($postCategories as $postCategory)
-                                <option value="{{ $postCategory->id }}"
-                                    {{ old('post_category', $post->post_category_id) == $postCategory->id ? 'selected' : '' }}>
-                                    {{ "{$postCategory->post_type->name}::{$postCategory->name}" }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                        <div class="mb-3">
+                            <label for="postStatus" class="form-label">Post Status</label>
+                            <select required class="form-select" id="postStatus" name="post_status"
+                                    aria-label="Post Status Selection">
+                                @foreach($postStatuses as $postStatus)
+                                    <option value="{{ $postStatus->value }}"
+                                        {{ old('post_status', $post->post_status_id) == $postStatus->value ? 'selected' : '' }}>
+                                        {{ $postStatus->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postType" class="form-label">Post Type</label>
+                            <select class="form-select" id="postType" name="post_type" aria-label="Post Type Selection">
+                                @foreach($postTypes as $postType)
+                                    <option value="{{ $postType->id }}"
+                                        {{ old('post_type', $post->post_category->post_type_id) == $postType->id ? 'selected' : '' }}>
+                                        {{ $postType->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postCategory" class="form-label">Post Category</label>
+                            <select class="form-select" id="postCategory" data-old-selection="{{ old('post_category', $post->post_category_id) }}" name="post_category"
+                                    aria-label="Post Category Selection">
+                                <option value="">Select Post Category</option>
+                                @foreach($postCategories as $postCategory)
+                                    <option value="{{ $postCategory->id }}"
+                                        {{ old('post_category', $post->post_category_id) == $postCategory->id ? 'selected' : '' }}>
+                                        {{ "{$postCategory->post_type->name}::{$postCategory->name}" }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tags" class="form-label">Tags</label>
+                            <select class="select2 form-select" id="tags" data-maximumSelectionLength="3" name="post_tags[]"
+                                    data-selectPlaceholder="Select Post Tags" aria-label="Post Tags Selection" multiple>
+                                <option value="">Select Post Tags</option>
+                                @php $prevSelectedTags = old('post_tags', $postTags->pluck('id')->toArray()); @endphp
+                                @foreach($tags as $tag)
+                                    <option value="{{ $tag->id }}"
+                                        {{ !empty($prevSelectedTags) && in_array($tag->id, $prevSelectedTags) ? 'selected' : '' }}>
+                                        {{ $tag->name }}</option>
+                                @endforeach
+                            </select>
+                            @form_field_error('post_tags')
+                        </div>
                     </div>
                 </div>
             </div>
