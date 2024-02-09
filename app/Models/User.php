@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use App\Notifications\AdminSetupNotification;
 use Carbon\Carbon;
 use Illuminate\Auth\MustVerifyEmail;
@@ -42,6 +43,7 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable
 {
+    use CrudTrait, CrudTrait;
     use HasApiTokens, HasFactory, Notifiable, MustVerifyEmail;
 
     protected $table = 'users';

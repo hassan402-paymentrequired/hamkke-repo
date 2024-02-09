@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesCrudController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralSettingsController;
 use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Admin\TagsCrudController;
 use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
@@ -20,11 +22,13 @@ use Illuminate\Support\Facades\Route;
 */
 $adminRoutes = function () {
     Route::get('/dashboard', [DashboardController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'home'])->middleware(['auth', 'verified']);
 
     Route::middleware('auth')->group(function () {
         Route::match(['GET', 'POST'], '/site-settings', [GeneralSettingsController::class, 'siteSettings'])
             ->name('settings.general');
 
+        // Start Admin-Post Management Routes
         Route::get('posts', [PostsController::class, 'index'])->name('admin.post.list');
         Route::match(['GET', 'POST'], 'posts/create', [PostsController::class, 'create'])->name('admin.post.create');
         Route::get('posts/{post:id}', [PostsController::class, 'preview'])->name('admin.post.view');
@@ -34,16 +38,19 @@ $adminRoutes = function () {
             ->name('admin.post.change_status');
         Route::post('posts/{post:id}/delete', [PostsController::class, 'delete'])->name('admin.post.delete');
 
-        Route::get('post-categories', [PostsController::class, 'categories'])->name('admin.category.list');
-        Route::post('post-categories/create', [PostsController::class, 'saveCategory'])->name('admin.category.create');
-        Route::post('post-categories/{category:id}/update', [PostsController::class, 'updateCategory'])->name('admin.category.update');
-        Route::post('post-categories/{category:id}/delete', [PostsController::class, 'deleteCategory'])->name('admin.category.delete');
+        // Start Admin-Category Management Routes
+        Route::get('categories', [CategoriesCrudController::class, 'index'])->name('admin.category.list');
+        Route::post('categories/create', [CategoriesCrudController::class, 'saveCategory'])->name('admin.category.create');
+        Route::post('categories/{category:id}/update', [CategoriesCrudController::class, 'updateCategory'])->name('admin.category.update');
+        Route::post('categories/{category:id}/delete', [CategoriesCrudController::class, 'deleteCategory'])->name('admin.category.delete');
 
-        Route::get('post-tags', [PostsController::class, 'tags'])->name('admin.tag.list');
-        Route::post('post-tags/create', [PostsController::class, 'saveTag'])->name('admin.tag.create');
-        Route::post('post-tags/{tag:id}/update', [PostsController::class, 'updateTag'])->name('admin.tag.update');
+        // Start Admin-Tag Management Routes
+        Route::get('tags', [TagsCrudController::class, 'index'])->name('admin.tag.list');
+        Route::post('tags/create', [TagsCrudController::class, 'store'])->name('admin.tag.create');
+        Route::post('tags/{tag:id}/update', [TagsCrudController::class, 'update'])->name('admin.tag.update');
+        Route::post('tags/{tag:id}/delete', [TagsCrudController::class, 'destroy'])->name('admin.tag.delete');
 
-        // Start User Management Routes
+        // Start Admin-User Management Routes
         Route::get('users', [UsersController::class, 'index'])->name('admin.user.list');
         Route::match(['GET', 'POST'], 'users/create', [UsersController::class, 'create'])
             ->name('admin.user.create');
@@ -57,6 +64,7 @@ $adminRoutes = function () {
 
     require __DIR__.'/auth.php';
 };
+
 Route::domain(config('app.admin_domain'))->group( $adminRoutes );
 
 Route::domain(config('app.default_domain'))->group( function () use ($adminRoutes) {

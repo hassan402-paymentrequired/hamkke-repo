@@ -79,6 +79,12 @@
                     </a>
                 </li>
 
+                <li class="menu-item {{ isCurrentRoute('admin.tag.list') ? 'active' : '' }}">
+                    <a href="{{ route('admin.tag.list') }}" class="menu-link">
+                        <div>Tags</div>
+                    </a>
+                </li>
+
 {{--                <li class="menu-item {{ isCurrentRoute('admin.tag.list') ? 'active' : '' }}">--}}
 {{--                    <a href="{{ route('admin.tag.list') }}" class="menu-link">--}}
 {{--                        <div>Tags</div>--}}

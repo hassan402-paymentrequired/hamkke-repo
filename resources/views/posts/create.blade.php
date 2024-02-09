@@ -3,11 +3,11 @@
 @section('main-content')
     <h4 class="py-3 mb-4"><span class="text-muted fw-light">Posts /</span> Add New</h4>
 
-    <div class="row">
-        <form id="postCreationForm" action="{{ route('admin.post.create') }}" method="POST" enctype="multipart/form-data">
+    <form id="postCreationForm" action="{{ route('admin.post.create') }}" class="needs-validation" method="POST" enctype="multipart/form-data">
+        <div class="row">
             @csrf
             <!-- Full Editor -->
-            <div class="col-12">
+            <div class="col-md-9">
                 <div class="card mb-4">
                     <h5 class="card-header">Add New Post</h5>
                     <div class="card-body">
@@ -34,7 +34,32 @@
                             <input type="text" class="form-control" value="{{ old('post_title') }}" id="formTitle"
                                    name="post_title"
                                    placeholder="Title"/>
+                            @form_field_error('post_title')
                         </div>
+                        <div class="mb-3">
+                            <label for="postContent" class="form-label">Post Content</label>
+                            <div id="full-editor">
+                                <p id="postContentEditor"></p>
+                            </div>
+                            <textarea name="post_content" style="display: none;"
+                                      id="postContent">{{ old('post_content') }}</textarea>
+                            @form_field_error('post_content')
+                        </div>
+                        <div class="mb-3">
+                            <label for="postSummary" class="form-label">Post Summary</label>
+                            <textarea class="form-control" id="postSummary" name="post_summary"
+                                      rows="4">{{ old('post_summary') }}</textarea>
+                            @form_field_error('post_summary')
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-outline primary me-2">Save changes and Preview</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-body">
                         <div class="mb-3">
                             <label for="postType" class="form-label">Post Type</label>
                             <select class="form-select" id="postType" name="post_type" aria-label="Post Type Selection">
@@ -59,28 +84,23 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="postContent" class="form-label">Post Content</label>
-                            <div id="full-editor">
-                                <p id="postContentEditor"></p>
-                            </div>
-                            <textarea name="post_content" style="display: none;" id="postContent">{{ old('post_content') }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="postSummary" class="form-label">Post Summary</label>
-                            <textarea class="form-control" id="postSummary" name="post_summary" rows="4">{{ old('post_summary') }}</textarea>
-                        </div>
-                        <div class="mt-2">
-                            <button type="submit" class="btn btn-outline primary me-2">Save changes and Preview</button>
-                        </div>
                     </div>
                 </div>
             </div>
             <!-- /Full Editor -->
-        </form>
-    </div>
+        </div>
+    </form>
 @endsection
 
 @section('more-scripts')
+    <script>
+        const POST_TYPES = {
+            @foreach($postTypes as $postType)
+            {{$postType->id}}: @json($postType),
+            @endforeach
+        };
+        const CATEGORIES = @json($postCategories);
+    </script>
+    <script src="{{ asset("cms-assets/js/pages/post-fields-manager.js") }}"></script>
     <script src="{{ asset("cms-assets/js/pages/create-post.js") }}"></script>
 @endsection

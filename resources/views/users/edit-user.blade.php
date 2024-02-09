@@ -1,4 +1,4 @@
-@extends('layouts.app', ['pageTitle' => 'Create User'])
+@extends('layouts.app', ['pageTitle' => 'Edit User'])
 
 @section('main-content')
     <h4 class="py-3 mb-4">

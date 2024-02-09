@@ -3,12 +3,12 @@
 @section('main-content')
     <h4 class="py-3 mb-4"><span class="text-muted fw-light">Posts /{{ $post->id }}/</span> Edit</h4>
 
-    <div class="row">
-        <form id="postUpdateForm" action="{{ route('admin.post.update', ['post' => $post->id]) }}" method="POST"
-              enctype="multipart/form-data">
-            @csrf
+    <form id="postUpdateForm" action="{{ route('admin.post.update', ['post' => $post->id]) }}" method="POST"
+          enctype="multipart/form-data">
+        @csrf
+        <div class="row">
             <!-- Full Editor -->
-            <div class="col-12">
+            <div class="col-md-9">
                 <div class="card mb-4">
                     <h5 class="card-header">Edit Post</h5>
                     <div class="card-body">
@@ -39,38 +39,6 @@
                                    placeholder="Title"/>
                         </div>
                         <div class="mb-3">
-                            <label for="postStatus" class="form-label">Post Status</label>
-                            <select required class="form-select" id="postStatus" name="post_status" aria-label="Post Status Selection">
-                                @foreach($postStatuses as $postStatus)
-                                    <option value="{{ $postStatus->value }}"
-                                        {{ old('post_status', $post->post_status_id) == $postStatus->value ? 'selected' : '' }}>
-                                        {{ $postStatus->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="postType" class="form-label">Post Type</label>
-                            <select class="form-select" id="postType" name="post_type" aria-label="Post Type Selection">
-                                @foreach($postTypes as $postType)
-                                    <option value="{{ $postType->id }}"
-                                        {{ old('post_type', $post->post_category->post_type_id) == $postType->id ? 'selected' : '' }}>
-                                        {{ $postType->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="postCategory" class="form-label">Post Category</label>
-                            <select class="form-select" id="postCategory" name="post_category"
-                                    aria-label="Post Category Selection">
-                                <option value="">Select Post Type</option>
-                                @foreach($postCategories as $postCategory)
-                                    <option value="{{ $postCategory->id }}"
-                                        {{ old('post_category', $post->post_category_id) == $postCategory->id ? 'selected' : '' }}>
-                                        {{ "{$postCategory->post_type->name}::{$postCategory->name}" }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
                             <label for="postContent" class="form-label">Post Content</label>
                             <div id="full-editor">
                                 <p id="postContentEditor"></p>
@@ -84,16 +52,65 @@
                                       rows="4">{{ old('post_summary', $post->summary) }}</textarea>
                         </div>
                         <div class="mt-2">
-                            <button type="submit" class="btn btn-outline primary me-2">Save changes and Preview</button>
+                            <button type="submit" class="btn btn-primary me-2">Save changes and Preview</button>
                         </div>
                     </div>
                 </div>
+                <!-- /Full Editor -->
             </div>
-            <!-- /Full Editor -->
-        </form>
-    </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+
+                    <div class="mb-3">
+                        <label for="postStatus" class="form-label">Post Status</label>
+                        <select required class="form-select" id="postStatus" name="post_status"
+                                aria-label="Post Status Selection">
+                            @foreach($postStatuses as $postStatus)
+                                <option value="{{ $postStatus->value }}"
+                                    {{ old('post_status', $post->post_status_id) == $postStatus->value ? 'selected' : '' }}>
+                                    {{ $postStatus->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postType" class="form-label">Post Type</label>
+                        <select class="form-select" id="postType" name="post_type" aria-label="Post Type Selection">
+                            @foreach($postTypes as $postType)
+                                <option value="{{ $postType->id }}"
+                                    {{ old('post_type', $post->post_category->post_type_id) == $postType->id ? 'selected' : '' }}>
+                                    {{ $postType->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postCategory" class="form-label">Post Category</label>
+                        <select class="form-select" id="postCategory" name="post_category"
+                                aria-label="Post Category Selection">
+                            <option value="">Select Post Type</option>
+                            @foreach($postCategories as $postCategory)
+                                <option value="{{ $postCategory->id }}"
+                                    {{ old('post_category', $post->post_category_id) == $postCategory->id ? 'selected' : '' }}>
+                                    {{ "{$postCategory->post_type->name}::{$postCategory->name}" }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 @endsection
 
 @section('more-scripts')
+    <script>
+        const POST_TYPES = {
+            @foreach($postTypes as $postType)
+                {{$postType->id}}: @json($postType),
+            @endforeach
+        };
+        const CATEGORIES = @json($postCategories);
+    </script>
+    <script src="{{ asset("cms-assets/js/pages/post-fields-manager.js") }}"></script>
     <script src="{{ asset("cms-assets/js/pages/edit-post.js") }}"></script>
 @endsection

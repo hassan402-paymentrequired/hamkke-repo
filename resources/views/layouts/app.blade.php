@@ -49,9 +49,6 @@
 
     @yield('more-styles')
 
-    <!-- Helpers -->
-    <script src="{{ asset('cms-assets/vendor/js/helpers.js') }}"></script>
-    <script src="{{ asset('cms-assets/js/config.js') }}"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -102,6 +99,11 @@
     <div class="drag-target"></div>
 </div>
 <!-- / Layout wrapper -->
+
+<!-- Helpers -->
+<script src="{{ asset('cms-assets/vendor/js/helpers.js') }}"></script>
+<script src="{{ asset('cms-assets/js/config.js') }}"></script>
+
 <script src="{{ asset('cms-assets/vendor/libs/jquery/jquery.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/popper/popper.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/js/bootstrap.js') }}"></script>

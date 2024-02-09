@@ -84,7 +84,7 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar">
-                                            <img src="../../assets/img/avatars/1.png" alt
+                                            <img src="{{ asset('images/avatars/1.png') }}" alt
                                                 class="h-auto rounded-circle" />
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar">
-                                            <img src="../../assets/img/avatars/2.png" alt
+                                            <img src="{{ asset('images/avatars/2.png') }}" alt
                                                 class="h-auto rounded-circle" />
                                         </div>
                                     </div>
@@ -169,7 +169,7 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar">
-                                            <img src="../../assets/img/avatars/9.png" alt
+                                            <img src="{{ asset('images/avatars/9.png') }}" alt
                                                 class="h-auto rounded-circle" />
                                         </div>
                                     </div>
@@ -215,7 +215,7 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar">
-                                            <img src="../../assets/img/avatars/5.png" alt
+                                            <img src="{{ asset('images/avatars/5.png') }}" alt
                                                 class="h-auto rounded-circle" />
                                         </div>
                                     </div>
@@ -236,7 +236,7 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar">
-                                            <img src="../../assets/img/avatars/6.png" alt
+                                            <img src="{{ asset('images/avatars/6.png') }}" alt
                                                 class="h-auto rounded-circle" />
                                         </div>
                                     </div>
