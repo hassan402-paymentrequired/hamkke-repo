@@ -83,6 +83,6 @@ class PostType extends Model
 
     public function post_categories()
     {
-        return $this->hasMany(PostCategory::class);
+        return $this->hasMany(Category::class);
     }
 }

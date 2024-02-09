@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
-use App\Models\PostCategory;
+use App\Models\Category;
 use App\Models\PostType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,16 +13,16 @@ class PagesController extends Controller
 {
     public function home()
     {
-        $postsQuery = Post::join('post_categories', 'post_categories.id', '=', 'posts.post_category_id')
-            ->join('post_types', 'post_types.id', '=', 'post_categories.post_type_id')
+        $postsQuery = Post::join('categories', 'categories.id', '=', 'posts.post_category_id')
+            ->join('post_types', 'post_types.id', '=', 'categories.post_type_id')
             ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
             ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id')
             ->leftJoin('users', 'users.id', '=', 'posts.post_author')
             ->groupBy('posts.id')
             ->select([
                 'posts.*',
-                'post_categories.name as post_category',
-                'post_categories.slug as post_category_slug',
+                'categories.name as post_category',
+                'categories.slug as post_category_slug',
                 'users.id as author_id',
                 'users.name as author_name',
                 'users.avatar as author_avatar',
@@ -33,7 +33,7 @@ class PagesController extends Controller
             ->orderByDesc('posts.created_at')->limit(2)->get();
         $latestForumEntries = clone $postsQuery->where('post_types.id', PostType::FORUM)
             ->orderByDesc('posts.created_at')->limit(3)->get();
-        $latestLearningEntries = PostCategory::where('post_type_id', PostType::LEARNING)
+        $latestLearningEntries = Category::where('post_type_id', PostType::LEARNING)
             ->limit(3)->latest()->get();
         $postTypes = PostType::all();
         $hallyuPostType = $postTypes->where('id',PostType::HALLYU)->first();

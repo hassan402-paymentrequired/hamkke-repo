@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Request;
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  *
- * @property PostCategory $post_category
+ * @property Category $post_category
  * @property User $author
  * @property PostComment[]|Collection $comments
  *
@@ -80,7 +80,7 @@ class Post extends Model
 
     public function post_category()
     {
-        return $this->belongsTo(PostCategory::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function author()
@@ -100,8 +100,8 @@ class Post extends Model
 
     public static function withCategoryCommentsAndLikes()
     {
-        return self::join('post_categories', 'post_categories.id', '=', 'posts.post_category_id')
-            ->join('post_types', 'post_types.id', '=', 'post_categories.post_type_id')
+        return self::join('categories', 'categories.id', '=', 'posts.post_category_id')
+            ->join('post_types', 'post_types.id', '=', 'categories.post_type_id')
             ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
             ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id')
             ->leftJoin('users', 'users.id', '=', 'posts.post_author');

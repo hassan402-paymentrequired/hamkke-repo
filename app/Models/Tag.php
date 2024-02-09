@@ -22,10 +22,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App\Models
  */
-class PostTag extends Model
+class Tag extends Model
 {
     use SoftDeletes;
-    protected $table = 'post_tags';
+    protected $table = 'tags';
 
     protected $fillable = [
         'name',

@@ -132,6 +132,20 @@ function isCurrentRoute($routeName)
     return $currentRoute === $routeName;
 }
 
+/**
+ * Verify the host
+ * @param string|array domainName
+ * @return bool
+ */
+function isCurrentDomain($domainName)
+{
+    $currentDomain = parse_url(request()->url(), PHP_URL_HOST);
+    if (is_array($domainName)) {
+        return in_array($currentDomain, $domainName);
+    }
+    return $currentDomain === $domainName;
+}
+
 function logCriticalError($message, Exception $actualException = null, $logChannel = null, $apiLogID = null)
 {
     $logChannel = $logChannel ?? config('logging.default');

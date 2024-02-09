@@ -27,11 +27,11 @@ use Illuminate\Support\Facades\DB;
  *
  * @package App\Models
  */
-class PostCategory extends Model
+class Category extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'post_categories';
+    protected $table = 'categories';
 
     protected $casts = [
         'post_type_id' => 'int'
