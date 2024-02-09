@@ -145,3 +145,6 @@ html:not([dir=rtl]) .app-brand-text {
     text-align: center;
     margin-top: 1rem;
 }
+.form-error {
+    color: red;
+}

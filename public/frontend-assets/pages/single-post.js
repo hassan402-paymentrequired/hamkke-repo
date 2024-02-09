@@ -16,7 +16,7 @@
         console.log('I/nnnn', $(e.target))
         let formId = $(e.target).data('form-id');
         if($(e.target).attr('id') === 'submit-comment') {
-            const formToSubmit = HamkkeJsHelpers.sitewideForm;
+            const formToSubmit = $(HamkkeJsHelpers.sitewideForm);
             console.log({formToSubmit});
             formId = formToSubmit.attr('id');
             console.log({formId});

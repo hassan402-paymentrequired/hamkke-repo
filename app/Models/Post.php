@@ -63,7 +63,9 @@ class Post extends Model
      */
     protected static function booted(): void
     {
-        if (Request::getHost() === config('app.default_domain')) {
+        $currentPath = request()->path();
+        // Check if the current path starts with '/admin'
+        if (strpos($currentPath, '/admin') === 0) {
             static::addGlobalScope('published', function (Builder $builder) {
                 $builder->where('post_status_id', PostStatus::PUBLISHED);
             });

@@ -32,6 +32,6 @@ class DashboardController extends Controller
                 DB::raw('COUNT(post_likes.post_id) as likes')
             ])->latest()->limit(10)->get();
 
-        return view(backpack_view('dashboard'), compact('cardStats', 'recentPosts'));
+        return view('dashboard', compact('cardStats', 'recentPosts'));
     }
 }

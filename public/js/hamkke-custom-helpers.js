@@ -3,7 +3,7 @@
  */
 'use strict';
 const HamkkeJsHelpers = {
-    sitewideForm:  $('#site-wide-action-form'),
+    sitewideForm:  '#site-wide-action-form',
     submitLogoutForm() {
         return HamkkeJsHelpers.confirmationAlert(
             'You will be required to login to perfome any actions after',
@@ -86,8 +86,9 @@ const HamkkeJsHelpers = {
         HamkkeJsHelpers.confirmationAlert(message, alertTitle)
             .then((continueAction) => {
                 if (continueAction) {
-                    this.sitewideForm.attr('action', url).attr('method', method);
-                    this.sitewideForm.submit();
+                    const formInstance = $(HamkkeJsHelpers.sitewideForm);
+                    formInstance.attr('action', url).attr('method', method);
+                    formInstance.submit();
                 }
             });
     },
@@ -443,5 +444,25 @@ const HamkkeJsHelpers = {
 
         // Formatted reading time
         return adjustedTime > 1 ? Math.round(adjustedTime) + " min" : "Less than 1 min";
+    },
+
+    /**
+     *
+     * @param obj
+     * @param fn
+     * @param returnAsArray
+     * @returns {{}}
+     */
+    objectMap(obj, fn, returnAsArray = false) {
+        let finalResult = returnAsArray ? [] : {};
+        Object.keys(obj).forEach(key => {
+            if(returnAsArray){
+                finalResult.push(fn(obj[key]));
+            } else {
+                finalResult[key] = fn(obj[key]);
+            }
+        });
+        return finalResult;
     }
+
 }

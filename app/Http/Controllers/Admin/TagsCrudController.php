@@ -2,76 +2,60 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\TagsRequest;
-use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-/**
- * Class TagsCrudController
- * @package App\Http\Controllers\Admin
- * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
- */
-class TagsCrudController extends CrudController
+class TagsCrudController extends Controller
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-
     /**
-     * Configure the CrudPanel object. Apply settings to all operations.
-     * 
-     * @return void
+     * Display a listing of the resource.
      */
-    public function setup()
+    public function index()
     {
-        CRUD::setModel(\App\Models\Tags::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/tags');
-        CRUD::setEntityNameStrings('tags', 'tags');
+        $tags = Tag::all();
+        return view('posts/list-tags', compact('tags'));
     }
 
     /**
-     * Define what happens when the List operation is loaded.
-     * 
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
-     * @return void
+     * Store a newly created resource in storage.
      */
-    protected function setupListOperation()
+    public function store(TagsRequest $request)
     {
-        CRUD::setFromDb(); // set columns from db columns.
-
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
+        $tagSlug = Str::slug($request->get('name'));
+        $tag = Tag::create([
+            'name' => $request->get('name'),
+            'slug' => $tagSlug
+        ]);
+        flashSuccessMessage("Tag::{$tag->name} Created successfully");
+        return back();
     }
 
     /**
-     * Define what happens when the Create operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
+     * Update the specified resource in storage.
      */
-    protected function setupCreateOperation()
+    public function update(Request $request, Tag $tag)
     {
-        CRUD::setValidation(TagsRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
-
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        $tagSlug = Str::slug($request->get('edit_tag_name'));
+        $tag->update([
+            'name' => $request->get('edit_tag_name'),
+            'slug' => $tagSlug
+        ]);
+        flashSuccessMessage("Tag::{$tag->name} Updated successfully");
+        return back();
     }
 
     /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
+     * @param Tag $tag
+     * @return \Illuminate\Http\RedirectResponse
      */
-    protected function setupUpdateOperation()
+    public function destroy(Tag $tag)
     {
-        $this->setupCreateOperation();
+        $tagName = $tag->name;
+        $tag->delete();
+        flashSuccessMessage("Tag:: {$tagName} deleted successfully");
+        return back();
     }
 }

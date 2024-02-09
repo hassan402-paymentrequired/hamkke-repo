@@ -27,6 +27,7 @@
                                     <span class="d-none d-sm-block">Reset</span>
                                 </button>
                                 <div class="text-muted">Allowed JPG or PNG. Max size of 2MB</div>
+                                @form_field_error('user_avatar')
                             </div>
                             @form_field_error('user_avatar')
                         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TagsRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class TagsRequest extends FormRequest
     public function authorize()
     {
         // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return auth()->check();
     }
 
     /**
@@ -24,32 +25,15 @@ class TagsRequest extends FormRequest
      */
     public function rules()
     {
+        if (isCurrentRoute('admin.tag.update')) {
+            $tag = $this->route('tag');
+            return [
+                'edit_tag_name' => ['required', Rule::unique('tags', 'name')->ignore($tag)
+                    ->whereNull('deleted_at')]
+            ];
+        }
         return [
-            // 'name' => 'required|min:5|max:255'
-        ];
-    }
-
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            //
-        ];
-    }
-
-    /**
-     * Get the validation messages that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            //
+            'name' => 'required|unique:tags,name|min:5|max:255'
         ];
     }
 }

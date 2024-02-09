@@ -66,5 +66,13 @@
         <!-- Drag Target Area To SlideIn Menu On Small Screens -->
         <div class="drag-target"></div>
     </div>
+    @yield('before_scripts')
+    @stack('before_scripts')
+
+    @include(backpack_view('inc.scripts'))
+    @include(backpack_view('inc.theme_scripts'))
+
+    @yield('after_scripts')
+    @stack('after_scripts')
 </body>
 </html>
