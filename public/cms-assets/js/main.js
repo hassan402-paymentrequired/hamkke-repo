@@ -12,6 +12,20 @@ if (document.getElementById('layout-menu')) {
     setTimeout(function () {
         window.Helpers.initCustomOptionCheck();
     }, 1000);
+    $(document).ready(function () {
+        const select2 = $('.select2');
+        if (select2.length) {
+            select2.each(function () {
+                let $this = $(this);
+                let maximumSelectionLength = parseInt($this.data('maximumSelectionLength'));
+                $this.wrap('<div class="position-relative"></div>').select2({
+                    placeholder: $this.data('selectPlaceholder'),
+                    dropdownParent: $this.parent(),
+                    maximumSelectionLength
+                });
+            });
+        }
+    });
 
     if (typeof Waves !== 'undefined') {
         Waves.init();

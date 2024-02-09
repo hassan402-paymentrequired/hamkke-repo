@@ -37,7 +37,9 @@ class UpdateOrCreatePost extends FormRequest
                 'post_category' => ['required', 'exists:categories,id'],
                 'post_summary' => 'required',
                 'post_content' => ['required'],
-                'post_status' => ['required', Rule::in(PostStatus::getValues())]
+                'post_status' => ['required', Rule::in(PostStatus::getValues())],
+                'post_tags' => ['nullable', 'array', 'max:3'],
+                'post_tags.*' => ['required', 'exists:tags,id']
             ];
         }
         return [
@@ -45,7 +47,10 @@ class UpdateOrCreatePost extends FormRequest
             'post_type' => ['required', 'exists:post_types,id'],
             'post_category' => ['required', 'exists:categories,id'],
             'post_summary' => 'required',
-            'post_content' => ['required']
+            'post_content' => ['required'],
+            'post_tags' => ['nullable', 'array', 'max:3'],
+            'post_tags.*' => ['required', 'exists:tags,id']
+
         ];
     }
 }

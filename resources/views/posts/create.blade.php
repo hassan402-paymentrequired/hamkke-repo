@@ -3,7 +3,8 @@
 @section('main-content')
     <h4 class="py-3 mb-4"><span class="text-muted fw-light">Posts /</span> Add New</h4>
 
-    <form id="postCreationForm" action="{{ route('admin.post.create') }}" class="needs-validation" method="POST" enctype="multipart/form-data">
+    <form id="postCreationForm" action="{{ route('admin.post.create') }}" class="needs-validation" method="POST"
+          enctype="multipart/form-data">
         <div class="row">
             @csrf
             <!-- Full Editor -->
@@ -70,12 +71,13 @@
                                         {{ $postType->name }}</option>
                                 @endforeach
                             </select>
+                            @form_field_error('post_type')
                         </div>
                         <div class="mb-3">
                             <label for="postCategory" class="form-label">Post Category</label>
-                            <select class="form-select" id="postCategory" name="post_category"
+                            <select class="form-select" id="postCategory" data-old-selection="{{ old('post_category') }}" name="post_category"
                                     aria-label="Post Category Selection">
-                                <option value="">Select Post Type</option>
+                                <option value="">Select Post post_category</option>
                                 @foreach($postCategories as $postCategory)
                                     <option value="{{ $postCategory->id }}"
                                         {{ old('post_category') == $postCategory->id ? 'selected' : '' }}>
@@ -83,6 +85,21 @@
                                     )
                                 @endforeach
                             </select>
+                            @form_field_error('post_category')
+                        </div>
+                        <div class="mb-3">
+                            <label for="tags" class="form-label">Tags</label>
+                            <select class="select2 form-select" id="tags" data-maximumSelectionLength="3" name="post_tags[]"
+                                    data-selectPlaceholder="Select Post Tags" aria-label="Post Tags Selection" multiple>
+                                <option value="">Select Post Tags</option>
+                                @php $prevSelectedTags = old('post_tags'); @endphp
+                                @foreach($tags as $tag)
+                                    <option value="{{ $tag->id }}"
+                                        {{ $prevSelectedTags && in_array($tag->id, old('post_tags')) ? 'selected' : '' }}>
+                                        {{ $tag->name }}</option>
+                                @endforeach
+                            </select>
+                            @form_field_error('post_tags')
                         </div>
                     </div>
                 </div>

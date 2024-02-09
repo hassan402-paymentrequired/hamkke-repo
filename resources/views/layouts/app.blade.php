@@ -30,20 +30,23 @@
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/css/select2.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/theme-default.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.min.css') }}"/>
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/node-waves/node-waves.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/@form-validation/umd/styles/index.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/@form-validation/umd/styles/index.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/select2/select2.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/tagify/tagify.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/apex-charts/apex-charts.css') }}"/>
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/typography.css') }}" />
-    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/katex.css') }}" />
-    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/editor.css') }}" />
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/typography.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/katex.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/editor.css') }}"/>
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('cms-assets/css/main.css') }}"/>
 
@@ -112,6 +115,8 @@
 <script src="{{ asset('cms-assets/vendor/libs/hammer/hammer.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/i18n/i18n.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+<script src="{{ asset('cms-assets/vendor/libs/select2/select2.js') }}"></script>
+<script src="{{ asset('cms-assets/vendor/libs/tagify/tagify.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/js/menu.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/@form-validation/umd/bundle/popular.min.js') }}"></script>

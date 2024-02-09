@@ -8,7 +8,9 @@ use App\Http\Requests\UpdateOrCreateCategory;
 use App\Http\Requests\UpdateOrCreatePost;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\PostTag;
 use App\Models\PostType;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -52,7 +54,8 @@ class PostsController extends Controller
             $postTypes = PostType::all();
             $postCategories = Category::all();
             $postStatuses = PostStatus::cases();
-            return view('posts.create', compact('postTypes', 'postCategories', 'postStatuses'));
+            $tags = Tag::all();
+            return view('posts.create', compact('postTypes', 'postCategories', 'postStatuses', 'tags'));
         }
         $request->merge(request()->all());
         $validatedData = $request->all();
@@ -74,6 +77,15 @@ class PostsController extends Controller
             'post_author' => auth()->id(),
             'featured_image' => $featuredImage
         ]);
+        $requestPostTags = $request->get('post_tags');
+        if(!empty($requestPostTags)){
+            foreach ($requestPostTags as $tagId) {
+                PostTag::create([
+                    'post_id' => $post->id,
+                    'tag_id' => $tagId
+                ]);
+            }
+        }
         flashSuccessMessage('Post created successfully - Title:' . $post->title);
         return redirect()->route('admin.post.update', $post);
     }
@@ -84,7 +96,9 @@ class PostsController extends Controller
             $postTypes = PostType::all();
             $postCategories = Category::all();
             $postStatuses = PostStatus::cases();
-            return view('posts.edit', compact('postTypes', 'postCategories', 'postStatuses', 'post'));
+            $tags = Tag::all();
+            $postTags = $post->tags;
+            return view('posts.edit', compact('postTypes', 'postCategories', 'postStatuses', 'post', 'tags', 'postTags'));
         }
         $postSlug = Str::slug($request->get('post_title'));
         $featuredImage = null;
@@ -100,6 +114,15 @@ class PostsController extends Controller
             'post_status_id' => $request->get('post_status'),
             'featured_image' => $featuredImage ?: $post->featured_image
         ]);
+        $requestPostTags = $request->get('post_tags');
+        if(!empty($requestPostTags)){
+            foreach ($requestPostTags as $tagId) {
+                PostTag::firstOrCreate([
+                    'post_id' => $post->id,
+                    'tag_id' => $tagId
+                ]);
+            }
+        }
         flashSuccessMessage('Post updated successfully - Title:' . $post->title);
         return redirect()->route('admin.post.update', $post);
     }

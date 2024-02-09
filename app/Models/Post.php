@@ -100,6 +100,16 @@ class Post extends Model
         return $this->hasMany(PostLike::class, 'post_id');
     }
 
+    public function post_tags()
+    {
+        return $this->hasMany(PostTag::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasManyThrough(Tag::class, PostTag::class, 'post_id', 'id', 'id', 'tag_id');
+    }
+
     public static function withCategoryCommentsAndLikes()
     {
         return self::join('categories', 'categories.id', '=', 'posts.post_category_id')
