@@ -7,11 +7,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>
     <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/fonts/fontawesome.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('frontend-assets/css/styles.css') }}" type="text/css">
     <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('cms-assets/css/select2.css') }}"/>
+
     <link href="{{ asset('frontend-assets/css/custom-styles.css') }}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/typography.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/katex.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/editor.css') }}"/>
 
     <script src="{{ asset('cms-assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('cms-assets/js/config.js') }}"></script>
@@ -44,6 +53,9 @@
 </head>
 
 <body class="article-body">
+@if(auth('web')->check())
+    @include('layouts.frontend.top-admin-row')
+@endif
 @include('layouts.frontend.navigation', ['registeredPostTypes' => PostType::all()])
 
 @yield('content')
@@ -80,13 +92,14 @@
                         <div class="optionalParent">
                             <div class="clear foot">
                                 <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
-                                <p style="margin: 0px auto;"><a href="http://eepurl.com/iraQMc"
-                                                                title="Mailchimp - email marketing made easy and fun"><span
-                                            style="display: inline-block; background-color: transparent; border-radius: 4px;"><img
-                                                class="refferal_badge"
+                                <p style="margin: 0 auto;">
+                                    <a href="http://eepurl.com/iraQMc" title="Mailchimp - email marketing made easy and fun">
+                                        <span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+                                            <img class="refferal_badge" alt="Intuit Mailchimp"
                                                 src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-dark.svg"
-                                                alt="Intuit Mailchimp"
-                                                style="width: 220px; height: 40px; display: flex; padding: 2px 0px; justify-content: center; align-items: center;"></span></a>
+                                                style="width: 220px; height: 40px; display: flex; padding: 2px 0px; justify-content: center; align-items: center;">
+                                        </span>
+                                    </a>
                                 </p>
                             </div>
                         </div>
@@ -122,10 +135,30 @@
 <script src="{{ asset('cms-assets/vendor/libs/jquery/jquery.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/popper/popper.js') }}"></script>
 <script src="{{ asset('frontend-assets/bootstrap-5.3.2-dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('cms-assets/vendor/libs/select2/select2.js') }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('js/hamkke-custom-helpers.js') }}"></script>
+<script>
+    (function ($){
+        $(document).ready(function () {
+            const select2 = $('.select2');
+            if (select2.length) {
+                select2.each(function () {
+                    let $this = $(this);
+                    let maximumSelectionLength = parseInt($this.data('maximumSelectionLength'));
+                    console.log({ placeholder: $this.data('select-placeholder') })
+                    $this.wrap('<div class="position-relative"></div>').select2({
+                        placeholder: $this.data('select-placeholder') ? $this.data('select-placeholder'): 'Select Tag',
+                        dropdownParent: $this.parent(),
+                        maximumSelectionLength
+                    });
+                });
+            }
+        });
+    })(jQuery);
+</script>
 @component('components.frontend-alerts') @endcomponent
 @yield('more-scripts')
 </body>

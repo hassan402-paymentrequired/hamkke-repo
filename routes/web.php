@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralSettingsController;
 use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\TagsCrudController;
+use App\Http\Controllers\Front\ForumCrudController;
 use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
@@ -79,5 +80,11 @@ Route::domain(config('app.default_domain'))->group( function () use ($adminRoute
 
     Route::post('/comment/{post}', [FrontPostsController::class, 'postComment'])->name('post.comment.add');
     Route::prefix('admin')->group($adminRoutes);
+
+    Route::prefix('forum')->group(function (){
+        Route::get('/', [ForumCrudController::class, 'index'])->name('forum.posts');
+        Route::post('/start-discussion', [ForumCrudController::class, 'create'])->name('forum.posts.create');
+        Route::get('/view-post/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.view');
+    });
 });
 

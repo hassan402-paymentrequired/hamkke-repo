@@ -1,5 +1,5 @@
 @php
-    use App\Helpers\SiteSettings;
+    use App\Helpers\SiteSettings;use App\Models\PostType;
 
     /**
      * @var SiteSettings $coreSiteDetails
@@ -20,8 +20,13 @@
                 </li>
                 @foreach($registeredPostTypes as $postType)
                     <li class="nav-item">
-                        <a class="nav-link"
-                           href="{{ route('post_type.view', $postType) }}">{{ $postType->name }}</a>
+                        @if($postType->id === PostType::FORUM)
+                            <a class="nav-link"
+                               href="{{ route('forum.posts') }}">{{ $postType->name }}</a>
+                        @else
+                            <a class="nav-link"
+                               href="{{ route('post_type.view', $postType) }}">{{ $postType->name }}</a>
+                        @endif
                     </li>
                 @endforeach
                 <li class="nav-item">
@@ -29,9 +34,9 @@
                 </li>
             </ul>
 
-            <div class="d-flex socials justify-content-end">
-                @include('components.front-social-links-section')
-            </div>
+            {{--            <div class="d-flex socials justify-content-end">--}}
+            {{--                @include('components.front-social-links-section')--}}
+            {{--            </div>--}}
 
             <div class="navbtn">
                 <button>
@@ -42,11 +47,15 @@
                     </a>
                 </button>
 
-                <button>
+                <button class="bg-filled">
                     <a class="nav-link"
                        onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currectly unavailable', 'Oops!', 'info').then(completeAction => false)"
                        href="javascript:void(0)"><img src="{{ asset('frontend-assets/cart.svg') }}" alt="Cart icon"/>Cart</a>
                 </button>
+                <a class="text-hamkke-purple nav-login-link" href="{{ route('login') }}">
+                    <em class="fa fa-arrow-right-to-bracket"></em>
+                    <span class="ml-1">Login</span>
+                </a>
             </div>
         </div>
 
