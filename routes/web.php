@@ -84,7 +84,8 @@ Route::domain(config('app.default_domain'))->group( function () use ($adminRoute
     Route::prefix('forum')->group(function (){
         Route::get('/', [ForumCrudController::class, 'index'])->name('forum.posts');
         Route::post('/start-discussion', [ForumCrudController::class, 'create'])->name('forum.posts.create');
-        Route::get('/view-post/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.view');
+        Route::get('/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.view');
+        Route::post('/comment/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.comment');
     });
 });
 
