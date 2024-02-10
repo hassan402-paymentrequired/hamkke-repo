@@ -19,7 +19,7 @@ if (document.getElementById('layout-menu')) {
                 let $this = $(this);
                 let maximumSelectionLength = parseInt($this.data('maximumSelectionLength'));
                 $this.wrap('<div class="position-relative"></div>').select2({
-                    placeholder: $this.data('selectPlaceholder'),
+                    placeholder: $this.data('selectPlaceholder') ? $this.data('selectPlaceholder'): 'Select Tag',
                     dropdownParent: $this.parent(),
                     maximumSelectionLength
                 });

@@ -9,6 +9,15 @@
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
+            <!-- Visit Website -->
+            <li class="nav-item navbar-dropdown dropdown-user  me-2 me-xl-0">
+                <a class="nav-lin hide-arrow" href="{{ config('app.url') }}" target="_blank">
+                    <i class="ti ti-world ti-md"></i>
+{{--                    <span class="">Visit Website</span>--}}
+                </a>
+            </li>
+            <!-- /Visit Website -->
+
             <!-- Quick links  -->
             <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
@@ -20,8 +29,9 @@
                         <div class="dropdown-header d-flex align-items-center py-3">
                             <h5 class="text-body mb-0 me-auto">Shortcuts</h5>
                             <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body"
-                                data-bs-toggle="tooltip" data-bs-placement="top" title="Add shortcuts"><i
-                                    class="ti ti-sm ti-apps"></i></a>
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Add shortcuts">
+                                <i class="ti ti-sm ti-apps"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="dropdown-shortcuts-list scrollable-container">
@@ -60,7 +70,7 @@
                     </div>
                 </div>
             </li>
-            <!-- Quick links -->
+            <!-- /Quick links -->
 
             <!-- Notification -->
             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">

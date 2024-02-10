@@ -13,15 +13,12 @@
 
     $('.comment-submit-btn').on('click', function (e) {
         e.preventDefault();
-        console.log('I/nnnn', $(e.target))
         let formId = $(e.target).data('form-id');
         if($(e.target).attr('id') === 'submit-comment') {
             const formToSubmit = $(HamkkeJsHelpers.sitewideForm);
             console.log({formToSubmit});
             formId = formToSubmit.attr('id');
-            console.log({formId});
             const formUrl = $(e.target).data('form-action');
-            console.log({formUrl});
             formToSubmit.attr('action', formUrl)
                 .attr('method', 'POST');
         }
