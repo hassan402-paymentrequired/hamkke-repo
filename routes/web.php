@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GeneralSettingsController;
 use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\TagsCrudController;
+use App\Http\Controllers\Customer\AuthenticationContoller;
 use App\Http\Controllers\Front\ForumCrudController;
 use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
@@ -86,6 +87,11 @@ Route::domain(config('app.default_domain'))->group( function () use ($adminRoute
         Route::post('/start-discussion', [ForumCrudController::class, 'create'])->name('forum.posts.create');
         Route::get('/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.view');
         Route::post('/comment/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.comment');
+    });
+
+    Route::middleware('guest')->group(function (){
+        Route::match(['get', 'post'], '/login', [AuthenticationContoller::class, 'login'])->name('customer.auth.login');
+        Route::match(['get', 'post'], '/register', [AuthenticationContoller::class, 'register'])->name('customer.auth.register');
     });
 });
 

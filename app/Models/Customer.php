@@ -63,4 +63,9 @@ class Customer extends Authenticatable
     {
         $this->hasMany(PostComment::class, 'customer_id');
     }
+
+    public function getName()
+    {
+        return $this->name ?: $this->username;
+    }
 }

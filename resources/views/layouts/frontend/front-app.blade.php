@@ -52,7 +52,7 @@
     <title>{{ $pageTitle ? "{$pageTitle} :: " : '' }}Hamkke Chingu</title>
 </head>
 
-<body class="article-body">
+<body class="{{ isset($bodyClass) ? $bodyClass : 'article-body' }}">
 @if(auth('web')->check())
     @include('layouts.frontend.top-admin-row')
 @endif

@@ -3,7 +3,7 @@
  * @var \App\Models\ForumPost $forumPost
  */
 ?>
-@extends('layouts.frontend.front-app', ['pageTitle' => "Forum ::: Recent Posts", 'bodyClass' => 'forum-div'])
+@extends('layouts.frontend.front-app', ['pageTitle' => "Forum ::: Recent Posts"])
 
 @section('content')
 

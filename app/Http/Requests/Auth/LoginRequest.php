@@ -26,6 +26,9 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
+        if(isCurrentRoute('customer.auth.login') && $this->isMethod('GET')){
+            return [];
+        }
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
@@ -37,12 +40,16 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
+    public function authenticate($guard = 'web'): void
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt(
-            ['email' => $this->get('email'), 'password' => $this->get('password'), 'is_active' => 1],
+        $loginCredentials = ['email' => $this->get('email'), 'password' => $this->get('password')];
+        if($guard === 'web'){
+            $loginCredentials['is_active'] = 1;
+        }
+        if (!auth($guard)->attempt(
+            $loginCredentials,
             $this->boolean('remember'))
         ) {
             RateLimiter::hit($this->throttleKey());
