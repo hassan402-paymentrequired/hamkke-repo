@@ -9,6 +9,7 @@ use App\Http\Requests\ForumPostCrudRequest;
 use App\Models\ForumDiscussion;
 use App\Models\ForumPost;
 use App\Models\ForumTag;
+use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
@@ -26,8 +27,7 @@ class ForumCrudController extends Controller
             })
             ->leftJoin('forum_post_tag', 'forum_post_tag.forum_post_id', 'forum_posts.id')
 //            ->leftJoin('forum_post_likes', 'forum_post_likes.forum_post_id', 'forum_posts.id')
-//            ->where('forum_posts.post_status_id', PostStatus::PUBLISHED)
-            ;
+            ->where('forum_posts.post_status_id', PostStatus::PUBLISHED);
         if($request->get('tag')){
             $tag = Tag::where('slug', $request->get('tag'))->first();
             $forumPostsQuery->where('forum_post_tag.tag_id', $tag->id);
