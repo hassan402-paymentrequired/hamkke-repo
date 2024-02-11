@@ -1,5 +1,10 @@
+<?php
 
-<!-- Post Modal -->
+use App\Models\Tag;
+
+$tags = isset($tags) ? $tags : Tag::all();
+?>
+    <!-- Post Modal -->
 <div class="modal fade light-style" id="postDiscussionModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -22,7 +27,7 @@
                             <label class="form-label" for="discussion-tags">Tags</label>
                             <select class="select2 form-select" name="tags[]" id="discussion-tags"
                                     data-select-placeholder="Select Tags" multiple>
-{{--                                <option selected>Select Tags</option>--}}
+                                {{--                                <option selected>Select Tags</option>--}}
                                 @foreach($tags as $tag)
                                     <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                 @endforeach

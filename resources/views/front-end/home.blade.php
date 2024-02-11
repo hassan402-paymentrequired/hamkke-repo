@@ -60,25 +60,33 @@
             </div>
 
             <div class="row marginX">
-                @foreach($latestForumEntries as $forumEntry)
+                @foreach($latestForumEntries as $forumPost)
                     <div class="col-md-4">
                         <div class="card">
-                            <div class="d-flex profile-div align-items-center">
-                                <img src="{{ $forumEntry->author_avatar ?: asset('frontend-assets/profile.jpg') }}"
-                                     class="profile-img"
-                                     alt="profile"><span>{{ $forumEntry->author_name }}</span>
+{{--                            <div class="d-flex profile-div align-items-center">--}}
+{{--                                <img src="{{ $forumPost->avatar ?: asset('frontend-assets/profile.jpg') }}"--}}
+{{--                                     class="profile-img"--}}
+{{--                                     alt="profile"><span>{{ $forumPost->poster_name }}</span>--}}
+{{--                            </div>--}}
+                            <div class="d-flex profile-div align-items-center mt-0">
+                                <img src="{{ $forumPost->avatar }}" alt="profile">
+                                <span>{{ $forumPost->poster_name }}</span>
                             </div>
-                            <h5 class="card-title">{{ $forumEntry->title }}</h5>
-                            <p class="card-text">{{ $forumEntry->body }}</p>
+                            <a href="{{ route('forum.posts.view', [$forumPost]) }}">
+                                <h5 class="card-title">{{ $forumPost->topic }}</h5>
+                            </a>
+                            <p class="card-text">{{ $forumPost->getPostSummary() }}</p>
 
                             <div class="d-flex justify-content-between">
                                 <div class="like-div">
-                                    <span>{{ $forumEntry->likes }}</span><img
-                                        src="{{ asset('frontend-assets/likes.png') }}" alt="..."/>
-                                    <span>{{ $forumEntry->comments }}</span><img
-                                        src="{{ asset('frontend-assets/comment.png') }}" alt="..."/>
+                                    <span>0</span>
+                                    <img src="{{ asset('frontend-assets/likes.png') }}" alt="...">
+
+                                    <span>{{ $forumPost->discussions }}</span>
+                                    <img src="{{ asset('frontend-assets/comment.png') }}" alt="...">
+
+                                    <span>Posted {{ $forumPost->created_at->diffForHumans() }}</span>
                                 </div>
-                                <div class="comment-div">Posted {{ $forumEntry->created_at->diffForHumans() }}</div>
                             </div>
 
                         </div>
@@ -88,7 +96,7 @@
 
             <div class="text-center">
                 <button class="link-div">
-                    <a href="{{ route('post_type.view', ['post_type' => PostType::SLUG_FORUM]) }}">See More
+                    <a href="{{ route('forum.posts') }}">See More
                         <img src="{{ asset('frontend-assets/arrow_right_color.svg') }}" alt="right arrow icon"/>
                     </a>
                 </button>

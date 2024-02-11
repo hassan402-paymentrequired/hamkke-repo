@@ -251,6 +251,9 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--multiple .se
     margin-right: 15px;
     border-radius: 50%;
 }
+.modal.show .modal-dialog {
+     margin-top: 50px;
+}
 @media (max-width: 991px) and (min-width: 768px) {
     .category-posts-div .col-md-3, .category-posts-div .col-md-9 {
         width: 100%;

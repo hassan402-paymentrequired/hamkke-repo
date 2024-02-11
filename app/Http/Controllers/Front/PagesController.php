@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Enums\PostStatus;
 use App\Http\Controllers\Controller;
+use App\Models\ForumPost;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\PostType;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,8 +34,20 @@ class PagesController extends Controller
             ]);
         $latestHallyuNews = clone $postsQuery->where('post_types.id', PostType::HALLYU)
             ->orderByDesc('posts.created_at')->limit(2)->get();
-        $latestForumEntries = clone $postsQuery->where('post_types.id', PostType::FORUM)
-            ->orderByDesc('posts.created_at')->limit(3)->get();
+        $latestForumEntries = ForumPost::leftJoin('customers', 'customers.id', 'forum_posts.customer_id')
+            ->leftJoin('users', 'users.id', 'forum_posts.user_id')
+            ->leftJoin('forum_discussions', function (JoinClause $joinClause) {
+                $joinClause->on('forum_discussions.forum_post_id', 'forum_posts.id')
+                    ->where('forum_discussions.post_status_id', PostStatus::PUBLISHED);
+            })
+            ->groupBy('forum_posts.id')
+            ->select([
+                'forum_posts.*',
+                DB::raw('count(forum_discussions.id) as discussions'),
+                DB::raw('IF(forum_posts.customer_id, customers.name, users.name) as poster_name'),
+                DB::raw('IF(forum_posts.customer_id, customers.avatar, users.avatar) as avatar')
+            ])
+            ->latest()->limit(3)->get();
         $latestLearningEntries = Category::where('post_type_id', PostType::LEARNING)
             ->limit(3)->latest()->get();
         $postTypes = PostType::all();

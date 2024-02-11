@@ -36,7 +36,7 @@ class PostType extends Model
     const LEARNING = 1;
     const HALLYU = 2;
     const PODCAST = 3;
-//    const FORUM = 4;
+    const FORUM = 4;
 
     const SLUG_LEARNING = 'learning';
     const SLUG_HALLYU = 'hallyu';

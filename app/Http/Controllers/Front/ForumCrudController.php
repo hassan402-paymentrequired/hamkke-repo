@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Enums\PostStatus;
+use App\Helpers\PostParser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForumPostCrudRequest;
 use App\Models\ForumDiscussion;
@@ -46,7 +47,7 @@ class ForumCrudController extends Controller
     {
         $currentGuard = auth()->guard();
         $poster = auth($currentGuard->name)->user();
-        $slug = Str::slug($request->get('post_title'));
+        $slug = Str::slug($request->get('topic'));
         $forumPost = ForumPost::create([
             'topic' => $request->get('topic'),
             'slug' => $slug,
@@ -67,13 +68,15 @@ class ForumCrudController extends Controller
 
     public function viewPost(ForumPost $forumPost)
     {
-        if($forumPost->post_status_id !== PostStatus::PUBLISHED){
-            throw new NotFoundHttpException('Forum post not found');
-        }
+//        if($forumPost->post_status_id !== PostStatus::PUBLISHED){
+//            throw new NotFoundHttpException('Forum post not found');
+//        }
+        $parsedPostBody = (new PostParser($forumPost))->parsePostBody()->render();
         $discussions = $forumPost->forum_discussions()
             ->where('post_status_id', PostStatus::PUBLISHED)
             ->latest()->paginate(10);
-        dd('Here');
-        return view('', compact('forumPost', 'discussions'));
+        $postAuthor = $forumPost->getPoster();
+        return view('front-end/single-forum-post', compact('forumPost', 'discussions',
+            'parsedPostBody', 'postAuthor'));
     }
 }
