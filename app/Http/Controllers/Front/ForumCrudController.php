@@ -24,13 +24,13 @@ class ForumCrudController extends Controller
                 $joinClause->on('forum_discussions.forum_post_id', 'forum_posts.id')
                     ->where('forum_discussions.post_status_id', PostStatus::PUBLISHED);
             })
-            ->leftJoin('forum_tags', 'forum_tags.forum_post_id', 'forum_posts.id')
+            ->leftJoin('forum_post_tag', 'forum_post_tag.forum_post_id', 'forum_posts.id')
 //            ->leftJoin('forum_post_likes', 'forum_post_likes.forum_post_id', 'forum_posts.id')
 //            ->where('forum_posts.post_status_id', PostStatus::PUBLISHED)
             ;
         if($request->get('tag')){
             $tag = Tag::where('slug', $request->get('tag'))->first();
-            $forumPostsQuery->where('forum_tags.tag_id', $tag->id);
+            $forumPostsQuery->where('forum_post_tag.tag_id', $tag->id);
         }
         $forumPosts = $forumPostsQuery->groupBy('forum_posts.id')
             ->select([

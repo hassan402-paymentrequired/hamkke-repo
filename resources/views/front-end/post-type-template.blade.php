@@ -28,7 +28,7 @@
                     <div class="tab-pane fade show active" id="v-pills-{{ $selectedCategory ? $selectedCategory->slug : '' }}" role="tabpanel"
                          aria-labelledby="v-pills-{{ $selectedCategory ? $selectedCategory->slug : '' }}-tab">
                         <div class="forum">
-                            <div class="d-flex flex-row flex-wrap forum-row justify-content-between">
+                            <div class="row d-flex flex-row flex-wrap forum-row justify-content-between">
                                 @foreach($posts as $post)
                                     <div class="card">
                                         <img class="card-img-top"
