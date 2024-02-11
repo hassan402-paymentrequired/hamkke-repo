@@ -667,3 +667,14 @@ function calculateReadingTime(string $htmlContent, int $wordsPerMinute = 200): s
     $readingTime = ceil($wordCount / $wordsPerMinute);
     return "$readingTime" . \Illuminate\Support\Str::plural('min', $readingTime);
 }
+
+if (!function_exists('assetWithVersion')) {
+    function assetWithVersion($path, $version = null): string
+    {
+        // Append version query parameter to asset URL
+        $url = asset($path);
+        $version = $version ?: config('app.asset_version');
+        $url .= '?v=' . urlencode($version);
+        return $url;
+    }
+}

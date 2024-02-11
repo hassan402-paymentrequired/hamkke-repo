@@ -12,18 +12,18 @@
     <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/fonts/fontawesome.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('frontend-assets/css/styles.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ assetWithVersion('frontend-assets/css/styles.css') }}" type="text/css">
     <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('cms-assets/css/select2.css') }}"/>
+    <link rel="stylesheet" href="{{ assetWithVersion('cms-assets/css/select2.css') }}"/>
 
-    <link href="{{ asset('frontend-assets/css/custom-styles.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ assetWithVersion('frontend-assets/css/custom-styles.css') }}" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/typography.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/katex.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/editor.css') }}"/>
 
     <script src="{{ asset('cms-assets/vendor/js/helpers.js') }}"></script>
-    <script src="{{ asset('cms-assets/js/config.js') }}"></script>
+    <script src="{{ assetWithVersion('cms-assets/js/config.js') }}"></script>
     <style>
         #mc_embed_signup {
             background: #fff;
@@ -139,7 +139,7 @@
 <script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
-<script src="{{ asset('js/hamkke-custom-helpers.js') }}"></script>
+<script src="{{ assetWithVersion('js/hamkke-custom-helpers.js') }}"></script>
 <script>
     (function ($){
         $(document).ready(function () {
