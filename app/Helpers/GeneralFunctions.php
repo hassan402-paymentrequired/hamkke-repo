@@ -673,7 +673,8 @@ if (!function_exists('assetWithVersion')) {
     {
         // Append version query parameter to asset URL
         $url = asset($path);
-        $version = $version ?: config('app.asset_version');
+        $defaultVersion = isLocalOrDevOrTesting() ? time() : config('app.asset_version');
+        $version = $version ?: $defaultVersion;
         $url .= '?v=' . urlencode($version);
         return $url;
     }
