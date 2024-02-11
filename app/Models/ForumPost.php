@@ -81,6 +81,6 @@ class ForumPost extends Model
                 $summaryText .= trim($op['insert']) . ' '; // Add space between text blocks
             }
         }
-        return trim($summaryText); // Trim any leading or trailing whitespace
+        return mb_strimwidth(trim($summaryText), 0, 200, '...');
     }
 }
