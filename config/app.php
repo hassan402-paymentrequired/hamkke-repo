@@ -59,6 +59,8 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'asset_version' => env('ASSET_VERSION', '1.01'),
+
     'admin_domain' => env('ADMIN_DOMAIN'),
     'default_domain' => env('DEFAULT_DOMAIN'),
 

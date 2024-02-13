@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/katex.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/editor.css') }}"/>
     <!-- Page CSS -->
-    <link rel="stylesheet" href="{{ asset('cms-assets/css/main.css') }}"/>
+    <link rel="stylesheet" href="{{ assetWithVersion('cms-assets/css/main.css') }}"/>
 
     @yield('more-styles')
 
@@ -132,8 +132,8 @@
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
 
 <!-- Main JS -->
-<script src="{{ asset('js/hamkke-custom-helpers.js') }}"></script>
-<script src="{{ asset('cms-assets/js/main.js') }}"></script>
+<script src="{{ assetWithVersion('js/hamkke-custom-helpers.js') }}"></script>
+<script src="{{ assetWithVersion('cms-assets/js/main.js') }}"></script>
 
 @yield('more-scripts')
 

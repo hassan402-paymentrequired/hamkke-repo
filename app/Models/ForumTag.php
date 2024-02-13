@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ForumTag extends Model
 {
-	protected $table = 'forum_tags';
+	protected $table = 'forum_post_tag';
 	public $incrementing = false;
 	public $timestamps = false;
 
