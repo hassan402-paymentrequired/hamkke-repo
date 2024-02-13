@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>
+{{--    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>--}}
     <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/fonts/fontawesome.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.min.css') }}"/>
@@ -54,9 +54,12 @@
 
 <body class="{{ isset($bodyClass) ? $bodyClass : 'article-body' }}">
 @if(auth('web')->check())
-    @include('layouts.frontend.top-admin-row')
+    @include('components.front.top-admin-row')
 @endif
-@include('layouts.frontend.navigation', ['registeredPostTypes' => PostType::all()])
+
+@if(!isAdminRoute())
+    @include('components.front.navigation', ['registeredPostTypes' => PostType::all()])
+@endif
 
 @yield('content')
 
@@ -134,7 +137,7 @@
 
 <script src="{{ asset('cms-assets/vendor/libs/jquery/jquery.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/popper/popper.js') }}"></script>
-<script src="{{ asset('frontend-assets/bootstrap-5.3.2-dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('frontend-assets/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/select2/select2.js') }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>

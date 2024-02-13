@@ -55,19 +55,34 @@
                        href="javascript:void(0)"><img src="{{ asset('frontend-assets/cart.svg') }}" alt="Cart icon"/>Cart</a>
                 </button>
                 @auth(CUSTOMER_GUARD_NAME)
-                    <a class="text-hamkke-purple nav-login-link" href="javascript:void(0);">
-                        @if($customerAuthUser->avatar)
-                        <img src="{{ $customerAuthUser->avatar }}" alt="profile"
-                             style="border-radius: 50%; max-height: 30px;">
-                        @else
-                            <em class="fa fa-user-circle"></em>
-                        @endif
-                        <span class="ml-1">{{ $customerAuthUser->getName() }}</span>
-                    </a>
+                    <div class="dropdown customer-auth-menu">
+                        <a class="text-hamkke-purple nav-login-link dropdown-toggle" href="javascript:void(0);"
+                           role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false" id="auth-menu-link">
+                            @if($customerAuthUser->avatar)
+                                <img src="{{ $customerAuthUser->avatar }}" alt="profile"
+                                     style="border-radius: 50%; max-height: 30px;">
+                            @else
+                                <em class="fa fa-user-circle"></em>
+                            @endif
+                            <span class="ml-1">{{ $customerAuthUser->getName() }}</span>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="auth-menu-link">
+                            <li>
+                                <a class="dropdown-item" href="javascript:void(0)" role="button" id="logoutLink"
+                                   onclick="return HamkkeJsHelpers.submitActionForm('{{ route('customer.auth.logout') }}', 'Please confirm you want to logout.');">
+                                    <em class="fa fa-sign-out"></em>
+                                    <span class="ml-1">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                 @endauth
                 @guest(CUSTOMER_GUARD_NAME)
                     <a class="text-hamkke-purple nav-login-link" href="{{ route('customer.auth.login') }}">
-                        <em class="fa fa-arrow-right-to-bracket"></em>
+                        <em class="fa fa-sign-in"></em>
                         <span class="ml-1">Login</span>
                     </a>
                 @endguest

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -678,4 +679,25 @@ if (!function_exists('assetWithVersion')) {
         $url .= '?v=' . urlencode($version);
         return $url;
     }
+}
+
+/**
+ * @return Authenticatable|null
+ */
+function getAuthUserPrioritizeCustomer() : Authenticatable|null
+{
+    $adminLoggedIn = auth()->check();
+    $customerLoggedIn = auth(CUSTOMER_GUARD_NAME)->check();
+    if(!$adminLoggedIn && !$customerLoggedIn){
+        return  null;
+    }
+    if($customerLoggedIn){
+        return auth(CUSTOMER_GUARD_NAME)->user();
+    }
+    return auth()->user();
+}
+
+function isAdminRoute() {
+    $currentPath = request()->path();
+    return strpos($currentPath, 'admin') === 0;
 }

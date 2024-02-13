@@ -6,16 +6,13 @@ use App\Enums\PostStatus;
 use App\Helpers\PostParser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForumPostCrudRequest;
-use App\Models\ForumDiscussion;
 use App\Models\ForumPost;
 use App\Models\ForumTag;
-use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ForumCrudController extends Controller
 {
@@ -43,17 +40,17 @@ class ForumCrudController extends Controller
         return view('front-end/forum-posts', compact('forumPosts', 'tags'));
     }
 
-    public function create(ForumPostCrudRequest $request)
+    public function createThread(ForumPostCrudRequest $request)
     {
-        $currentGuard = auth()->guard();
-        $poster = auth($currentGuard->name)->user();
+        $getForumPoster = getAuthUserPrioritizeCustomer();
+        $currentGuard = auth(CUSTOMER_GUARD_NAME)->check() ? CUSTOMER_GUARD_NAME : auth()->guard()->name;
         $slug = Str::slug($request->get('topic'));
         $forumPost = ForumPost::create([
             'topic' => $request->get('topic'),
             'slug' => $slug,
             'body' => $request->get('body'),
-            'user_id' => ($currentGuard !== CUSTOMER_GUARD_NAME) ? $poster->id: null,
-            'customer_id' => ($currentGuard === CUSTOMER_GUARD_NAME) ? $poster->id: null,
+            'user_id' => ($currentGuard !== CUSTOMER_GUARD_NAME) ? $getForumPoster->id: null,
+            'customer_id' => ($currentGuard === CUSTOMER_GUARD_NAME) ? $getForumPoster->id: null,
             'post_status_id' => PostStatus::AWAITING_APPROVAL
         ]);
         foreach($request->get('tags') as $tagId){
@@ -68,15 +65,37 @@ class ForumCrudController extends Controller
 
     public function viewPost(ForumPost $forumPost)
     {
-//        if($forumPost->post_status_id !== PostStatus::PUBLISHED){
-//            throw new NotFoundHttpException('Forum post not found');
-//        }
+        if($forumPost->post_status_id !== PostStatus::PUBLISHED){
+            flashErrorMessage('Forum post not found');
+            return redirect()->route('forum.posts');
+        }
         $parsedPostBody = (new PostParser($forumPost))->parsePostBody()->render();
         $discussions = $forumPost->forum_discussions()
             ->where('post_status_id', PostStatus::PUBLISHED)
-            ->latest()->paginate(10);
+            ->paginate(10);
         $postAuthor = $forumPost->getPoster();
         return view('front-end/single-forum-post', compact('forumPost', 'discussions',
             'parsedPostBody', 'postAuthor'));
+    }
+
+    public function replyThread(Request $request, ForumPost $forumPost)
+    {
+        if ($forumPost->post_status_id !== PostStatus::PUBLISHED) {
+            flashErrorMessage('Forum post not found');
+            return redirect()->route('forum.posts');
+        }
+        $getForumPoster = getAuthUserPrioritizeCustomer();
+        $currentGuard = auth(CUSTOMER_GUARD_NAME)->check() ? CUSTOMER_GUARD_NAME : auth()->guard()->name;
+        $replyBody = $request->get('reply-body');
+        // TODO Cleanup the reply-body
+        // TODO Notify admins and the poster of the reply
+        $forumPost->forum_discussions()->create([
+            'body' => $replyBody,
+            'user_id' => ($currentGuard !== CUSTOMER_GUARD_NAME) ? $getForumPoster->id: null,
+            'customer_id' => ($currentGuard === CUSTOMER_GUARD_NAME) ? $getForumPoster->id: null,
+            'post_status_id' => PostStatus::AWAITING_APPROVAL
+        ]);
+        flashSuccessMessage('Reply sent successfully');
+        return back();
     }
 }

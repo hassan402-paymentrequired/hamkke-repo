@@ -215,6 +215,9 @@
 .navbtn button.bg-filled .nav-link{
     color: #ffffff;
 }
+.navbtn .customer-auth-menu {
+    display: inline-block;
+}
 
 .modal-dialog {
     max-width: 800px !important;
@@ -258,6 +261,19 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--multiple .se
      margin-top: 50px;
 }
 
+.login label{
+    margin-bottom: 0.3em;
+    display: block;
+}
+
+.login label:not(:first-child) {
+    margin-top: 1em;
+}
+
+.login input {
+    margin-bottom: 0;
+}
+
 .login-body {
     background-color: #f2efef;
 }
@@ -275,10 +291,34 @@ footer {
 
 .form-error {
     color: red;
+    font-size: 12px;
 }
 
 .post-btn {
     background-color: #662687;
+}
+
+.sitewide-alert-modal .modal-body {
+    padding: 20px 0;
+}
+
+.sitewide-alert-modal .modal-content {
+    padding: 20px;
+}
+
+.sitewide-alert-modal .modal-body img {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.sitewide-alert-modal .modal-header .btn-close {
+    right: 2rem !important;
+}
+
+p.sitewide-alert-message {
+    font-size: 18px;
+    font-weight: 600;
+    color: #404040;
 }
 
 @media (max-width: 991px) and (min-width: 768px) {

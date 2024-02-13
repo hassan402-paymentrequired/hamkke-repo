@@ -136,7 +136,6 @@
 <script src="{{ assetWithVersion('cms-assets/js/main.js') }}"></script>
 
 @yield('more-scripts')
-
 </body>
 
 </html>

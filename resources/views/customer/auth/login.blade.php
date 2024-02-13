@@ -13,13 +13,17 @@
                     <div class="login">
                         <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                         <input type="email" id="email" name="email" placeholder="Email"/>
-                        <div class="d-flex justify-content-between">
+                        @form_field_error('email')
+
+                        <div class="d-flex justify-content-between mt-2">
                             <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
 {{--                            <a href="auth-forgot-password-basic.html" class="text-decoration-none text-hamkke-purple">--}}
 {{--                                <small>Forgot Password?</small>--}}
 {{--                            </a>--}}
                         </div>
                         <input type="password" id="password" name="password" placeholder="Password"/>
+                        @form_field_error('password')
+
                     </div>
 
                     <div class="d-flex check-div">

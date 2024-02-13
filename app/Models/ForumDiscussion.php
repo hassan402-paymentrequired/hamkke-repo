@@ -12,10 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class ForumDiscussion
- * 
+ *
  * @property int $id
  * @property int $forum_post_id
- * @property string $slug
  * @property string $body
  * @property int|null $user_id
  * @property int|null $customer_id
@@ -23,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- * 
+ *
  * @property Customer|null $customer
  * @property ForumPost $forum_post
  * @property User|null $user
@@ -44,7 +43,6 @@ class ForumDiscussion extends Model
 
 	protected $fillable = [
 		'forum_post_id',
-		'slug',
 		'body',
 		'user_id',
 		'customer_id',

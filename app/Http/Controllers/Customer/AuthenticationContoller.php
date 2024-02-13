@@ -55,10 +55,12 @@ class AuthenticationContoller extends Controller
     {
         Auth::guard(CUSTOMER_GUARD_NAME)->logout();
 
-        $request->session()->invalidate();
+        if(!auth()->check()) {
+            $request->session()->invalidate();
 
-        $request->session()->regenerateToken();
+            $request->session()->regenerateToken();
+        }
 
-        return redirect($this->getAdminHome());
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 }

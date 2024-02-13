@@ -17,4 +17,9 @@ enum PostStatus: int
             self::cases()
         );
     }
+    public static function getName($statusValue)
+    {
+        return collect(self::cases())->where('value', $statusValue)
+            ->first()->name;
+    }
 }

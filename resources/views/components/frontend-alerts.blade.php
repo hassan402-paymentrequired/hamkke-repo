@@ -1,18 +1,17 @@
 @php
 $successMessage = \Illuminate\Support\Facades\Session::get('success');
 @endphp
-<div class="modal fade" id="errorsAlertModal" tabindex="-1" aria-labelledby="errorsAlertModalLabel" aria-hidden="true">
+<div class="modal fade sitewide-alert-modal" id="errorsAlertModal" tabindex="-1" aria-labelledby="errorsAlertModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close bg-danger text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <h6>Oops!!</h6>
-                <h6>The following errors occurred</h6>
+                <h6>Oops!! The following errors occurred</h6>
                 <div id="error-paragraphs">
                     @foreach($errors->all() as $error)
-                    <p class="text-danger">{{ $error }}</p>
+                        <p class="sitewide-alert-message text-danger">{{ $error }}</p>
                     @endforeach
                 </div>
             </div>
@@ -20,20 +19,25 @@ $successMessage = \Illuminate\Support\Facades\Session::get('success');
     </div>
 </div>
 
-<!-- Success Modal -->
-<div class="modal fade" id="successAlertModal" tabindex="-1" aria-labelledby="successAlertModalLabel" aria-hidden="true">
+
+<!-- Post Success Modal -->
+<div class="modal fade sitewide-alert-modal" id="successAlertModal" tabindex="-1" aria-labelledby="successAlertModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close bg-danger text-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="{{ asset('images/success-icon.png') }}" alt="Success icon"/>
-                <h6 id="success-message">{{ $successMessage }}</h6>
+                <img src="{{ asset('images/check_circle.svg') }}" alt="Check Circle Image"/>
+                <p class="sitewide-alert-message" id="success-message">{{ $successMessage }}</p>
             </div>
         </div>
     </div>
 </div>
+
+
 <script>
     (function ($) {
         // On document load, execute the following code
@@ -70,7 +74,7 @@ $successMessage = \Illuminate\Support\Facades\Session::get('success');
                 // If there is a message for the current status, append a paragraph to the 'error-paragraphs' element
                 @if($alertMessage = Session::get($status))
                     $('#error-paragraphs').append(`
-                        <p class='text-{{ $status }}'>{{ $alertMessage }}</p>
+                        <p class="sitewide-alert-message text-{{ $status === 'error' ? 'danger' : $status }}">{{ $alertMessage }}</p>
                     `);
                 @endif
 
