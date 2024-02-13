@@ -71,6 +71,15 @@ class ForumPost extends Model
         return $this->user ?: $this->customer;
     }
 
+    public function posterName()
+    {
+        $poster = $this->getPoster();
+        if($this->user_id){
+            return $poster->name;
+        }
+        return $poster->name ?: $poster->username;
+    }
+
     public function getPostSummary()
     {
         // Decode the JSON string to an associative array

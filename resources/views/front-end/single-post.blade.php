@@ -208,7 +208,7 @@
 
                         <h4>Related Posts</h4>
 
-                        <div class="d-flex flex-row flex-wrap forum-row justify-content-between">
+                        <div class="row d-flex flex-row flex-wrap forum-row justify-content-between">
                             @foreach ($relatedPosts as $relatedPost)
                                 @component('components.posts.post-preview-card-box-title-one', ['post' => $relatedPost])
                                 @endcomponent

@@ -13,8 +13,7 @@
                 <div class="nav col-md-3 paddingR nav-pills sticky-top" id="v-pills-tab" role="tablist"
                      aria-orientation="vertical">
                     <span class="sticky-top">
-                        <button class="post-btn" type="button" data-bs-toggle="modal"
-                                data-bs-target="#postDiscussionModal">Start Discussion</button>
+                        @include('components.front.start-thread-button')
 
                         <nav class="navbar navbar-expand-lg navbar-light">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -95,5 +94,5 @@
 @endsection
 
 @section('more-scripts')
-    <script src="{{ asset('frontend-assets/pages/forum-posts.js') }}"></script>
+    <script src="{{ assetWithVersion('frontend-assets/pages/forum-posts.js') }}"></script>
 @stop

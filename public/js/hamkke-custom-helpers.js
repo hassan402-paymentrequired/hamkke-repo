@@ -4,9 +4,109 @@
 'use strict';
 const HamkkeJsHelpers = {
     sitewideForm:  '#site-wide-action-form',
+    quillFullToolbar: [
+        [
+            {
+                font: []
+            },
+            {
+                size: []
+            }
+        ],
+        ['bold', 'italic', 'underline', 'strike'],
+        [
+            {
+                color: []
+            },
+            {
+                background: []
+            }
+        ],
+        [
+            {
+                script: 'super'
+            },
+            {
+                script: 'sub'
+            }
+        ],
+        [
+            {
+                header: '1'
+            },
+            {
+                header: '2'
+            },
+            'blockquote',
+            'code-block'
+        ],
+        [
+            {
+                list: 'ordered'
+            },
+            {
+                list: 'bullet'
+            },
+            {
+                indent: '-1'
+            },
+            {
+                indent: '+1'
+            }
+        ],
+        [{ direction: 'rtl' }],
+        ['link', 'image', 'video', 'formula'],
+        ['clean']
+    ],
+    quillCustomerToolbar: [
+        [
+            {
+                font: []
+            },
+            {
+                size: []
+            }
+        ],
+        ['bold', 'italic', 'underline', 'strike'],
+        [
+            {
+                color: []
+            },
+            {
+                background: []
+            }
+        ],
+        [
+            {
+                header: '1'
+            },
+            {
+                header: '2'
+            },
+            'blockquote',
+            'code-block'
+        ],
+        [
+            {
+                list: 'ordered'
+            },
+            {
+                list: 'bullet'
+            },
+            {
+                indent: '-1'
+            },
+            {
+                indent: '+1'
+            }
+        ],
+        ['link', 'image'],
+        ['clean']
+    ],
+
     submitLogoutForm() {
         return HamkkeJsHelpers.confirmationAlert(
-            'You will be required to login to perfome any actions after',
+            'You will be required to login to perform any actions after',
             'Are you sure'
         ).then(completeAction => {
             if (completeAction) {
@@ -463,6 +563,38 @@ const HamkkeJsHelpers = {
             }
         });
         return finalResult;
-    }
+    },
+
+    isAdminPath() {
+        const currentUrl = window.location.href;
+        return currentUrl.includes('/admin')
+    },
+
+    initializeQuillEditor(finalSubmissionField, editorContainerSelector, parentFormSelector) {
+        const finalSubmissionFieldInstance = $(finalSubmissionField);
+        console.log({finalSubmissionField});
+        const postContentEditor = new Quill(editorContainerSelector, {
+            bounds: editorContainerSelector,
+            placeholder: 'Type Something...',
+            modules: {
+                formula: true,
+                toolbar: this.isAdminPath() ? HamkkeJsHelpers.quillFullToolbar : HamkkeJsHelpers.quillCustomerToolbar
+            },
+            theme: 'snow'
+        });
+        const currentPageContent = finalSubmissionFieldInstance.html();
+        if (currentPageContent) {
+            postContentEditor.setContents(
+                JSON.parse(currentPageContent)
+            );
+        }
+        $(parentFormSelector).on('submit', function (e) {
+            e.preventDefault();
+            finalSubmissionFieldInstance.html(
+                JSON.stringify(postContentEditor.getContents())
+            )
+            e.target.submit();
+        });
+    },
 
 }

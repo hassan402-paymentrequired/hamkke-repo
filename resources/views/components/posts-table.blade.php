@@ -16,7 +16,7 @@
         @forelse ($posts as $post)
             <tr>
                 <td>{{ $post->id }}</td>
-                <td>{{ $post->title }}</td>
+                <td><a href="{{ route('admin.post.preview', $post) }}">{{ $post->title }}</a></td>
                 <td>{{ $post->post_category }}</td>
                 <td>{{ $post->post_status_id->name }}</td>
                 <td>{{ $post->author->name }}</td>

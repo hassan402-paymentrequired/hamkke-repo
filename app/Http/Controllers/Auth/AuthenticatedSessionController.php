@@ -38,12 +38,11 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect($this->getAdminHome());
+        if(!auth(CUSTOMER_GUARD_NAME)->check()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+        return redirect()->route('login');
     }
 
     private function getAdminHome(): string

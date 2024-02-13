@@ -5,6 +5,7 @@ use App\Models\Tag;
 $tags = isset($tags) ? $tags : Tag::all();
 ?>
     <!-- Post Modal -->
+
 <div class="modal fade light-style" id="postDiscussionModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -35,7 +36,7 @@ $tags = isset($tags) ? $tags : Tag::all();
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="discussion-body">Body</label>
-                            <div id="quill-editor">
+                            <div id="quill-editor" class="quill-editor">
                                 <p id="discussion-body-editor"></p>
                             </div>
                             <textarea type="text" placeholder="type something" name="body" style="display: none;"

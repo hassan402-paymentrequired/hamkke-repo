@@ -112,4 +112,14 @@ class User extends Authenticatable
         $token = $this->getResetToken();
         $this->notify(new AdminSetupNotification($token));
     }
+
+    public function hasRole(string $roleName): bool
+    {
+        return $this->role->name === $roleName;
+    }
+
+    public function hasRoleById(int $roleId): bool
+    {
+        return $this->role_id === $roleId;
+    }
 }

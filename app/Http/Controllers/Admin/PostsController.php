@@ -22,7 +22,7 @@ class PostsController extends Controller
         $postTypes = PostType::all();
         $postCategories = Category::all();
         $postStatuses = PostStatus::cases();
-        $postsQuery = Post::join('categories', 'categories.id', '=', 'posts.post_category_id')
+        $postsQuery = Post::withoutGlobalScopes()->join('categories', 'categories.id', '=', 'posts.post_category_id')
                 ->join('post_types', 'post_types.id', '=', 'categories.post_type_id')
                 ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
                 ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id');
@@ -129,7 +129,7 @@ class PostsController extends Controller
 
     public function preview(Post $post)
     {
-        return view('front-end.single-post', compact('post'));
+        return (new \App\Http\Controllers\Front\PostsController())->singlePost($post);
     }
 
     public function delete(Post $post)
@@ -139,4 +139,8 @@ class PostsController extends Controller
         flashSuccessMessage("Post {$postTitle} Deleted Successfully}");
         return back();
     }
+
+//    public function preview(Post $post){
+//        return (new \App\Http\Controllers\Front\PostsController())->singlePost($post);
+//    }
 }

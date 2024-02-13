@@ -33,7 +33,7 @@ $adminRoutes = function () {
         // Start Admin-Post Management Routes
         Route::get('posts', [PostsController::class, 'index'])->name('admin.post.list');
         Route::match(['GET', 'POST'], 'posts/create', [PostsController::class, 'create'])->name('admin.post.create');
-        Route::get('posts/{post:id}', [PostsController::class, 'preview'])->name('admin.post.view');
+        Route::get('posts/{post:id}', [PostsController::class, 'preview'])->name('admin.post.preview');
         Route::match(['GET', 'POST'], 'posts/{post:id}/update', [PostsController::class, 'update'])
             ->name('admin.post.update');
         Route::post('posts/{post:id}/change-status', [PostsController::class, 'changeStatus'])
@@ -62,6 +62,20 @@ $adminRoutes = function () {
         Route::post('users/{user}/deactivate', [UsersController::class, 'deactivate'])->name('admin.user.deactivate');
         Route::post('users/{user}/delete', [UsersController::class, 'delete'])->name('admin.user.delete');
         // End User Management Routes
+
+        Route::prefix('forum')->group(function () {
+            // Start Admin-Post Management Routes
+            Route::get('posts', [PostsController::class, 'index'])->name('admin.forum-post.list');
+            Route::match(['GET', 'POST'], 'posts/create', [PostsController::class, 'create'])->name('admin.forum-post.create');
+            Route::get('posts/{forumPost:id}', [PostsController::class, 'preview'])->name('admin.forum-post.preview');
+            Route::match(['GET', 'POST'], 'posts/{forumPost:id}/update', [PostsController::class, 'update'])
+                ->name('admin.forum-post.approve');
+            Route::match(['GET', 'POST'], 'posts/{forumPost:id}/update', [PostsController::class, 'update'])
+                ->name('admin.forum-post.reject');
+            Route::post('posts/{forumPost:id}/change-status', [PostsController::class, 'changeStatus'])
+                ->name('admin.forum-post.change_status');
+            Route::post('posts/{forumPost:id}/delete', [PostsController::class, 'delete'])->name('admin.forum-post.delete');
+        });
     });
 
     require __DIR__.'/auth.php';
@@ -84,14 +98,15 @@ Route::domain(config('app.default_domain'))->group( function () use ($adminRoute
 
     Route::prefix('forum')->group(function (){
         Route::get('/', [ForumCrudController::class, 'index'])->name('forum.posts');
-        Route::post('/start-discussion', [ForumCrudController::class, 'create'])->name('forum.posts.create');
+        Route::post('/start-discussion', [ForumCrudController::class, 'createThread'])->name('forum.posts.create');
         Route::get('/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.view');
-        Route::post('/comment/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.comment');
+        Route::post('/comment/{forumPost:slug}', [ForumCrudController::class, 'replyThread'])->name('forum.posts.reply');
     });
 
-    Route::middleware('guest')->group(function (){
+    Route::middleware('guest:' . CUSTOMER_GUARD_NAME)->group(function (){
         Route::match(['get', 'post'], '/login', [AuthenticationContoller::class, 'login'])->name('customer.auth.login');
         Route::match(['get', 'post'], '/register', [AuthenticationContoller::class, 'register'])->name('customer.auth.register');
     });
+    Route::post('/logout', [AuthenticationContoller::class, 'logout'])->name('customer.auth.logout');
 });
 

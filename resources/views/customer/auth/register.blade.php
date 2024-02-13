@@ -11,7 +11,7 @@
                     <div class="title text-center">Register</div>
 
                     <div class="login">
-                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                         <input required type="text" id="name" name="name" placeholder="name" value="{{ old('name') }}" />
                         @form_field_error('name')
 
