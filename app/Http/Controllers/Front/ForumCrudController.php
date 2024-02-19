@@ -65,7 +65,7 @@ class ForumCrudController extends Controller
 
     public function viewPost(ForumPost $forumPost)
     {
-        if($forumPost->post_status_id !== PostStatus::PUBLISHED){
+        if(!$forumPost->isPublished()){
             flashErrorMessage('Forum post not found');
             return redirect()->route('forum.posts');
         }
@@ -80,7 +80,7 @@ class ForumCrudController extends Controller
 
     public function replyThread(Request $request, ForumPost $forumPost)
     {
-        if ($forumPost->post_status_id !== PostStatus::PUBLISHED) {
+        if(!$forumPost->isPublished()){
             flashErrorMessage('Forum post not found');
             return redirect()->route('forum.posts');
         }
