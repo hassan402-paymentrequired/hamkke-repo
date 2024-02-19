@@ -51,7 +51,7 @@ class ForumCrudController extends Controller
             'body' => $request->get('body'),
             'user_id' => ($currentGuard !== CUSTOMER_GUARD_NAME) ? $getForumPoster->id: null,
             'customer_id' => ($currentGuard === CUSTOMER_GUARD_NAME) ? $getForumPoster->id: null,
-            'post_status_id' => PostStatus::AWAITING_APPROVAL
+            'post_status_id' => PostStatus::PUBLISHED
         ]);
         foreach($request->get('tags') as $tagId){
             ForumTag::create([
@@ -59,13 +59,13 @@ class ForumCrudController extends Controller
                 'tag_id' => $tagId
             ]);
         }
-        flashSuccessMessage('Successful: Your discussion has been sent for admin approval');
+        flashSuccessMessage('Successful');
         return back();
     }
 
     public function viewPost(ForumPost $forumPost)
     {
-        if($forumPost->post_status_id !== PostStatus::PUBLISHED){
+        if(!$forumPost->isPublished()){
             flashErrorMessage('Forum post not found');
             return redirect()->route('forum.posts');
         }
@@ -80,7 +80,7 @@ class ForumCrudController extends Controller
 
     public function replyThread(Request $request, ForumPost $forumPost)
     {
-        if ($forumPost->post_status_id !== PostStatus::PUBLISHED) {
+        if(!$forumPost->isPublished()){
             flashErrorMessage('Forum post not found');
             return redirect()->route('forum.posts');
         }
@@ -88,14 +88,14 @@ class ForumCrudController extends Controller
         $currentGuard = auth(CUSTOMER_GUARD_NAME)->check() ? CUSTOMER_GUARD_NAME : auth()->guard()->name;
         $replyBody = $request->get('reply-body');
         // TODO Cleanup the reply-body
-        // TODO Notify admins and the poster of the reply
+        // TODO Notify the poster of the reply
         $forumPost->forum_discussions()->create([
             'body' => $replyBody,
             'user_id' => ($currentGuard !== CUSTOMER_GUARD_NAME) ? $getForumPoster->id: null,
             'customer_id' => ($currentGuard === CUSTOMER_GUARD_NAME) ? $getForumPoster->id: null,
-            'post_status_id' => PostStatus::AWAITING_APPROVAL
+            'post_status_id' => PostStatus::PUBLISHED
         ]);
-        flashSuccessMessage('Reply sent successfully');
+        flashSuccessMessage('Successful');
         return back();
     }
 }

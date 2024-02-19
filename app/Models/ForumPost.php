@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Enums\PostStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -91,5 +92,10 @@ class ForumPost extends Model
             }
         }
         return mb_strimwidth(trim($summaryText), 0, 200, '...');
+    }
+
+    public function isPublished()
+    {
+        return $this->post_status_id === PostStatus::PUBLISHED->value;
     }
 }

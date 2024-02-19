@@ -22,7 +22,7 @@
                                     <span class="d-none d-sm-block">Click to Upload User Avatar</span>
                                     <em class="ti ti-upload d-block d-sm-none"></em>
                                     <input type="file" id="userAvatar" hidden
-                                           accept="image/png, image/jpeg" required name="user_avatar"/>
+                                           accept="image/png, image/jpeg" name="user_avatar"/>
                                 </label>
                                 <button type="button" id="resetAvatarField" class="btn btn-label-secondary mb-3">
                                     <em class="ti ti-refresh-dot d-block./.. d-sm-none"></em>
@@ -30,33 +30,32 @@
                                 </button>
                                 <div class="text-muted">Allowed JPG or PNG. Max size of 2MB</div>
                             </div>
+                            @form_field_error('user_avatar')
                         </div>
                         <hr class="my-0"/>
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Name<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" value="{{ old('name', $user->name) }}" id="fullName"
                                    name="name" required placeholder="Display Name"/>
+                            @form_field_error('name')
                         </div>
                         <div class="mb-3">
                             <label for="userEmail" class="form-label">Email<span class="text-danger">*</span></label>
                             <input type="email" class="form-control" value="{{ old('email', $user->email) }}"
                                    id="userEmail" name="email" required placeholder="johndoe@example.com"/>
+                            @form_field_error('email')
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label">
                                 Username
                             </label>
                             <input type="text" class="form-control" value="{{ old('username', $user->username) }}"
-                                   id="username" name="text" required placeholder="unique username"/>
+                                   id="username" name="text" placeholder="unique username"/>
+                            @form_field_error('username')
                         </div>
-                        {{--                        <div class="mb-3">--}}
-                        {{--                            <label for="userPhone" class="form-label">Phone</label>--}}
-                        {{--                            <input type="text" class="form-control phone-number-field" value="{{ old('phone') }}"--}}
-                        {{--                                   id="userPhone" name="name" placeholder="+2349028789878"/>--}}
-                        {{--                        </div>--}}
                         <div class="mb-3">
                             <label for="userRole" class="form-label">Role<span class="text-danger">*</span></label>
-                            <select class="form-select" id="userRole" name="role" aria-label="Role Selection">
+                            <select class="form-select" id="userRole" name="role" aria-label="Role Selection" required>
                                 <option value="">Select Role</option>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}"
@@ -64,11 +63,13 @@
                                         {{ $role->display_name }}</option>
                                 @endforeach
                             </select>
+                            @form_field_error('role')
                         </div>
                         <div class="mb-3">
                             <label for="authorBio" class="form-label">About the author</label>
                             <textarea class="form-control" id="authorBio" name="author_bio"
                                       rows="4">{{ old('author_bio', $user->author_bio) }}</textarea>
+                            @form_field_error('author_bio')
                         </div>
                         <div class="mt-2">
                             <button type="submit" class="btn btn-outline-primary me-2">Submit</button>
