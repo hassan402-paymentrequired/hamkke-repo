@@ -22,7 +22,7 @@ class PostsController extends Controller
         $postTypes = PostType::all();
         $postCategories = Category::all();
         $postStatuses = PostStatus::cases();
-        $postsQuery = Post::withoutGlobalScopes()->join('categories', 'categories.id', '=', 'posts.post_category_id')
+        $postsQuery = Post::join('categories', 'categories.id', '=', 'posts.post_category_id')
                 ->join('post_types', 'post_types.id', '=', 'categories.post_type_id')
                 ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
                 ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id');
