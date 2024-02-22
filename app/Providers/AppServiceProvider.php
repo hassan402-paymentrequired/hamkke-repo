@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Helpers\SiteSettings;
 use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::defaultView('vendor/pagination/bootstrap-5');
         Blade::directive('form_field_error', function ($formFieldName) {
             return "<?php if (\$errors->has({$formFieldName})): ?>
                 <span class=\"help-block form-error\"  role=\"alert\">

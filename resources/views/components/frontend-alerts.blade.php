@@ -9,7 +9,7 @@ $successMessage = \Illuminate\Support\Facades\Session::get('success');
             </div>
             <div class="modal-body text-center">
                 <h6>Oops!! The following errors occurred</h6>
-                <div id="error-paragraphs">
+                <div class="alert-paragraphs" id="error-paragraphs">
                     @foreach($errors->all() as $error)
                         <p class="sitewide-alert-message text-danger">{{ $error }}</p>
                     @endforeach
@@ -31,7 +31,9 @@ $successMessage = \Illuminate\Support\Facades\Session::get('success');
             </div>
             <div class="modal-body text-center">
                 <img src="{{ asset('images/check_circle.svg') }}" alt="Check Circle Image"/>
+                <div class="alert-paragraphs">
                 <p class="sitewide-alert-message" id="success-message">{{ $successMessage }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -53,7 +55,7 @@ $successMessage = \Illuminate\Support\Facades\Session::get('success');
                 // Set a new timeout to hide the modal after 3000 milliseconds (3 seconds)
                 _this.data('hideInterval', setTimeout(function () {
                     _this.modal('hide');
-                }, 3000));
+                }, 5000));
             });
 
             // PHP code to set default values for alertStatuses and sessionKeys
@@ -73,7 +75,7 @@ $successMessage = \Illuminate\Support\Facades\Session::get('success');
 
                 // If there is a message for the current status, append a paragraph to the 'error-paragraphs' element
                 @if($alertMessage = Session::get($status))
-                    $('#error-paragraphs').append(`
+                    $('#alert-paragraph').append(`
                         <p class="sitewide-alert-message text-{{ $status === 'error' ? 'danger' : $status }}">{{ $alertMessage }}</p>
                     `);
                 @endif

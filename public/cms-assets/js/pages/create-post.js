@@ -1,4 +1,6 @@
-
+function deletePost(url) {
+    HamkkeJsHelpers.submitActionForm(url, 'This post will not longer be accessible', 'POST', 'Are you sure?');
+}
 (function ($){
     "use strict";
     console.log('HERE');
@@ -9,7 +11,7 @@
         placeholder: 'Type Something...',
         modules: {
             formula: true,
-            toolbar: HamkkeJsHelpers.quillFullToolbar
+            toolbar: HamkkeJsHelpers.getQuillToolbar()
         },
         theme: 'snow'
     });

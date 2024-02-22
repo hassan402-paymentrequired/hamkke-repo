@@ -65,15 +65,18 @@ class ForumCrudController extends Controller
 
     public function viewPost(ForumPost $forumPost)
     {
-        if(!$forumPost->isPublished()){
+        if(!isAdminRoute() && !$forumPost->isPublished()){
             flashErrorMessage('Forum post not found');
             return redirect()->route('forum.posts');
         }
         $parsedPostBody = (new PostParser($forumPost))->parsePostBody()->render();
+        $postAuthor = $forumPost->getPoster();
+        if(isAdminRoute()) {
+            return view('forum_posts/preview-forum-post', compact('forumPost', 'parsedPostBody', 'postAuthor'));
+        }
         $discussions = $forumPost->forum_discussions()
             ->where('post_status_id', PostStatus::PUBLISHED)
             ->paginate(10);
-        $postAuthor = $forumPost->getPoster();
         return view('front-end/single-forum-post', compact('forumPost', 'discussions',
             'parsedPostBody', 'postAuthor'));
     }

@@ -11,7 +11,8 @@
             HamkkeJsHelpers.initializeQuillEditor(
                 sendReplyBodyHidden,
                 '#reply-content-editor',
-                '#threadReplyForm');
+                '#threadReplyForm',
+                true);
         }
     });
 })(jQuery);

@@ -67,6 +67,11 @@ class ForumPost extends Model
 		return $this->hasMany(ForumDiscussion::class);
 	}
 
+    public function post_status()
+    {
+        return PostStatus::getName($this->post_status_id);
+    }
+
     public function getPoster()
     {
         return $this->user ?: $this->customer;
@@ -97,5 +102,19 @@ class ForumPost extends Model
     public function isPublished()
     {
         return $this->post_status_id === PostStatus::PUBLISHED->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function tagNames()
+    {
+        $tags = ForumTag::where('forum_post_id', $this->id)->get();
+        $tagIds = $tags->pluck('tag_id')->toArray();
+        $tagNamesArr = Tag::whereIn('id', $tagIds)->get()
+            ->map(function ($tag) {
+                return "<span class='alert alert-primary p-1 mx-1'>{$tag->name}</span>";
+            })->toArray();
+        return implode('', $tagNamesArr);
     }
 }

@@ -1,12 +1,14 @@
 @extends('layouts.app', ['pageTitle' => 'Forum Threads::List'])
 
 @section('main-content')
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Forum Posts /</span> All</h4>
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Forum Threads /</span> All</h4>
 
     <div class="row">
         <!-- Bordered Table -->
         <div class="card">
-            <h5 class="card-header">Forum Threads</h5>
+            <h5 class="card-header">
+                @include('components.posts.post-statuses-nav-tabs')
+            </h5>
             <div class="card-body">
                 @include('components.forum.forum-posts-table', compact('forumPosts'))
             </div>

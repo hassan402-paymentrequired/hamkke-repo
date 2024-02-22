@@ -4,7 +4,7 @@
 'use strict';
 const HamkkeJsHelpers = {
     sitewideForm:  '#site-wide-action-form',
-    quillFullToolbar: [
+    quillBaseToolbar: [
         [
             {
                 font: []
@@ -55,54 +55,29 @@ const HamkkeJsHelpers = {
             }
         ],
         [{ direction: 'rtl' }],
-        ['link', 'image', 'video', 'formula'],
         ['clean']
     ],
-    quillCustomerToolbar: [
-        [
-            {
-                font: []
-            },
-            {
-                size: []
-            }
-        ],
-        ['bold', 'italic', 'underline', 'strike'],
-        [
-            {
-                color: []
-            },
-            {
-                background: []
-            }
-        ],
-        [
-            {
-                header: '1'
-            },
-            {
-                header: '2'
-            },
-            'blockquote',
-            'code-block'
-        ],
-        [
-            {
-                list: 'ordered'
-            },
-            {
-                list: 'bullet'
-            },
-            {
-                indent: '-1'
-            },
-            {
-                indent: '+1'
-            }
-        ],
-        ['link', 'image'],
-        ['clean']
-    ],
+    frontendSuccessAlertModal: '#successAlertModal',
+    frontendErrorAlertModal: '#errorsAlertModal',
+
+    getQuillToolbar(noImage = false) {
+        let quillToolbar = this.quillBaseToolbar;
+        if(this.isAdminPath()){
+            quillToolbar.push(
+                ['link', 'image', 'video', 'formula']
+            );
+        }
+        else if(noImage) {
+            quillToolbar.push(
+                ['link', 'image']
+            );
+        } else {
+            quillToolbar.push(
+                ['link']
+            );
+        }
+        return quillToolbar;
+    },
 
     submitLogoutForm() {
         return HamkkeJsHelpers.confirmationAlert(
@@ -570,15 +545,16 @@ const HamkkeJsHelpers = {
         return currentUrl.includes('/admin')
     },
 
-    initializeQuillEditor(finalSubmissionField, editorContainerSelector, parentFormSelector) {
+    initializeQuillEditor(finalSubmissionField, editorContainerSelector, parentFormSelector, noImage = false) {
         const finalSubmissionFieldInstance = $(finalSubmissionField);
         console.log({finalSubmissionField});
+        let toolbar = this.getQuillToolbar(noImage);
         const postContentEditor = new Quill(editorContainerSelector, {
             bounds: editorContainerSelector,
             placeholder: 'Type Something...',
             modules: {
                 formula: true,
-                toolbar: this.isAdminPath() ? HamkkeJsHelpers.quillFullToolbar : HamkkeJsHelpers.quillCustomerToolbar
+                toolbar
             },
             theme: 'snow'
         });
@@ -590,11 +566,27 @@ const HamkkeJsHelpers = {
         }
         $(parentFormSelector).on('submit', function (e) {
             e.preventDefault();
+            if(postContentEditor.getLength() <= 2){
+                HamkkeJsHelpers.showFrontendAlert(
+                    'Please do not submit an empty text editor',
+                    'danger'
+                );
+                return;
+            }
             finalSubmissionFieldInstance.html(
                 JSON.stringify(postContentEditor.getContents())
             )
             e.target.submit();
         });
     },
+
+    showFrontendAlert(alertMessage, alertStatus) {
+        const modalSelector = alertStatus === 'success' ? this.frontendSuccessAlertModal : this.frontendErrorAlertModal;
+        $(modalSelector + ' .alert-paragraphs').empty()
+            .append(`
+                <p class="sitewide-alert-message text-${alertStatus}">${alertMessage}</p>
+            `);
+        $(modalSelector).modal('show');
+    }
 
 }

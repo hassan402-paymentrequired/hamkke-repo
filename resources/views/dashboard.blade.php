@@ -63,8 +63,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <div class="card-title mb-0">
-                        <h5 class="mb-0">Recent Posts</h5>
-                        <small class="text-muted">Recently Posts</small>
+                        <h5 class="mb-0">Recent Published Posts</h5>
                     </div>
                 </div>
                 <div class="card-body">

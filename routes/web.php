@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoriesCrudController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ForumPostsController;
 use App\Http\Controllers\Admin\GeneralSettingsController;
 use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\TagsCrudController;
@@ -64,17 +65,13 @@ $adminRoutes = function () {
         // End User Management Routes
 
         Route::prefix('forum')->group(function () {
-            // Start Admin-Post Management Routes
-            Route::get('posts', [PostsController::class, 'index'])->name('admin.forum-post.list');
-            Route::match(['GET', 'POST'], 'posts/create', [PostsController::class, 'create'])->name('admin.forum-post.create');
-            Route::get('posts/{forumPost:id}', [PostsController::class, 'preview'])->name('admin.forum-post.preview');
-            Route::match(['GET', 'POST'], 'posts/{forumPost:id}/update', [PostsController::class, 'update'])
-                ->name('admin.forum-post.approve');
-            Route::match(['GET', 'POST'], 'posts/{forumPost:id}/update', [PostsController::class, 'update'])
-                ->name('admin.forum-post.reject');
-            Route::post('posts/{forumPost:id}/change-status', [PostsController::class, 'changeStatus'])
+            // Start Admin Forum-Post Management Routes
+            Route::get('threads', [ForumPostsController::class, 'index'])->name('admin.forum-post.list');
+            Route::match(['GET', 'POST'], 'threads/create', [ForumPostsController::class, 'create'])->name('admin.forum-post.create');
+            Route::get('threads/preview/{forumPost:id}', [ForumPostsController::class, 'preview'])->name('admin.forum-post.preview');
+            Route::post('threads/archive/{forumPost:id}', [ForumPostsController::class, 'changeStatus'])
                 ->name('admin.forum-post.change_status');
-            Route::post('posts/{forumPost:id}/delete', [PostsController::class, 'delete'])->name('admin.forum-post.delete');
+            Route::post('threads/delete/{forumPost:id}', [ForumPostsController::class, 'delete'])->name('admin.forum-post.delete');
         });
     });
 

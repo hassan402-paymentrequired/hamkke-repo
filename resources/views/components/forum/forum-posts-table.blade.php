@@ -20,13 +20,13 @@
             <tr>
                 <td>{{ $forumPost->id }}</td>
                 <td>{{ $forumPost->topic }}</td>
-                <td>{{ $forumPost->tagNames() }}</td>
-                <td>{{ $forumPost->post_status_id }}</td>
+                <td>{!! $forumPost->tagNames() !!}</td>
+                <td>{{ $forumPost->post_status() }}</td>
                 @if($forumPost->user_id)
                     @php $forumPoster = $forumPost->user; @endphp
-                    <td>{{ $forumPoster->getRoleData()->display_name }} :: {{ $forumPoster->posterName() }}</td>
+                    <td>{{ $forumPoster->getRoleData()->display_name }} :: {{ $forumPost->posterName() }}</td>
                 @else
-                    <td>{{ $forumPoster->posterName() }}</td>
+                    <td>{{ $forumPost->posterName() }}</td>
                 @endif
                 <td>
                     <div class="dropdown">
@@ -35,14 +35,10 @@
                             <i class="ti ti-dots-vertical"></i>
                         </button>
                         <div class="dropdown-menu">
-                            @if($forumPost->post_status_id === PostStatus::AWAITING_APPROVAL)
-                                <a class="dropdown-item" href="{{ route('admin.forum-post.approve', $forumPost) }}">
+                            @if($forumPost->post_status_id === PostStatus::PUBLISHED)
+                                <a class="dropdown-item" href="{{ route('admin.forum-post.archive', $forumPost) }}">
                                     <i class="ti ti-checkbox me-1"></i>
-                                    Approve
-                                </a>
-                                <a class="dropdown-item" href="{{ route('admin.forum-post.reject', $forumPost) }}">
-                                    <i class="ti ti-checkbox me-1"></i>
-                                    Reject
+                                    Move to Archive
                                 </a>
                             @endif
                             <a class="dropdown-item" href="{{ route('admin.forum-post.preview', $forumPost) }}">
@@ -68,4 +64,8 @@
         @endforelse
         </tbody>
     </table>
+
+    @if($forumPosts instanceof \Illuminate\Pagination\LengthAwarePaginator )
+        {{ $forumPosts->links() }}
+    @endif
 </div>

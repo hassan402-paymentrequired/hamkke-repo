@@ -2,40 +2,72 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\PostStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Front\ForumCrudController;
+use App\Models\ForumPost;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ForumPostsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $postTypes = PostType::all();
-        $postCategories = Category::all();
         $postStatuses = PostStatus::cases();
-        $postsQuery = Post::join('categories', 'categories.id', '=', 'posts.post_category_id')
-            ->join('post_types', 'post_types.id', '=', 'categories.post_type_id')
-            ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
-            ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id');
-        if($request->post_type) {
-            $postsQuery->where('post_types.id', $request->post_type);
-        }
-        if($request->post_category){
-            $postsQuery->where('categories.id', $request->post_category);
-        }
-        if($request->post_status){
-            $postsQuery->where('posts.post_status_id', $request->post_status);
-        }
-        $posts = $postsQuery->groupBy('posts.id')
+        $postStatusGroups = ForumPost::groupBy('post_status_id')
             ->select([
-                'posts.*',
-                'categories.name as post_category',
-                'categories.slug as post_category_slug',
-                'post_types.name as post_type',
-                'post_types.slug as post_type_slug',
-                DB::raw('COUNT(post_comments.id) as comments'),
-                DB::raw('COUNT(post_likes.post_id) as likes')
-            ])->paginate(20);
-        return view('posts.list', compact('postTypes', 'postCategories', 'postStatuses', 'posts'));
+                'post_status_id',
+                DB::raw("COUNT(post_status_id) as posts_count")
+            ])->pluck('posts_count', 'post_status_id')->toArray();
 
+        $forumPostsQuery = ForumPost::leftJoin('forum_discussions', function (JoinClause $joinClause) {
+                $joinClause->on('forum_discussions.forum_post_id', 'forum_posts.id');
+            })
+            ->leftJoin('forum_post_tag', 'forum_post_tag.forum_post_id', 'forum_posts.id');
+//        if(!empty($request->tags)) {
+//            dd(['tags' => $request->tags]);
+//            $tagIdsAsString = implode(',', array_keys($request->tags));
+//            dd(compact('tagIdsAsString'));
+//            $forumPostsQuery->whereRaw("forum_post_tag.tag_id IN ({$tagIdsAsString})");
+//        }
+        if($request->get('post_status', PostStatus::PUBLISHED->value)){
+            $forumPostsQuery->where('forum_posts.post_status_id', $request->get('post_status', PostStatus::PUBLISHED->value));
+        }
+        $forumPosts = $forumPostsQuery->groupBy('forum_posts.id')
+            ->select([
+                'forum_posts.*',
+                DB::raw('count(forum_discussions.id) as discussions')
+            ])->latest()->paginate(20);
+
+        return view('forum_posts.list', compact('postStatusGroups', 'postStatuses', 'forumPosts'));
+
+    }
+
+    public function preview(ForumPost $forumPost)
+    {
+        return (new ForumCrudController())->viewPost($forumPost);
+    }
+
+    public function archive(ForumPost $forumPost)
+    {
+        if(!$this->getAuthUser()->hasRoleById(ROLE_SUPER_ADMIN)){
+            flashErrorMessage('Inadequate permissions please contact the super admin');
+            return back();
+        }
+        $forumPost->update(['post_status_id' => PostStatus::ARCHIVED]);
+        flashSuccessMessage('Thread deleted successfully');
+        return  back();
+    }
+
+    public function delete(ForumPost $forumPost)
+    {
+        if(!$this->getAuthUser()->hasRoleById(ROLE_SUPER_ADMIN)){
+            flashErrorMessage('Inadequate permissions please contact the super admin');
+            return back();
+        }
+        $forumPost->delete();
+        flashSuccessMessage('Thread deleted successfully');
+        return  back();
     }
 }
