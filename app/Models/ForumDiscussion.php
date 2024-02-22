@@ -63,4 +63,18 @@ class ForumDiscussion extends Model
 	{
 		return $this->belongsTo(User::class);
 	}
+
+    public function getPoster()
+    {
+        return $this->user_id ? $this->user : $this->customer;
+    }
+
+    public function posterName()
+    {
+        $poster = $this->getPoster();
+        if($this->user_id){
+            return $poster->name;
+        }
+        return $poster->name ?: $poster->username;
+    }
 }

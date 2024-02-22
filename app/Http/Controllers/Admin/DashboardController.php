@@ -21,6 +21,7 @@ class DashboardController extends Controller
             'customers' => Customer::count()
         ];
         $recentPosts = Post::withCategoryCommentsAndLikes()
+            ->where('post_status_id', PostStatus::PUBLISHED)
             ->groupBy('posts.id')
             ->select([
                 'posts.*',

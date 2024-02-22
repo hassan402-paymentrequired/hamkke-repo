@@ -45,7 +45,7 @@
                 </div>
 
                 @foreach ($latestHallyuNews as $post)
-                    @component('components.posts.post-preview-card-box-title-one', compact('post'))
+                    @component('components.front.posts.post-preview-card-box-title-one', compact('post'))
                     @endcomponent
                 @endforeach
             </div>

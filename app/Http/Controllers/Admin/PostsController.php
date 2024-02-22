@@ -19,21 +19,27 @@ class PostsController extends Controller
 {
     public function index(Request $request)
     {
-        $postTypes = PostType::all();
-        $postCategories = Category::all();
+        $postTypes = PostType::where('id', '<>', PostType::FORUM)->get();
+        $postCategories = Category::where('post_type_id', '<>', PostType::FORUM)->get();
         $postStatuses = PostStatus::cases();
+        $postStatusGroups = Post::groupBy('post_status_id')
+            ->select([
+                'post_status_id',
+                DB::raw("COUNT(post_status_id) as posts_count")
+            ])->pluck('posts_count', 'post_status_id')->toArray();
         $postsQuery = Post::join('categories', 'categories.id', '=', 'posts.post_category_id')
                 ->join('post_types', 'post_types.id', '=', 'categories.post_type_id')
                 ->leftJoin('post_comments', 'post_comments.post_id', '=', 'posts.id')
                 ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id');
+
         if($request->post_type) {
             $postsQuery->where('post_types.id', $request->post_type);
         }
         if($request->post_category){
             $postsQuery->where('categories.id', $request->post_category);
         }
-        if($request->post_status){
-            $postsQuery->where('posts.post_status_id', $request->post_status);
+        if($request->get('post_status', PostStatus::PUBLISHED->value)){
+            $postsQuery->where('posts.post_status_id', $request->get('post_status', PostStatus::PUBLISHED->value));
         }
         $posts = $postsQuery->groupBy('posts.id')
             ->select([
@@ -45,14 +51,15 @@ class PostsController extends Controller
                 DB::raw('COUNT(post_comments.id) as comments'),
                 DB::raw('COUNT(post_likes.post_id) as likes')
             ])->paginate(20);
-        return view('posts.list', compact('postTypes', 'postCategories', 'postStatuses', 'posts'));
+        return view('posts.list', compact('postTypes', 'postCategories', 'postStatuses', 'posts',
+            'postStatusGroups'));
     }
 
     public function create(UpdateOrCreatePost $request)
     {
         if(request()->isMethod('GET')){
-            $postTypes = PostType::all();
-            $postCategories = Category::all();
+            $postTypes = PostType::where('id', '<>', PostType::FORUM)->get();
+            $postCategories = Category::where('post_type_id', '<>', PostType::FORUM)->get();
             $postStatuses = PostStatus::cases();
             $tags = Tag::all();
             return view('posts.create', compact('postTypes', 'postCategories', 'postStatuses', 'tags'));
@@ -93,8 +100,8 @@ class PostsController extends Controller
     public function update(UpdateOrCreatePost $request, Post $post)
     {
         if(request()->isMethod('GET')){
-            $postTypes = PostType::all();
-            $postCategories = Category::all();
+            $postTypes = PostType::where('id', '<>', PostType::FORUM)->get();
+            $postCategories = Category::where('post_type_id', '<>', PostType::FORUM)->get();
             $postStatuses = PostStatus::cases();
             $tags = Tag::all();
             $postTags = $post->tags;

@@ -1,4 +1,3 @@
-
 <div class="table-responsive text-nowrap">
     <table class="table table-bordered">
         <caption>Created Posts</caption>
@@ -30,9 +29,12 @@
                             <a class="dropdown-item" href="{{ route('admin.post.update', $post) }}">
                                 <i class="ti ti-pencil me-1"></i> Edit
                             </a>
-                            <a class="dropdown-item"
-                               onclick="deletePost('{{ route('admin.post.delete', $post) }}')"
-                               href="javascript:void(0);">
+                            <a class="dropdown-item" onclick="return HamkkeJsHelpers.submitActionForm(
+                                    '{{ route('admin.post.delete', $post) }}',
+                                    'This post will not longer be accessible',
+                                    'POST',
+                                    'Are you sure?'
+                               );" href="javascript:void(0);">
                                 <i class="ti ti-trash me-1"></i> Delete
                             </a>
                         </div>
@@ -46,4 +48,7 @@
         @endforelse
         </tbody>
     </table>
+    @if($posts instanceof \Illuminate\Pagination\LengthAwarePaginator )
+    {{ $posts->links() }}
+    @endif
 </div>

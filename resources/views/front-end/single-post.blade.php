@@ -210,7 +210,7 @@
 
                         <div class="row d-flex flex-row flex-wrap forum-row justify-content-between">
                             @foreach ($relatedPosts as $relatedPost)
-                                @component('components.posts.post-preview-card-box-title-one', ['post' => $relatedPost])
+                                @component('components.front.posts.post-preview-card-box-title-one', compact('post'))
                                 @endcomponent
                             @endforeach
                         </div>

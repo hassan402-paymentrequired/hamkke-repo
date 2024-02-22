@@ -1,4 +1,4 @@
-.text-hamkke-purple{
+.text-hamkke-purple {
     color: #662687;
 }
 
@@ -13,13 +13,19 @@
     margin-bottom: 20px;
 }
 
-.forum-div .nav-link, .learnkorean-div .nav-link, .store-div .nav-link, .category-posts-div .nav-link {
+.forum-div .nav-link,
+.learnkorean-div .nav-link,
+.store-div .nav-link,
+.category-posts-div .nav-link {
     padding: 0;
     text-align: left;
     width: 100% !important;
 }
 
-.forum-div .nav-link a, .learnkorean-div .nav-link a, .store-div .nav-link a, .category-posts-div .nav-link a {
+.forum-div .nav-link a,
+.learnkorean-div .nav-link a,
+.store-div .nav-link a,
+.category-posts-div .nav-link a {
     padding: 20px;
     width: 100%;
     color: #404040;
@@ -53,24 +59,24 @@
     margin-top: 15px;
 }
 
-.card-box{
+.card-box {
     height: auto;
 }
 
-.card-box .overlay{
+.card-box .overlay {
     height: auto;
 }
 
-.card-box .overlay p{
+.card-box .overlay p {
     margin-bottom: 0;
 }
 
-.card-box .overlay a{
+.card-box .overlay a {
     color: inherit;
     text-decoration: none;
 }
 
-.card-box .overlay a:hover{
+.card-box .overlay a:hover {
     /*color: inherit;*/
     text-decoration: underline;
 }
@@ -81,11 +87,11 @@
 }
 
 
-.comment-form{
+.comment-form {
     margin: 0 0 30px 0;
 }
 
-.comment-form textarea{
+.comment-form textarea {
     border-radius: 10px;
     outline: none;
     border: none;
@@ -110,25 +116,25 @@
     margin-bottom: 0.25rem;
 }
 
-.comment-form input::placeholder{
+.comment-form input::placeholder {
     color: #a8a8a8;
     font-size: 14px;
     font-weight: 300;
 }
 
-.comment-section span{
+.comment-section span {
     color: #662687;
     font-size: 14px;
     font-weight: 500;
 }
 
-.comment-form p{
+.comment-form p {
     font-size: 10px;
     font-weight: 300;
     width: auto;
 }
 
-.comment-form .card-text{
+.comment-form .card-text {
     font-size: 14px;
     font-weight: 400;
     margin-bottom: 5px;
@@ -164,8 +170,8 @@
 }
 
 .comment .card .nav.nav-tabs {
-     margin-right: 0;
-     margin-left: 0;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .form-check-input {
@@ -178,15 +184,15 @@
     line-height: inherit;
 }
 
-#customerAuthForm{
+#customerAuthForm {
     display: none;
 }
 
-#customerAuthForm.open{
+#customerAuthForm.open {
     display: block;
 }
 
-.navbtn button{
+.navbtn button {
     background-color: transparent;
     border: 1px solid #662687;
     margin-right: 10px;
@@ -195,7 +201,7 @@
     color: #662687;
 }
 
-.navbtn button.bg-filled{
+.navbtn button.bg-filled {
     outline: none;
     border-radius: 100px;
     background-color: #662687;
@@ -207,14 +213,15 @@
     text-decoration: none;
 }
 
-.navbtn button .nav-link{
+.navbtn button .nav-link {
     text-decoration: none;
     color: #662687;
 }
 
-.navbtn button.bg-filled .nav-link{
+.navbtn button.bg-filled .nav-link {
     color: #ffffff;
 }
+
 .navbtn .customer-auth-menu {
     display: inline-block;
 }
@@ -223,7 +230,7 @@
     max-width: 800px !important;
 }
 
-.post-box .form-control{
+.post-box .form-control {
     padding: .375rem .75rem;
     border: 1px solid #a8a8a8;
 }
@@ -248,7 +255,8 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--multiple .se
     padding: 0.375rem;
 }
 
-.ql-snow.ql-toolbar, .light-style .ql-snow .ql-toolbar {
+.ql-snow.ql-toolbar,
+.light-style .ql-snow .ql-toolbar {
     border: 0.0625rem solid #dbdade;
 }
 
@@ -257,11 +265,12 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--multiple .se
     margin-right: 15px;
     border-radius: 50%;
 }
+
 .modal.show .modal-dialog {
-     margin-top: 50px;
+    margin-top: 50px;
 }
 
-.login label{
+.login label {
     margin-bottom: 0.3em;
     display: block;
 }
@@ -321,10 +330,110 @@ p.sitewide-alert-message {
     color: #404040;
 }
 
+/** === All answer === **/
+.all-answers {
+    margin-top: 60px;
+}
+
+.all-answers .title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.all-answers .filter-bar {
+    background: var(--black_25);
+    border: 1px solid var(--black_50);
+    padding: 10px 30px;
+    justify-content: space-between;
+    border-radius: 4px;
+}
+
+.all-answers .filter-bar .custom-select {
+    box-shadow: none;
+}
+
+.all-answers .filter-bar .custom-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem transparent;
+    border: none;
+}
+
+.all-answers .filter-bar .custom-select::after {
+    border-bottom: 1px solid #C3C3C3;
+    border-right: 1px solid #C3C3C3;
+    height: 6px;
+    width: 6px;
+    right: 5px;
+}
+
+.all-answers .filter-bar p {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 14px;
+    color: var(--p_color);
+}
+
+.all-answers .filter-bar .nice-select {
+    background: var(--black_25);
+    height: 100%;
+    border: 0;
+    padding: 0 25px 0 0;
+}
+
+.all-answers .filter-bar .nice-select .list {
+    width: 100px;
+}
+
+.all-answers .filter-bar .nice-select::-ms-expand {
+    display: none;
+}
+
+.all-answers .forum-comment {
+    margin-top: 30px;
+}
+
+.all-answers .forum-comment .comment-content {
+    margin-left: 60px;
+    margin-top: 10px;
+    border-bottom: 1px solid var(--black_50);
+    padding-bottom: 28px;
+}
+
+.all-answers .forum-comment .comment-content p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.all-answers .forum-comment .comment-content p:last-child {
+    margin-bottom: 0;
+}
+
+.all-answers .forum-comment .comment-content .action-btns {
+    margin-top: 20px;
+    display: none;
+    opacity: 0;
+    transition: all 5s ease-in;
+}
+
+.all-answers .forum-comment:hover .comment-content .action-btns {
+    display: block;
+    opacity: 1;
+}
+
+.all-answers .pagination-wrapper {
+    background: transparent;
+    box-shadow: none;
+    margin-top: 15px;
+}
+
 @media (max-width: 991px) and (min-width: 768px) {
-    .category-posts-div .col-md-3, .category-posts-div .col-md-9 {
+
+    .category-posts-div .col-md-3,
+    .category-posts-div .col-md-9 {
         width: 100%;
     }
+
     .category-posts-div .nav {
         box-shadow: rgba(33, 35, 38, 0.1) 0 10px 10px -10px;
     }
@@ -335,7 +444,7 @@ p.sitewide-alert-message {
         text-align: justify;
     }
 
-    .row > .post-impression {
+    .row>.post-impression {
         width: inherit;
         padding-right: 0 !important;
         padding-left: 0 !important;
