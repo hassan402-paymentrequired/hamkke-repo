@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('forum_post_likes', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('forum_post_id')->index();
+            $table->unsignedBigInteger('model_id')->index();
+            $table->unsignedBigInteger('model_table_name')->index();
             $table->timestamps();
+            $table->primary(['forum_post_id','model_id', 'model_table_name'], 'forum_post_likes_PK');
         });
     }
 

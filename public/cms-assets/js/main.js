@@ -25,6 +25,7 @@ if (document.getElementById('layout-menu')) {
                 });
             });
         }
+        Quill.register("modules/imageCompressor", imageCompressor);
     });
 
     if (typeof Waves !== 'undefined') {
@@ -42,7 +43,7 @@ if (document.getElementById('layout-menu')) {
     layoutMenuEl.forEach(function (element) {
         menu = new Menu(element, {
             orientation: isHorizontalLayout ? 'horizontal' : 'vertical',
-            closeChildren: isHorizontalLayout ? true : false,
+            closeChildren: isHorizontalLayout,
             // ? This option only works with Horizontal menu
             showDropdownOnHover: localStorage.getItem('templateCustomizer-' + templateName + '--ShowDropdownOnHover') // If value(showDropdownOnHover) is set in local storage
                 ? localStorage.getItem('templateCustomizer-' + templateName + '--ShowDropdownOnHover') === 'true' // Use the local storage value

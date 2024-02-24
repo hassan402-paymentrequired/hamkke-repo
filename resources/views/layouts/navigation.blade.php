@@ -93,8 +93,7 @@
             </ul>
         </li>
         @php
-        $forumRouteNames = ['admin.forum-post.list','admin.forum-post.create','admin.forum-post.preview',
-            'admin.forum-post.change_status','admin.forum-post.delete'];
+        $forumRouteNames = ['admin.forum-post.list', 'admin.forum-discussion.list'];
         @endphp
         <li class="menu-item {{ isCurrentRoute($forumRouteNames) ? 'open': ''}}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -107,23 +106,12 @@
                         <div>All Thread</div>
                     </a>
                 </li>
-{{--                <li class="menu-item {{ isCurrentRoute('admin.post.create') ? 'active' : '' }}">--}}
-{{--                    <a href="{{ route('admin.post.create') }}" class="menu-link">--}}
-{{--                        <div>Add New Post</div>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
 
-                <li class="menu-item {{ isCurrentRoute('admin.category.list') ? 'active' : '' }}">
-                    <a href="{{ route('admin.category.list') }}" class="menu-link">
-                        <div>Discussions</div>
+                <li class="menu-item {{ isCurrentRoute('admin.forum-discussion.list') ? 'active' : '' }}">
+                    <a href="{{ route('admin.forum-discussion.list') }}" class="menu-link">
+                        <div>Forum Discussions</div>
                     </a>
                 </li>
-
-{{--                <li class="menu-item {{ isCurrentRoute('admin.tag.list') ? 'active' : '' }}">--}}
-{{--                    <a href="{{ route('admin.tag.list') }}" class="menu-link">--}}
-{{--                        <div>Tags</div>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
             </ul>
         </li>
     </ul>

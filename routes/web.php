@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoriesCrudController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ForumDiscussionsController;
 use App\Http\Controllers\Admin\ForumPostsController;
 use App\Http\Controllers\Admin\GeneralSettingsController;
 use App\Http\Controllers\Admin\PostsController;
@@ -72,6 +73,10 @@ $adminRoutes = function () {
             Route::post('threads/archive/{forumPost:id}', [ForumPostsController::class, 'changeStatus'])
                 ->name('admin.forum-post.change_status');
             Route::post('threads/delete/{forumPost:id}', [ForumPostsController::class, 'delete'])->name('admin.forum-post.delete');
+
+            Route::get('discussions', [ForumDiscussionsController::class, 'index'])->name('admin.forum-discussion.list');
+            Route::post('discussions/delete/{discussion}', [ForumDiscussionsController::class, 'delete'])->name('admin.forum-discussion.delete');
+            Route::post('discussions/archive/{discussion}', [ForumDiscussionsController::class, 'archive'])->name('admin.forum-discussion.archive');
         });
     });
 

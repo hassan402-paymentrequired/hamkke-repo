@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Enums\PostStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $user_id
  * @property int|null $customer_id
  * @property int $post_status_id
+ * @property string $deletion_reason
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
@@ -46,7 +48,8 @@ class ForumDiscussion extends Model
 		'body',
 		'user_id',
 		'customer_id',
-		'post_status_id'
+		'post_status_id',
+        'deletion_reason'
 	];
 
 	public function customer()
@@ -64,6 +67,11 @@ class ForumDiscussion extends Model
 		return $this->belongsTo(User::class);
 	}
 
+    public function post_status()
+    {
+        return PostStatus::getName($this->post_status_id);
+    }
+
     public function getPoster()
     {
         return $this->user_id ? $this->user : $this->customer;
@@ -76,5 +84,18 @@ class ForumDiscussion extends Model
             return $poster->name;
         }
         return $poster->name ?: $poster->username;
+    }
+
+    public function getBodySummary()
+    {
+        // Decode the JSON string to an associative array
+        $delta = json_decode($this->body, true);
+        $summaryText = '';
+        foreach ($delta['ops'] as $op) {
+            if (isset($op['insert']) && is_string($op['insert'])) {
+                $summaryText .= trim($op['insert']) . ' '; // Add space between text blocks
+            }
+        }
+        return mb_strimwidth(trim($summaryText), 0, 100, '...');
     }
 }

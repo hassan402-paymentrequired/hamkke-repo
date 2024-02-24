@@ -3,7 +3,7 @@
  */
 'use strict';
 const HamkkeJsHelpers = {
-    sitewideForm:  '#site-wide-action-form',
+    sitewideForm: '#site-wide-action-form',
     quillBaseToolbar: [
         [
             {
@@ -54,26 +54,25 @@ const HamkkeJsHelpers = {
                 indent: '+1'
             }
         ],
-        [{ direction: 'rtl' }],
+        [{direction: 'rtl'}],
         ['clean']
     ],
     frontendSuccessAlertModal: '#successAlertModal',
     frontendErrorAlertModal: '#errorsAlertModal',
 
     getQuillToolbar(noImage = false) {
-        let quillToolbar = this.quillBaseToolbar;
-        if(this.isAdminPath()){
+        let quillToolbar = [...this.quillBaseToolbar];
+        if (this.isAdminPath()) {
             quillToolbar.push(
                 ['link', 'image', 'video', 'formula']
             );
-        }
-        else if(noImage) {
+        } else if (noImage) {
             quillToolbar.push(
-                ['link', 'image']
+                ['link']
             );
         } else {
             quillToolbar.push(
-                ['link']
+                ['link', 'image']
             );
         }
         return quillToolbar;
@@ -101,7 +100,6 @@ const HamkkeJsHelpers = {
         const quillInstance = new Quill(temporaryElement);
         //Set the quill delta in the newly created div.( This converts to HTML )
         const delta = quillInstance.clipboard.convert(postContent);
-        console.log({delta});
         const htmlContent = temporaryElement.getElementsByClassName("ql-editor")[0].innerHTML;
         editorInstance.setContents(delta);
     },
@@ -166,6 +164,27 @@ const HamkkeJsHelpers = {
                     formInstance.submit();
                 }
             });
+    },
+
+    deleteWithComment: (url) => {
+        // let message = "This entry will not longer be accessible."
+        Swal.fire({
+            title: "<span class='text-warning'>Are you sure?</span><br>This entry will no longer be accessible.",
+            input: "textarea",
+            inputLabel: "Please enter the reason (optional)",
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Delete it',
+        }).then((continueAction) => {
+            const deletionReason = continueAction.value;
+            if(continueAction.isConfirmed) {
+                const formInstance = $(HamkkeJsHelpers.sitewideForm);
+                if(deletionReason) {
+                    formInstance.append(`<textarea name="deletion_reason">${deletionReason}</textarea>`);
+                }
+                formInstance.attr('action', url).attr('method', 'POST');
+                formInstance.submit();
+            }
+        });
     },
 
     autocompleteHelper: (inputId, sourceUrl = null, selectFunction, responseFunction = null) => {
@@ -531,7 +550,7 @@ const HamkkeJsHelpers = {
     objectMap(obj, fn, returnAsArray = false) {
         let finalResult = returnAsArray ? [] : {};
         Object.keys(obj).forEach(key => {
-            if(returnAsArray){
+            if (returnAsArray) {
                 finalResult.push(fn(obj[key]));
             } else {
                 finalResult[key] = fn(obj[key]);
@@ -547,14 +566,21 @@ const HamkkeJsHelpers = {
 
     initializeQuillEditor(finalSubmissionField, editorContainerSelector, parentFormSelector, noImage = false) {
         const finalSubmissionFieldInstance = $(finalSubmissionField);
-        console.log({finalSubmissionField});
-        let toolbar = this.getQuillToolbar(noImage);
+        let toolbar = this.getQuillToolbar(noImage),
+            imageResize = noImage ? false : {}
+            imageCompressor = noImage ? false : {
+                quality: 1,
+                maxHeight: 500,
+                debug: true
+            };
         const postContentEditor = new Quill(editorContainerSelector, {
             bounds: editorContainerSelector,
             placeholder: 'Type Something...',
             modules: {
                 formula: true,
-                toolbar
+                toolbar,
+                imageCompressor,
+                ImageResize: imageResize
             },
             theme: 'snow'
         });
@@ -566,13 +592,23 @@ const HamkkeJsHelpers = {
         }
         $(parentFormSelector).on('submit', function (e) {
             e.preventDefault();
-            if(postContentEditor.getLength() <= 2){
+            const contentCharLength = postContentEditor.getLength();
+            const maxLength = 500;
+            if (contentCharLength <= 2) {
                 HamkkeJsHelpers.showFrontendAlert(
-                    'Please do not submit an empty text editor',
+                    'Please do not submit an empty reply',
                     'danger'
                 );
                 return;
             }
+            if (contentCharLength > maxLength) {
+                HamkkeJsHelpers.showFrontendAlert(
+                    `You have exceeded the ${maxLength} character limit by "${contentCharLength - maxLength}" characters.<br> Please review it`,
+                    'danger'
+                );
+                return;
+            }
+
             finalSubmissionFieldInstance.html(
                 JSON.stringify(postContentEditor.getContents())
             )
@@ -580,13 +616,13 @@ const HamkkeJsHelpers = {
         });
     },
 
-    showFrontendAlert(alertMessage, alertStatus) {
+    showFrontendAlert(alertMessage, alertStatus, alertTitle = 'Oops!!') {
         const modalSelector = alertStatus === 'success' ? this.frontendSuccessAlertModal : this.frontendErrorAlertModal;
         $(modalSelector + ' .alert-paragraphs').empty()
             .append(`
                 <p class="sitewide-alert-message text-${alertStatus}">${alertMessage}</p>
             `);
+        document.querySelector(modalSelector + ' .alert-title').innerHTML = alertTitle
         $(modalSelector).modal('show');
     }
-
 }

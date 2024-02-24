@@ -21,20 +21,12 @@ class ForumPostsController extends Controller
                 DB::raw("COUNT(post_status_id) as posts_count")
             ])->pluck('posts_count', 'post_status_id')->toArray();
 
-        $forumPostsQuery = ForumPost::leftJoin('forum_discussions', function (JoinClause $joinClause) {
+        $forumPosts = ForumPost::leftJoin('forum_discussions', function (JoinClause $joinClause) {
                 $joinClause->on('forum_discussions.forum_post_id', 'forum_posts.id');
             })
-            ->leftJoin('forum_post_tag', 'forum_post_tag.forum_post_id', 'forum_posts.id');
-//        if(!empty($request->tags)) {
-//            dd(['tags' => $request->tags]);
-//            $tagIdsAsString = implode(',', array_keys($request->tags));
-//            dd(compact('tagIdsAsString'));
-//            $forumPostsQuery->whereRaw("forum_post_tag.tag_id IN ({$tagIdsAsString})");
-//        }
-        if($request->get('post_status', PostStatus::PUBLISHED->value)){
-            $forumPostsQuery->where('forum_posts.post_status_id', $request->get('post_status', PostStatus::PUBLISHED->value));
-        }
-        $forumPosts = $forumPostsQuery->groupBy('forum_posts.id')
+            ->leftJoin('forum_post_tag', 'forum_post_tag.forum_post_id', 'forum_posts.id')
+            ->where('forum_posts.post_status_id', $request->get('post_status', PostStatus::PUBLISHED->value))
+            ->groupBy('forum_posts.id')
             ->select([
                 'forum_posts.*',
                 DB::raw('count(forum_discussions.id) as discussions')
