@@ -30,7 +30,7 @@
                                 <i class="ti ti-pencil me-1"></i> Edit
                             </a>
                             <a class="dropdown-item" onclick="return HamkkeJsHelpers.deleteWithComment(
-                                    '{{ route('admin.forum-post.delete', $forumPost) }}'
+                                    '{{ route('admin.post.delete', $post) }}'
                                 )" href="javascript:void(0);">
                                 <i class="ti ti-trash me-1"></i> Delete
                             </a>
