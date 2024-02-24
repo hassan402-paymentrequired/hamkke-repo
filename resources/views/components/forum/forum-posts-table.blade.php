@@ -24,9 +24,9 @@
                 <td>{{ $forumPost->post_status() }}</td>
                 @if($forumPost->user_id)
                     @php $forumPoster = $forumPost->user; @endphp
-                    <td>{{ $forumPoster->getRoleData()->display_name }} :: {{ $forumPost->posterName() }}</td>
+                    <td><span class="text-decoration-underline">{{ $forumPoster->getRoleData()->display_name }}</span> :: {{ $forumPost->posterName() }}</td>
                 @else
-                    <td>{{ $forumPost->posterName() }}</td>
+                    <td class="text-capitalize">{{ $forumPost->posterName() }}</td>
                 @endif
                 <td>
                     <div class="dropdown">
@@ -48,8 +48,9 @@
 
                             @if($authUser->hasRoleById(ROLE_SUPER_ADMIN))
                                 <a class="dropdown-item"
-                                   onclick="deleteForumPost('{{ route('admin.forum-post.delete', $forumPost) }}')"
-                                   href="javascript:void(0);">
+                                   onclick="return HamkkeJsHelpers.deleteWithComment(
+                                            '{{ route('admin.forum-post.delete', $forumPost) }}'
+                                       )" href="javascript:void(0);">
                                     <i class="ti ti-trash me-1"></i> Delete
                                 </a>
                             @endif

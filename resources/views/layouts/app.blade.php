@@ -130,6 +130,13 @@
 <!-- Vendors JS -->
 <script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
+<script src="{{ asset("cms-assets/vendor/libs/quill/modules/imageResizer.min.js") }}"></script>
+<script src="https://unpkg.com/quill-image-compress@1.2.11/dist/quill.imageCompressor.min.js"></script>
+<script>
+    Quill.register("modules/imageCompressor", imageCompressor)
+    // console.log({ImageResize});
+    Quill.register("modules/ImageResize", ImageResize.default)
+</script>
 
 <!-- Main JS -->
 <script src="{{ assetWithVersion('js/hamkke-custom-helpers.js') }}"></script>

@@ -31,7 +31,7 @@ enum PostStatus: int
                 $iconClass .= 'ti-hourglass-low';
                 break;
             case self::DRAFT->value:
-                $iconClass .= 'ti-pen';
+                $iconClass .= 'ti-pencil';
                 break;
             case self::PUBLISHED->value:
                 $iconClass .= 'ti-circle-check';

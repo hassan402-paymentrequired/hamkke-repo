@@ -8,7 +8,7 @@ $successMessage = \Illuminate\Support\Facades\Session::get('success');
                 <button type="button" class="btn-close bg-danger text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <h6>Oops!! The following errors occurred</h6>
+                <h6 class="alert-title">Oops!! The following errors occurred</h6>
                 <div class="alert-paragraphs" id="error-paragraphs">
                     @foreach($errors->all() as $error)
                         <p class="sitewide-alert-message text-danger">{{ $error }}</p>
