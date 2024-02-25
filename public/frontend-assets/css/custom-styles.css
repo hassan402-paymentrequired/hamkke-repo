@@ -1,3 +1,12 @@
+#main-site-tagline  {
+    font-size: 0.7em;
+    font-weight: normal;
+}
+
+.carousel-inner {
+    height: 550px;
+}
+
 .text-hamkke-purple {
     color: #662687;
 }
@@ -456,6 +465,10 @@ p.sitewide-alert-message {
 }
 
 @media (max-width: 576px) {
+    #main-site-tagline  {
+        display:none;
+    }
+
     .category-posts-div .nav {
         box-shadow: rgba(33, 35, 38, 0.1) 0 10px 10px -10px;
     }

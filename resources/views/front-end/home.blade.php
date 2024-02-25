@@ -7,21 +7,21 @@
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="{{ asset('frontend-assets/carousel-img1.jpg') }}" class="d-block w-100" alt="img1">
+                <img src="{{ asset('frontend-assets/header-sliders/1.gif') }}" class="d-block w-100" alt="img1">
             </div>
             <div class="carousel-item">
-                <img src="{{ asset('frontend-assets/carousel-img2.jpg') }}" class="d-block w-100" alt="img2">
+                <img src="{{ asset('frontend-assets/header-sliders/2.gif') }}" class="d-block w-100" alt="img2">
             </div>
             <div class="carousel-item">
-                <img src="{{ asset('frontend-assets/carousel-img3.jpg') }}" class="d-block w-100" alt="img3">
+                <img src="{{ asset('frontend-assets/header-sliders/3.gif') }}" class="d-block w-100" alt="img3">
             </div>
-            <div class="carousel-overlay">
-                <div class="title">
-                    <h1>WELCOME</h1>
-                    <p>{{ $coreSiteDetails->tagline() }}</p>
-                </div>
-                <img src="{{ asset('frontend-assets/carousel-overlay.png') }}" alt="carousel-overlay"/>
-            </div>
+{{--            <div class="carousel-overlay">--}}
+{{--                <div class="title">--}}
+{{--                    <h1>WELCOME</h1>--}}
+{{--                    <p>{{ $coreSiteDetails->tagline() }}</p>--}}
+{{--                </div>--}}
+{{--                <img src="{{ asset('frontend-assets/carousel-overlay.png') }}" alt="carousel-overlay"/>--}}
+{{--            </div>--}}
         </div>
     </div>
 
@@ -30,7 +30,7 @@
             <div class="row marginX">
                 <div class="col-md-4">
                     <div class="title-div">
-                        <div class="title-text">LATEST HALLYU NEWS</div>
+                        <div class="title-text">Hallyu Hub</div>
                         <div class="title-box"></div>
                     </div>
                     <div class="paragraph">
@@ -55,7 +55,7 @@
     <div class="section2">
         <div class="container group2">
             <div class="title-div sm">
-                <div class="title-text">ENGAGE IN FORUM</div>
+                <div class="title-text">Let's Talk About It</div>
                 <div class="title-box"></div>
             </div>
 
