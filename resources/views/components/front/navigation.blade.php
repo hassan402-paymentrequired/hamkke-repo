@@ -8,7 +8,9 @@
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="{{ url('') }}">
-            <img src="{{ $coreSiteDetails->siteLogo() }}" alt="logo"/>{{ $coreSiteDetails->siteName() }}
+            <img src="{{ $coreSiteDetails->siteLogo() }}" alt="logo"/>
+            <span id="main-site-name">{{ $coreSiteDetails->siteName() }}</span><br>
+            <span id="main-site-tagline">{{ $coreSiteDetails->tagline() }}</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
