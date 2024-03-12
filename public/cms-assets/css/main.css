@@ -148,3 +148,11 @@ html:not([dir=rtl]) .app-brand-text {
 .form-error {
     color: red;
 }
+
+.toast-top-center {
+    top: 10%;
+}
+.light-style #toast-container > .toast-success {
+    color: #5d596c;
+    background-color: #f0faf4;
+}

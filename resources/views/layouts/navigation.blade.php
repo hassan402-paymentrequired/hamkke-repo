@@ -39,14 +39,14 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item {{ isCurrentRoute('settings.roles_and_permissions') ? 'active' : '' }}">
+        <li class="menu-item {{ isCurrentRoute('admin.permissions.manage') ? 'active' : '' }}">
             <a href="javascript:void(0);" class="menu-link">
                 <em class="menu-icon tf-icons ti ti-lock"></em>
                 <div data-i18n="Roles & Permissions">Roles & Permissions</div>
             </a>
         </li>
-        <li class="menu-item {{ isCurrentRoute('settings.general') ? 'active' : '' }}">
-            <a href="{{ route('settings.general') }}" class="menu-link">
+        <li class="menu-item {{ isCurrentroute('admin.settings.general') ? 'active' : '' }}">
+            <a href="{{ route('admin.settings.general') }}" class="menu-link">
                 <em class="menu-icon tf-icons ti ti-settings"></em>
                 <div data-i18n="Site Settings">Site Settings</div>
             </a>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,19 +21,18 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Victoria Etim',
                 'email' => 'vkeylicious@gmail.com',
-                'role_id' => ROLE_SUPER_ADMIN,
                 'password' => bcrypt('hamkke@password')
             ],
             [
                 'name' => 'Kemmieola',
                 'email' => 'kemmieola@gmail.com',
-                'role_id' => ROLE_SUPER_ADMIN,
                 'password' => bcrypt('hamkke@password')
             ]
         ];
-
-        foreach($users as $user) {
-            User::firstOrCreate(['email' => $user['email']], $user);
+        $role = Role::find(ROLE_SUPER_ADMIN);
+        foreach($users as $u) {
+            $user = User::firstOrCreate(['email' => $u['email']], $u);
+            $user->syncRoles($role);
         }
     }
 }

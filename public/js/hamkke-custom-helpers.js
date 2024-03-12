@@ -131,6 +131,21 @@ const HamkkeJsHelpers = {
             .then((confirmed) => confirmed.value);
     },
 
+    showToast(title, message, toast_type = 'success') {
+        toastr.options = {
+            maxOpened: 1,
+            autoDismiss: false,
+            closeButton: true,
+            debug: true,
+            newestOnTop: true,
+            positionClass: 'toast-top-center',
+            preventDuplicates: true,
+            onclick: null,
+            rtl: true
+        };
+        toastr[toast_type](message, title);
+    },
+
     changeRequestInitiationPrompt: () => {
         return Swal.fire({
             title: "Are you sure?",

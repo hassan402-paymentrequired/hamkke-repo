@@ -701,3 +701,13 @@ function isAdminRoute() {
     $currentPath = request()->path();
     return strpos($currentPath, 'admin') === 0;
 }
+
+function includeWWWPrefix($domain)
+{
+    $current = request()->getHost();
+    $currentDomainHasWWW = str_starts_with($current, 'www.');
+    if(!str_starts_with($domain, 'www.') && $currentDomainHasWWW) {
+        return "www.{$domain}";
+    }
+    return $domain;
+}

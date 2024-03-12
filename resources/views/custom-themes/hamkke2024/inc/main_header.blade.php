@@ -306,7 +306,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-medium d-block">{{ $authUser->name }}</span>
-                                    <small class="text-muted">Role: {{ $authUser->role->display_name }}</small>
+                                    <small class="text-muted">Role: {{ $authUser->getRoleData()->display_name }}</small>
                                 </div>
                             </div>
                         </a>
@@ -321,7 +321,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('settings.general') }}">
+                        <a class="dropdown-item" href="{{ route('admin.settings.general') }}">
                             <i class="ti ti-settings me-2 ti-sm"></i>
                             <span class="align-middle">Settings</span>
                         </a>

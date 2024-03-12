@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/@form-validation/umd/styles/index.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/toastr/toastr.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/select2/select2.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/tagify/tagify.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/apex-charts/apex-charts.css') }}"/>
@@ -115,6 +116,7 @@
 <script src="{{ asset('cms-assets/vendor/libs/hammer/hammer.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/i18n/i18n.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+<script src="{{ asset('cms-assets/vendor/libs/toastr/toastr.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/select2/select2.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/tagify/tagify.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/js/menu.js') }}"></script>
