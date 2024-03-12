@@ -34,8 +34,7 @@
                                     {{ $user->is_active ? 'ACTIVE' : 'DEACTIVATED' }}
                                 </td>
                                 <td>
-                                    @if($authUser->role_id == ROLE_SUPER_ADMIN
-                                        || $authUser->role->hierarchy > $user->hierarchy)
+                                    @if($authUser->canUpdateUser($user))
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown">

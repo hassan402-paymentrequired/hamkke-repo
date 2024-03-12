@@ -26,12 +26,11 @@ class ManageRolePermissions extends Component
     public $userPermissions = [];
     public $rolePermissions = [];
 
-
     public function mount()
     {
         $this->authUser = auth()->user();
         $this->roles = $this->authUser->hasRole(ROLE_NAME_SUPER_ADMIN) ? Role::all()
-            : Role::where('hierarchy', '<', $this->authUser->roles()->max('hierarchy'))->get();
+            : Role::where('hierarchy', '<', $this->authUser->maxRoleHierarchy())->get();
         $this->userPermissions = $this->authUser->getAllPermissions();
         $this->rolePermissions = RolePermission::all();
     }

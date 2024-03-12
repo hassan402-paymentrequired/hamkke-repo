@@ -39,7 +39,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item {{ isCurrentRoute('settings.roles_and_permissions') ? 'active' : '' }}">
+        <li class="menu-item {{ isCurrentRoute('admin.permissions.manage') ? 'active' : '' }}">
             <a href="javascript:void(0);" class="menu-link">
                 <em class="menu-icon tf-icons ti ti-lock"></em>
                 <div data-i18n="Roles & Permissions">Roles & Permissions</div>

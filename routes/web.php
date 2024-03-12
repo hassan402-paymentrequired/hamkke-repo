@@ -12,6 +12,7 @@ use App\Http\Controllers\Front\ForumCrudController;
 use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
+use App\Livewire\ManageRolePermissions;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -91,9 +92,7 @@ Route::group(['domain' => $defaultDomain],  function () {
                 Route::post('discussions/archive/{discussion}', [ForumDiscussionsController::class, 'archive'])->name('admin.forum-discussion.archive');
             });
 
-            Route::prefix('/permissions')->group(function (){
-
-            });
+            Route::get('/manage-permissions', ManageRolePermissions::class)->name('admin.permissions.manage');
         });
 
         require __DIR__.'/auth.php';

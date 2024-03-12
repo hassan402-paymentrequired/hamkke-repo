@@ -11,11 +11,7 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $authUser = auth()->user();
-        $users = User::join('roles', 'roles.id', '=', 'users.role_id')
-            ->where('roles.hierarchy', '<=', $authUser->maxRoleHierarchy())
-            ->select(['users.*', 'roles.hierarchy'])
-            ->paginate(20);
+        $users = User::paginate(20);
         return view('users.users-list', compact('users'));
     }
 
@@ -29,10 +25,13 @@ class UsersController extends Controller
             'name' => $request->get('name'),
             'username' => $request->get('username'),
             'email' => $request->get('email'),
-            'role_id' => $request->get('role'),
             'author_bio' => $request->get('author_bio'),
             'password' => null
         ]);
+
+        $role = Role::find($request->get('role'));
+        $user->syncRoles($role);
+
         if($request->user_avatar) {
             $user->avatar = uploadFilesFromRequest(
                 $request,
@@ -65,10 +64,11 @@ class UsersController extends Controller
         $user->update([
             'name' => $request->get('name'),
             'username' => $request->get('username'),
-            'role_id' => $request->get('role'),
             'author_bio' => $request->get('author_bio'),
             'avatar' => $userAvatar
         ]);
+        $role = Role::find($request->get('role'));
+        $user->syncRoles($role);
         flashSuccessMessage("User: @{$user->username} updated successfully");
         return redirect()->route('admin.user.list');
     }

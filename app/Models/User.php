@@ -61,7 +61,6 @@ class User extends Authenticatable
         'name',
         'email',
         'username',
-        'role_id',
         'author_bio',
         'email_verified_at',
         'is_active',
@@ -69,11 +68,6 @@ class User extends Authenticatable
         'avatar',
         'remember_token'
     ];
-
-	public function role()
-	{
-		return $this->belongsTo(Role::class);
-	}
 
     public function posts()
     {
@@ -85,11 +79,7 @@ class User extends Authenticatable
      */
     public function getRoleData() : Role
     {
-        $role = Arr::first(Role::seedData(), function ($entry){
-            return $entry['id'] = $this->role_id;
-        });
-        $roleInstance = new Role($role); $roleInstance->id = $role['id'];
-        return $roleInstance;
+        return  $this->roles()->first();
     }
 
     /**
@@ -109,13 +99,18 @@ class User extends Authenticatable
         $this->notify(new AdminSetupNotification($token));
     }
 
-    public function hasRole(string $roleName): bool
-    {
-        return $this->role->name === $roleName;
-    }
-
     public function hasRoleById(int $roleId): bool
     {
-        return $this->role_id === $roleId;
+        return $this->roles()->where('id', $roleId)->exists();
+    }
+
+    public function maxRoleHierarchy()
+    {
+        return $this->roles()->max('hierarchy');
+    }
+
+    public function canUpdateUser($user): bool
+    {
+        return $this->hasRole(ROLE_NAME_SUPER_ADMIN) || $this->maxRoleHierarchy() > $user->maxRoleHierarchy();
     }
 }
