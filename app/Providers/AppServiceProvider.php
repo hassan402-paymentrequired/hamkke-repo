@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Helpers\SiteSettings;
+use App\Models\Permission;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('*', function(View $view) {
             $view->with('authUser', Auth::user())
+                ->with('allPermissions', Permission::all())
                 ->with('customerAuthUser', Auth::guard(CUSTOMER_GUARD_NAME)->user())
                 ->with('coreSiteDetails', new SiteSettings());
         });

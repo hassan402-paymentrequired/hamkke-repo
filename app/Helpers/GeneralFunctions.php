@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -710,4 +711,15 @@ function includeWWWPrefix($domain)
         return "www.{$domain}";
     }
     return $domain;
+}
+
+function currentRouteIsPermissionProtected(\Illuminate\Http\Request $request)
+{
+    /**
+     * @var Route $route
+     */
+    $route = $request->route();
+    return in_array('permission_protected', $route->middleware())
+        && in_array('auth', $route->middleware())
+        && str_starts_with($route->getName(), 'admin.');
 }

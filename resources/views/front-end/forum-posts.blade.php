@@ -56,7 +56,8 @@
                                                 $forumPoster = $forumPost->getPoster();
                                             @endphp
                                             <div class="d-flex profile-div align-items-center mt-0">
-                                                <img src="{{ asset($forumPoster->avatar) }}" alt="profile">
+                                                @component('components.front.profile-image', ['avatar' => $forumPoster->avatar])
+                                                @endcomponent
                                                 <span>{{ $forumPoster->name }}</span>
                                             </div>
 
