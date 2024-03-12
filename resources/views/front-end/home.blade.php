@@ -69,7 +69,8 @@
 {{--                                     alt="profile"><span>{{ $forumPost->poster_name }}</span>--}}
 {{--                            </div>--}}
                             <div class="d-flex profile-div align-items-center mt-0">
-                                <img src="{{ $forumPost->avatar }}" alt="profile">
+                                @component('components.front.profile-image', ['avatar' => $forumPost->avatar])
+                                @endcomponent
                                 <span>{{ $forumPost->poster_name }}</span>
                             </div>
                             <a href="{{ route('forum.posts.view', [$forumPost]) }}">

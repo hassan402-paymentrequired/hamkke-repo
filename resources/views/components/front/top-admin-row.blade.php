@@ -6,10 +6,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbtn">
-                <a class="text-white nav-login-link" href="http://hamkke.test/admin">
+                <a class="text-white nav-login-link" href="{{ route('dashboard') }}">
                     <span class="ml-1" style="margin-right: 0.5em;">Logged-in as <span class="text-decoration-underline">{{ $authUser->getRoleData()->display_name }}</span>:: {{ $authUser->name }}</span>
-                    <img src="{{ $authUser->avatar }}" alt="profile"
-                         style="border-radius: 50%; max-height: 30px;">
+                    @component('components.front.profile-image', ['avatar' => $authUser->avatar, 'styles' => 'border-radius: 50%; max-height: 30px;'])
+                    @endcomponent
                 </a>
             </div>
         </div>

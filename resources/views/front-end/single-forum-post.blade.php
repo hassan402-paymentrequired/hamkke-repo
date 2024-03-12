@@ -20,7 +20,8 @@
                             <h5 class="bg-black text-white p-2" style="border-radius: 5px">Author</h5>
                         @endif
                         <div class="d-flex profile-div align-items-center">
-                            <img src="{{ getCorrectAbsolutePath($postAuthor->avatar) }}" class="profile-img" alt="profile">
+                            @component('components.front.profile-image', ['avatar' => $postAuthor->avatar])
+                            @endcomponent
                             <span>{{ $postAuthor->name }}</span>
                         </div>
                         <p>{{ $postAuthor->author_bio }}</p>
@@ -41,7 +42,8 @@
                     <div class="article-div">
                         <div class="row">
                             <div class="d-flex profile-div align-items-center mt-0">
-                                <img src="{{ asset($postAuthor->avatar) }}" alt="profile">
+                                @component('components.front.profile-image', ['avatar' => $postAuthor->avatar])
+                                @endcomponent
                                 <span>{{ $postAuthor->name }}</span>
                             </div>
 
