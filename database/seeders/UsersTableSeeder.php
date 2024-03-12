@@ -31,8 +31,9 @@ class UsersTableSeeder extends Seeder
             ]
         ];
 
-        foreach($users as $user) {
-            User::firstOrCreate(['email' => $user['email']], $user);
+        foreach($users as $u) {
+            $user = User::firstOrCreate(['email' => $u['email']], $u);
+            $user->assignRole(ROLE_NAME_SUPER_ADMIN);
         }
     }
 }

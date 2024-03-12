@@ -13,7 +13,7 @@ class UsersController extends Controller
     {
         $authUser = auth()->user();
         $users = User::join('roles', 'roles.id', '=', 'users.role_id')
-            ->where('roles.hierarchy', '<=', $authUser->role->hierarchy)
+            ->where('roles.hierarchy', '<=', $authUser->maxRoleHierarchy())
             ->select(['users.*', 'roles.hierarchy'])
             ->paginate(20);
         return view('users.users-list', compact('users'));

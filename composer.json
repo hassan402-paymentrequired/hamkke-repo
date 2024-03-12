@@ -15,11 +15,13 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "livewire/livewire": "^3.4",
         "mailchimp/marketing": "^3.0",
         "nadar/quill-delta-parser": "^3.4",
         "opcodesio/log-viewer": "^3.1",
         "propaganistas/laravel-phone": "^5.1",
-        "reliese/laravel": "^1.2"
+        "reliese/laravel": "^1.2",
+        "spatie/laravel-permission": "^6.4"
     },
     "require-dev": {
         "backpack/generators": "^4.0",

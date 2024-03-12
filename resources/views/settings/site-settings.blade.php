@@ -17,7 +17,7 @@ use App\Models\GeneralSetting;
             <div class="card mb-4">
                 <h5 class="card-header">Core Site Settings</h5>
 
-                <form id="formAccountSettings" method="POST" action="{{ route('settings.general') }}"
+                <form id="formAccountSettings" method="POST" action="{{ route('admin.settings.general') }}"
                       enctype="multipart/form-data">
                     @csrf
                     <!-- Account -->

@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
@@ -17,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
@@ -45,6 +42,7 @@ class User extends Authenticatable
 {
     use CrudTrait, CrudTrait;
     use HasApiTokens, HasFactory, Notifiable, MustVerifyEmail;
+    use HasRoles;
 
     protected $table = 'users';
 
@@ -95,9 +93,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the broker to be used during password reset.
-     *
-     * @return string
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
     public function broker(){
         return Password::broker('users');

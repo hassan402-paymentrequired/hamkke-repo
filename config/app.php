@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Hamkkechingu'),
 
     /*
     |--------------------------------------------------------------------------
@@ -173,6 +173,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -182,7 +183,7 @@ return [
     |
     | This array of class aliases will be registered when this application
     | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
+    | the aliases are "lazy" loaded in order not to hinder performance.
     |
     */
 

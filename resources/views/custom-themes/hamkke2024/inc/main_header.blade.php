@@ -321,7 +321,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('settings.general') }}">
+                        <a class="dropdown-item" href="{{ route('admin.settings.general') }}">
                             <i class="ti ti-settings me-2 ti-sm"></i>
                             <span class="align-middle">Settings</span>
                         </a>
