@@ -29,10 +29,8 @@ if (document.getElementById('layout-menu')) {
 
         $('.modal').on('hide.bs.modal', function () {
             if ($(this).is(':visible')) {
-                console.log("show modal")
                 $('.modal-backdrop').show();
-            }else{
-                console.log("hidden modal");
+            } else {
                 $('.modal-backdrop').remove();
             }
         })

@@ -30,8 +30,6 @@ class CreateProductCategory extends Component
     {
         $productCategory = $this->form->store();
 
-        $this->dispatch('product-category-created', $productCategory)->to(ProductCategoriesList::class);
-
         flashSuccessMessage( 'Product Category "'. $productCategory['name']. '" created successfully');
         $this->redirect(route('admin.product-categories.list'));
     }

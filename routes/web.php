@@ -13,6 +13,7 @@ use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
 use App\Livewire\Admin\ProductCategoriesList;
+use App\Livewire\Admin\ProductsList;
 use App\Livewire\ManageRolePermissions;
 use Illuminate\Support\Facades\Route;
 
@@ -104,6 +105,12 @@ Route::group(['domain' => $defaultDomain],  function () {
                 Route::post('/create', ProductCategoriesList::class)->name('admin.product-category.create');
                 Route::post('/update', ProductCategoriesList::class)->name('admin.product-category.update');
                 Route::post('/delete', ProductCategoriesList::class)->name('admin.product-category.delete');
+            });
+            Route::prefix('products')->group(function (){
+                Route::get('/', ProductsList::class)->name('admin.products.list');
+                Route::post('/create', ProductsList::class)->name('admin.product.create');
+                Route::post('/update', ProductsList::class)->name('admin.product.update');
+                Route::post('/delete', ProductsList::class)->name('admin.product.delete');
             });
 
         });

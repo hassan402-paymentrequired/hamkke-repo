@@ -69,6 +69,9 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text" data-i18n="Payment Management">Products & Payments</span>
         </li>
+
         <x-admin-nav-link routeName="admin.product-categories.list" linkText="Product Categories" icon="ti-list"/>
+
+        <x-admin-nav-link routeName="admin.products.list" linkText="Products" icon="ti-shopping-bag"/>
     </ul>
 </aside>

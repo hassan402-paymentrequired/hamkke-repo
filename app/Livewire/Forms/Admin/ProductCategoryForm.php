@@ -22,7 +22,6 @@ class ProductCategoryForm extends Form
 
     public string $description;
 
-
     public function rules(): array
     {
         $rule = $this->productCategory ?  Rule::unique('product_categories') :

@@ -1,36 +1,36 @@
 <div>
-    <h4 class="py-3 mb-4">Product Categories</h4>
+    <h4 class="py-3 mb-4">
+        <span class="text-muted fw-light">eCommerce /</span> Product Categories
+    </h4>
 
-    <div class="row">
-        <!-- Bordered Table -->
-        <div class="card">
-            <h5 class="card-header">Product Categories List</h5>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-2 offset-md-10 mb-3 mt-3">
-                        <button class="btn btn-primary w-100" type="button" wire:click="createProductCategory">
-                            Add Product Category
-                        </button>
-                    </div>
+    <!-- Bordered Table -->
+    <div class="card">
+{{--        <h5 class="card-header">Product Categories List</h5>--}}
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2 offset-md-10 mb-3 mt-3">
+                    <button class="btn btn-primary w-100" type="button" wire:click="createProductCategory">
+                        Add Product Category
+                    </button>
                 </div>
-                <div class="table-responsive text-nowrap">
-                    <table class="table table-bordered permissions-management-table">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Icon</th>
-                            <th>Name</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php $n = 0; ?>
-                        @foreach($productCategories as $category)
-                            <livewire:admin.product-categories-table-row :key="$category->id" :category="$category">
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+                <table class="table table-bordered permissions-management-table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Icon</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $n = 0; ?>
+                    @foreach($productCategories as $category)
+                        <livewire:admin.product-categories-table-row :key="$category->id" :category="$category">
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
