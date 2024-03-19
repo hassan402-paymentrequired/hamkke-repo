@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\DBAL\Schema\Index;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Log;
@@ -10,13 +11,14 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
-function isProductionEnv()
+function isProductionEnv(): bool
 {
     return config('app.env') === 'production';
 }
 
-function isLocalOrDevOrTesting($env = null)
+function isLocalOrDevOrTesting($env = null): bool
 {
     if ($env) {
         return is_array($env) ? in_array(config('app.env'), $env) : (config('app.env') === $env);
@@ -25,7 +27,7 @@ function isLocalOrDevOrTesting($env = null)
     return in_array(config('app.env'), ['local', 'develop', 'development', 'testing']);
 }
 
-function cleanupStringByRegexp($string, $regexp = "/[^a-zA-Z0-9\-\_ ]+/", $replacement = "", $toLowerCase = false)
+function cleanupStringByRegexp($string, $regexp = "/[^a-zA-Z0-9\-\_ ]+/", $replacement = "", $toLowerCase = false): array|string|null
 {
     $cleanedString = preg_replace($regexp, $replacement, $string);
     if ($toLowerCase) {
@@ -34,7 +36,7 @@ function cleanupStringByRegexp($string, $regexp = "/[^a-zA-Z0-9\-\_ ]+/", $repla
     return $cleanedString;
 }
 
-function roundNumberUp($value)
+function roundNumberUp($value): int
 {
     return (int)round($value + 0.5, 0);
 }
@@ -44,7 +46,7 @@ function roundNumberUp($value)
  * @param array $columns
  * @return string
  */
-function searchQueryConstructor($searchString, $columns)
+function searchQueryConstructor($searchString, $columns): string
 {
     $searchString = htmlentities($searchString);
     $searchWords = array_filter(explode(" ", trim($searchString)));
@@ -72,7 +74,7 @@ function searchQueryConstructor($searchString, $columns)
  * @param array $columns
  * @return string
  */
-function orderByQueryConstructor($searchString, $columns)
+function orderByQueryConstructor(string $searchString, $columns): string
 {
     $searchString = htmlentities($searchString);
     $searchWords = array_filter(explode(" ", trim($searchString)));
@@ -102,7 +104,7 @@ function orderByQueryConstructor($searchString, $columns)
     ";
 }
 
-function formatPhoneNumber($phoneNumber)
+function formatPhoneNumber($phoneNumber): array|string
 {
     $phoneNumber = str_replace('/\+/', '', $phoneNumber);
     $countryCode = '234';
@@ -122,10 +124,10 @@ function formatPhoneNumber($phoneNumber)
 
 /**
  * Verify the current route by name(s)
- * @param string|array $routeName
+ * @param array|string $routeName
  * @return bool
  */
-function isCurrentRoute($routeName)
+function isCurrentRoute(array|string $routeName): bool
 {
     $currentRoute = Request::route()->getName();
     if (is_array($routeName)) {
@@ -139,7 +141,7 @@ function isCurrentRoute($routeName)
  * @param string|array domainName
  * @return bool
  */
-function isCurrentDomain($domainName)
+function isCurrentDomain($domainName): bool
 {
     $currentDomain = parse_url(request()->url(), PHP_URL_HOST);
     if (is_array($domainName)) {
@@ -148,7 +150,7 @@ function isCurrentDomain($domainName)
     return $currentDomain === $domainName;
 }
 
-function logCriticalError($message, Exception $actualException = null, $logChannel = null, $apiLogID = null)
+function logCriticalError($message, Exception $actualException = null, $logChannel = null, $apiLogID = null): void
 {
     $logChannel = $logChannel ?? config('logging.default');
     $logMessage = $errorMessage = $message;
@@ -167,7 +169,7 @@ function logCriticalError($message, Exception $actualException = null, $logChann
     Log::channel($logChannel)->critical("Message :: " . $logMessage);
 }
 
-function logNonCriticalError($message, Exception $actualException = null, $logChannel = null)
+function logNonCriticalError($message, Exception $actualException = null, $logChannel = null): void
 {
     $errorMessage = "Message :: {$message}";
     if ($actualException) {
@@ -185,7 +187,7 @@ function logNonCriticalError($message, Exception $actualException = null, $logCh
  * @param string $mailerClass Full reference to the mailer class thar handles this mail
  * @param array $mailerClassParams Constructor parameters for the mailer class
  */
-function sendMailWithMailerClass($mailTo, $mailerClass, $mailerClassParams, $multipleRecipient = null)
+function sendMailWithMailerClass($mailTo, $mailerClass, $mailerClassParams, $multipleRecipient = null): void
 {
     try {
         $mailer = Mail::to($mailTo);
@@ -204,13 +206,12 @@ function removeSpecialCharacters($string)
     return str_replace('/[^A-Za-z0-9 ]/', '', $string);
 }
 
-function moneyFormat($value)
+function moneyFormat($value): string
 {
-
     return sprintf('%01.2f', $value);
 }
 
-function arrayToCsv($data, $heading, $fileName)
+function arrayToCsv($data, $heading, $fileName): void
 {
     $fp = fopen($fileName, 'w');
     if ($heading) {
@@ -271,7 +272,7 @@ function validatePhoneNumber($phoneNumber, $justStatus = false, $regionCode = nu
     return ($justStatus) ? $errorResult['status'] : $errorResult;
 }
 
-function cleanUpNigerianPhoneNumber($phone)
+function cleanUpNigerianPhoneNumber($phone): ?string
 {
     return (strlen(trim(" " . $phone)) >= 10) ? "+234" . substr(trim($phone), -10) : null;
 }
@@ -281,7 +282,7 @@ function generateUniqueRef($prefix, $uniqueID, $separator = '.')
     return $prefix . $uniqueID . $separator . strtoupper(uniqid());
 }
 
-function encryptDecrypt($action, $dataToEncrypt, $encryptMethod = null, $secretKey = null, $secretIV = null)
+function encryptDecrypt($action, $dataToEncrypt, $encryptMethod = null, $secretKey = null, $secretIV = null): bool|string
 {
     $output = false;
 
@@ -316,7 +317,7 @@ function encryptDecrypt($action, $dataToEncrypt, $encryptMethod = null, $secretK
  * @param  bool $absolute
  * @return string
  */
-function routeByName($name, $parameters = [], $absolute = false)
+function routeByName($name, $parameters = [], $absolute = false): string
 {
     return config('app.url') . route($name, $parameters, $absolute);
 }
@@ -326,11 +327,11 @@ function routeByName($name, $parameters = [], $absolute = false)
  * @param string $fieldName The name of the field in the request
  * @param string $storagePath Where do you want to store the file(s)
  * @param null $storeAsName Set this if you want the file to be stored as a particular name
- * @param null $getAbsoluteUrl
+ * @param bool|null $getAbsoluteUrl
  *
- * @return array|string An array of urls or a single url
+ * @return array|string|null An array of urls or a single url
  */
-function uploadFilesFromRequest(\Illuminate\Http\Request $request, $fieldName, $storagePath, $storeAsName = null, $getAbsoluteUrl = true)
+function uploadFilesFromRequest(\Illuminate\Http\Request $request, string $fieldName, string $storagePath, $storeAsName = null, ?bool $getAbsoluteUrl = true): array|string|null
 {
     $fileNameToSet = cleanAlphanumericString($storeAsName);
     $documents = request($fieldName);
@@ -359,39 +360,40 @@ function uploadFilesFromRequest(\Illuminate\Http\Request $request, $fieldName, $
         }
         return $path;
     }
+    return null;
 }
 
 /**
  * @param $path
  * @return string
  */
-function getAbsoluteUrlFromPath($path)
+function getAbsoluteUrlFromPath($path): string
 {
     return asset(Storage::url($path));
 }
 
-function cleanAlphanumericString($subject)
+function cleanAlphanumericString($subject): array|string|null
 {
     return cleanupStringByRegexp(preg_replace('/[^a-zA-Z0-9\-\_ ]+/', '', $subject), '/ +/', "_", true);
 }
 
-function isImageFile($file)
+function isImageFile($file): bool
 {
-    return substr($file->getMimeType(), 0, 5) === 'image';
+    return str_starts_with($file->getMimeType(), 'image');
 
 }
 
-function flashErrorMessage($message)
+function flashErrorMessage($message): void
 {
     Session::flash('error', $message);
 }
 
-function flashInfoMessage($message)
+function flashInfoMessage($message): void
 {
     Session::flash('info', $message);
 }
 
-function flashSuccessMessage($message)
+function flashSuccessMessage($message): void
 {
     Session::flash('success', $message);
 }
@@ -493,7 +495,7 @@ function splitByWords($stringToBeSplit, $wordsInEachPart)
  * @param string $stringToCheck
  * @return boolean
  */
-function isJson($stringToCheck)
+function isJson(string $stringToCheck): bool
 {
     if(is_string($stringToCheck) && !is_numeric($stringToCheck)){
         json_decode($stringToCheck);
@@ -504,9 +506,10 @@ function isJson($stringToCheck)
 
 /**
  * @param $tableName
- * @return \Doctrine\DBAL\Schema\Index[]
+ * @return Index[]
  */
-function getTableIndexes($tableName){
+function getTableIndexes($tableName): array
+{
     $sm = Schema::getConnection()->getDoctrineSchemaManager();
     return $sm->listTableIndexes($tableName);
 }
@@ -521,7 +524,8 @@ function getJsonFileContent($filePath, $defaultResponse = null){
     }
 }
 
-function populateJsonFileContent($filePath, $content){
+function populateJsonFileContent($filePath, $content): bool
+{
     $newJsonString = json_encode($content, JSON_PRETTY_PRINT);
     $result = file_put_contents(
         base_path($filePath),
@@ -539,12 +543,13 @@ function populateJsonFileContent($filePath, $content){
  * </p>
  * @return string
  */
-function numberFormatWithoutComma($numberToFormat, $decimalPlaced = 2)
+function numberFormatWithoutComma(float $numberToFormat, int $decimalPlaced = 2): string
 {
     return number_format($numberToFormat, $decimalPlaced, '.', '');
 }
 
-function getMonthsInYear(){
+function getMonthsInYear(): array
+{
     return [
         ['month' => 1, 'name' => 'January', 'amount' => 0],
         ['month' => 2, 'name' => 'February', 'amount' => 0],
@@ -561,20 +566,20 @@ function getMonthsInYear(){
     ];
 }
 
-function assetWithVersion($path, $secure = false)
+function assetWithVersion($path, $secure = false): string
 {
     $secure = !$secure ? request()->secure() : $secure;
     $assetVersion = (isProductionEnv()) ? config('app.asset_version') : uniqid('av');
     return asset( "$path?ver=$assetVersion" , $secure);
 }
 
-function convertRequestToQueryString()
+function convertRequestToQueryString(): string
 {
     $queryString = http_build_query(request()->all());
     return rtrim($queryString, '&');
 }
 
-function sanitizeQueryString() // Remove 'amp;' attached to the query params for reasons unidentified yet
+function sanitizeQueryString(): void // Remove 'amp;' attached to the query params for reasons unidentified yet
 {
     foreach(request()->all() as $key => $val){
         $newKey = str_replace('amp;', '', $key);
@@ -587,20 +592,22 @@ function sanitizeQueryString() // Remove 'amp;' attached to the query params for
  *
  * @return string|null
  */
-function getRequestBearerToken(\Illuminate\Http\Request $request)
+function getRequestBearerToken(\Illuminate\Http\Request $request): ?string
 {
     $header = $request->header('Authorization', '');
-    if (\Illuminate\Support\Str::startsWith($header, ['Bearer ', 'bearer '])) {
-        return \Illuminate\Support\Str::substr($header, 7);
+    if (Str::startsWith($header, ['Bearer ', 'bearer '])) {
+        return Str::substr($header, 7);
     }
     return null;
 }
 
-function calculatePaginationSkip(int $sizePerPage, $currentPage = 1){
+function calculatePaginationSkip(int $sizePerPage, $currentPage = 1): float|int
+{
     return ($sizePerPage * $currentPage) - $sizePerPage ;
 }
 
-function appStoragePath($fileName = ''){
+function appStoragePath($fileName = ''): string
+{
     return Storage::path($fileName);
 }
 
@@ -622,18 +629,18 @@ function developerDebugLogger(string $subject, string $message, bool $error = fa
     }
 }
 
-function getAmountInKobo($amountInNaira)
+function getAmountInKobo($amountInNaira): float|int
 {
     return $amountInNaira * 100;
 }
 
-function getFileSize($filePath)
+function getFileSize($filePath): float|int
 {
     $sizeInBytes = File::size($filePath);
     return $sizeInBytes * pow(10, -6); // Convert size to Megabytes(MB)
 }
 
-function getCorrectAbsolutePath($assetUrl)
+function getCorrectAbsolutePath($assetUrl): array|string|null
 {
 
     $path = preg_replace('/^http.*\/storage\//', '', $assetUrl);
@@ -667,7 +674,7 @@ function calculateReadingTime(string $htmlContent, int $wordsPerMinute = 200): s
 
     // Calculate reading time in minutes
     $readingTime = ceil($wordCount / $wordsPerMinute);
-    return "$readingTime" . \Illuminate\Support\Str::plural('min', $readingTime);
+    return "$readingTime" . Str::plural('min', $readingTime);
 }
 
 if (!function_exists('assetWithVersion')) {
@@ -698,9 +705,10 @@ function getAuthUserPrioritizeCustomer() : Authenticatable|null
     return auth()->user();
 }
 
-function isAdminRoute() {
+function isAdminRoute(): bool
+{
     $currentPath = request()->path();
-    return strpos($currentPath, 'admin') === 0;
+    return str_starts_with($currentPath, 'admin');
 }
 
 function includeWWWPrefix($domain)
@@ -713,7 +721,7 @@ function includeWWWPrefix($domain)
     return $domain;
 }
 
-function currentRouteIsPermissionProtected(\Illuminate\Http\Request $request)
+function currentRouteIsPermissionProtected(\Illuminate\Http\Request $request): bool
 {
     /**
      * @var Route $route
@@ -722,4 +730,13 @@ function currentRouteIsPermissionProtected(\Illuminate\Http\Request $request)
     return in_array('permission_protected', $route->middleware())
         && in_array('auth', $route->middleware())
         && str_starts_with($route->getName(), 'admin.');
+}
+
+/**
+ * @param $text
+ * @return string
+ */
+function createSlugFromString($text): string
+{
+    return Str::slug($text);
 }

@@ -523,6 +523,10 @@ const HamkkeJsHelpers = {
         }
     },
 
+    addLivewireEventListener(callbackFunction) {
+        document.addEventListener('livewire:load', callbackFunction());
+    },
+
     /**
      * Calculates the estimated reading time for a given text.
      *

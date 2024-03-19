@@ -12,6 +12,8 @@ use App\Http\Controllers\Front\ForumCrudController;
 use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
+use App\Livewire\Admin\ProductCategoriesList;
+use App\Livewire\Admin\ProductsList;
 use App\Livewire\ManageRolePermissions;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +31,10 @@ use Illuminate\Support\Facades\Route;
 $defaultDomain = includeWWWPrefix(config('app.default_domain'));
 
 Route::group(['domain' => $defaultDomain],  function () {
+//    Route::get('system-dev-test', function (){
+//        $defaultDomain = includeWWWPrefix(config('app.default_domain'));
+//        dd($defaultDomain);
+//    });
     Route::get('/', [PagesController::class, 'home'])->name('home');
     Route::get('/about-us', [PagesController::class, 'about'])->name('about_us');
     Route::post('/contact-us', [PagesController::class, 'submitContactRequest'])->name('contact_us');
@@ -93,6 +99,20 @@ Route::group(['domain' => $defaultDomain],  function () {
             });
 
             Route::get('/manage-permissions', ManageRolePermissions::class)->name('admin.permissions.manage');
+
+            Route::prefix('product-categories')->group(function (){
+                Route::get('/', ProductCategoriesList::class)->name('admin.product-categories.list');
+                Route::post('/create', ProductCategoriesList::class)->name('admin.product-category.create');
+                Route::post('/update', ProductCategoriesList::class)->name('admin.product-category.update');
+                Route::post('/delete', ProductCategoriesList::class)->name('admin.product-category.delete');
+            });
+            Route::prefix('products')->group(function (){
+                Route::get('/', ProductsList::class)->name('admin.products.list');
+                Route::post('/create', ProductsList::class)->name('admin.product.create');
+                Route::post('/update', ProductsList::class)->name('admin.product.update');
+                Route::post('/delete', ProductsList::class)->name('admin.product.delete');
+            });
+
         });
 
         require __DIR__.'/auth.php';
@@ -108,6 +128,7 @@ Route::group(['domain' => $defaultDomain],  function () {
     Route::middleware('guest:' . CUSTOMER_GUARD_NAME)->group(function (){
         Route::match(['get', 'post'], '/login', [AuthenticationContoller::class, 'login'])->name('customer.auth.login');
         Route::match(['get', 'post'], '/register', [AuthenticationContoller::class, 'register'])->name('customer.auth.register');
+
     });
     Route::post('/logout', [AuthenticationContoller::class, 'logout'])->name('customer.auth.logout');
 });
