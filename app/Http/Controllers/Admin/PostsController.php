@@ -70,7 +70,7 @@ class PostsController extends Controller
         $featuredImage = null;
         if($request->featured_image) {
             $featuredImage = uploadFilesFromRequest(
-                $request, 'featured_image', 'features-images',
+                $request, 'featured_image', 'featured-images',
                 strtolower("{$postSlug}_featured_image")
             );
         }

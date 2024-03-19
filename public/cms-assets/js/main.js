@@ -26,6 +26,16 @@ if (document.getElementById('layout-menu')) {
             });
         }
         Quill.register("modules/imageCompressor", imageCompressor);
+
+        $('.modal').on('hide.bs.modal', function () {
+            if ($(this).is(':visible')) {
+                console.log("show modal")
+                $('.modal-backdrop').show();
+            }else{
+                console.log("hidden modal");
+                $('.modal-backdrop').remove();
+            }
+        })
     });
 
     if (typeof Waves !== 'undefined') {
