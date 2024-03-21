@@ -49,12 +49,21 @@ class PostsController extends Controller
                 'customers.name as customer_name',
                 'customers.username as username'
             ])->get();
-        $postCategory = $post->post_category;
+
+        // Get the category ID of the current post
+        $categoryIds = [$post->post_category_id];
+
+        // Get the tag IDs of the current post
+        $tagIds = $post->tags()->pluck('id')->toArray();
+
+        // Fetch related posts based on the category and tag IDs
         $relatedPosts = Post::withCategoryCommentsAndLikes()
             ->where('posts.id', '!=', $post->id)
-            ->where(function ($q) use ($postCategory) {
-                $q->where('categories.id', $postCategory->id)
-                    ->orWhere('post_types.id', $postCategory->post_type_id);
+            ->where(function ($query) use ($categoryIds, $tagIds) {
+                $query->whereIn('post_category_id', $categoryIds)
+                    ->orWhereHas('tags', function ($query) use ($tagIds) {
+                        $query->whereIn('id', $tagIds);
+                    });
             })
             ->groupBy('posts.id')
             ->select([
@@ -76,7 +85,7 @@ class PostsController extends Controller
 
     public function postsByPostCategory(PostType $post_type, Category $post_category = null)
     {
-        if($post_type->id === PostType::FORUM){
+        if ($post_type->id === PostType::FORUM) {
             return $this->getForumPosts($post_category);
         }
         $postType = $post_type;
@@ -87,7 +96,7 @@ class PostsController extends Controller
             ->leftJoin('post_likes', 'post_likes.post_id', '=', 'posts.id')
             ->leftJoin('users', 'users.id', '=', 'posts.post_author')
             ->where('categories.post_type_id', $postType->id);
-        if($selectedCategory) {
+        if ($selectedCategory) {
             $postsQuery->where('posts.post_category_id', $selectedCategory->id);
         }
         $posts = $postsQuery->groupBy('posts.id')->select([
@@ -100,8 +109,8 @@ class PostsController extends Controller
             DB::raw('COUNT(post_comments.id) as comments'),
             DB::raw('COUNT(post_likes.customer_id) as likes')
         ])
-        ->latest()
-        ->paginate(10);
+            ->latest()
+            ->paginate(10);
         return view('front-end.post-type-template', compact('posts', 'postType', 'postCategories', 'selectedCategory', 'selectedCategory'));
     }
 
@@ -109,9 +118,10 @@ class PostsController extends Controller
     {
 
     }
+
     public function postComment(PostCommentRequest $request, Post $post)
     {
-        if(auth(CUSTOMER_GUARD_NAME)->check()){
+        if (auth(CUSTOMER_GUARD_NAME)->check()) {
             $post->comments()->create([
                 'customer_id' => auth()->guard('customer')->id(),
                 'reply_to' => $request->reply_to,
@@ -124,7 +134,7 @@ class PostsController extends Controller
          * @var User $authUser
          */
         $loginAttemptPassed = false;
-        if($request->get('registration_request') === 'yes'){
+        if ($request->get('registration_request') === 'yes') {
             $customer = Customer::create([
                 'name' => $request->name,
                 'username' => $request->username,
@@ -142,7 +152,7 @@ class PostsController extends Controller
                 'password' => $request->password
             ], $request->get('remember_me') === 'on');
         }
-        if($loginAttemptPassed){
+        if ($loginAttemptPassed) {
             $request->session()->regenerate();
             $post->comments()->create([
                 'customer_id' => auth(CUSTOMER_GUARD_NAME)->id(),

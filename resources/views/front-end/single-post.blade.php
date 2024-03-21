@@ -26,9 +26,9 @@
                              alt="{{ $post->title }} - featured image"/>
 
                         <h4>{{ $post->title }}</h4>
-{{--                        <span class="card-text">--}}
-{{--                            {{ calculateReadingTime($parsedPostBody) }} read--}}
-{{--                        </span>--}}
+                        {{--                        <span class="card-text">--}}
+                        {{--                            {{ calculateReadingTime($parsedPostBody) }} read--}}
+                        {{--                        </span>--}}
                         <div id="postContent">{!! $parsedPostBody !!}</div>
 
 
@@ -109,14 +109,13 @@
                                                                            checked
                                                                            type="checkbox" name="remember_me"
                                                                            role="switch" id="subscription-checkbox">
-                                                                    <label class="form-check-label"
-                                                                           for="subscription-checkbox">Remember me on
-                                                                        this browser for the next time I comment</label>
+                                                                    <label class="form-check-label" for="subscription-checkbox">
+                                                                        Remember me on this browser for the next time I comment
+                                                                    </label>
                                                                 </div>
                                                                 <hr>
                                                                 <button
-                                                                    class="btn btn-primary pull-right customer-login-input
-                                                                        comment-submit-btn"
+                                                                    class="btn btn-primary pull-right customer-login-input comment-submit-btn"
                                                                     disabled type="submit" data-form-id="customer-login"
                                                                     data-form-action="{{ route('post.comment.add', $post) }}">
                                                                     Submit
@@ -210,7 +209,7 @@
 
                         <div class="row d-flex flex-row flex-wrap forum-row justify-content-between">
                             @foreach ($relatedPosts as $relatedPost)
-                                @component('components.front.posts.post-preview-card-box-title-one', compact('post'))
+                                @component('components.front.posts.post-preview-card-box-title-one', ['post' => $relatedPost])
                                 @endcomponent
                             @endforeach
                         </div>

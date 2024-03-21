@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -54,4 +50,12 @@ class Product extends Model
 	{
 		return $this->belongsTo(ProductCategory::class);
 	}
+
+    public function getPriceInNaira($thousandSeparated = false) : string
+    {
+        if($thousandSeparated){
+            return number_format($this->price/100, 2);
+        }
+        return moneyFormat($this->price / 100);
+    }
 }

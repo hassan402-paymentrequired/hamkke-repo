@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Helpers\SiteSettings;
 use App\Models\Permission;
+use App\Services\CartService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -19,12 +20,15 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         Sanctum::ignoreMigrations();
+        $this->app->singleton('hamkke-cart', function ($app) {
+            return new CartService();
+        });
     }
 
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(CartService $cartService): void
     {
         Paginator::defaultView('vendor/pagination/bootstrap-5');
         Blade::directive('form_field_error', function ($formFieldName) {
@@ -47,6 +51,11 @@ class AppServiceProvider extends ServiceProvider
                 ->with('allPermissions', Permission::all())
                 ->with('customerAuthUser', Auth::guard(CUSTOMER_GUARD_NAME)->user())
                 ->with('coreSiteDetails', new SiteSettings());
+        });
+
+        view()->composer('layouts.frontend.front-app', function ($view) use ($cartService) {
+            $cartItemCount = $cartService->getCartItemCount(); // Implement this method in your CartService
+            $view->with('cartItemCount', $cartItemCount);
         });
     }
 }

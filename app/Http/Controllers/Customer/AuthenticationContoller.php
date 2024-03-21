@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Facades\Cart;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\CustomerRegisterationRequest;
 use App\Http\Requests\Auth\CustomerRegistrationRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Customer;
@@ -12,6 +12,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticationContoller extends Controller
 {
@@ -40,10 +41,15 @@ class AuthenticationContoller extends Controller
 
     public function processLogin(Request $request)
     {
+        $cartItems = Cart::getGuestCartData();
         $request->authenticate(CUSTOMER_GUARD_NAME);
 
         $request->session()->regenerate();
-
+        Session::put(CART_KEY_IN_SESSION, $cartItems);
+        foreach ($cartItems as $item){
+            $item['id'] = $item['product_id'];
+            Cart::addToCart($item, $item['quantity']);
+        }
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

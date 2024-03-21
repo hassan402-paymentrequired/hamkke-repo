@@ -10,7 +10,7 @@ enum PostStatus: int
     case QUEUED = 5;
     case ARCHIVED = 4;
 
-    public static function getValues()
+    public static function getValues(): array
     {
         return array_map(
             fn(PostStatus $status) => $status->value,
@@ -23,7 +23,7 @@ enum PostStatus: int
             ->first()->name;
     }
 
-    public static function getIcon($statusValue)
+    public static function getIcon($statusValue): string
     {
         $iconClass = "ti ";
         switch ((int) $statusValue) {

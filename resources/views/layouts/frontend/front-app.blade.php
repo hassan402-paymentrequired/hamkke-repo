@@ -1,14 +1,14 @@
 @php
     use App\Models\PostType;
 @endphp
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Core CSS -->
-{{--    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>--}}
+    {{--    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>--}}
     <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/fonts/fontawesome.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.min.css') }}"/>
@@ -35,12 +35,14 @@
             border-radius: 5px;
             margin-bottom: 2em;
         }
+
         footer > div {
             text-align: center;
             color: inherit;
             margin: auto;
             max-width: 650px;
         }
+
         .footer-note {
             font-size: 20px;
             line-height: 32px;
@@ -63,7 +65,6 @@
 
 @yield('content')
 
-
 <footer>
     <div class="d-flex justify-content-center text-white">
         <p class="footer-note">
@@ -77,30 +78,35 @@
             <div id="mc_embed_signup">
                 <form
                     action="https://wordpress.us20.list-manage.com/subscribe/post?u=4a3c302ee2560c38b3c427157&amp;id=7ffb6ce758&amp;f_id=001405eaf0"
-                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+                    target="_blank">
                     <div id="mc_embed_signup_scroll">
                         <h2>Don’t miss out on all the special stuff! Join the Hamkke Clan👇</h2>
                         <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
                         <div class="mc-field-group"><label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label><input
-                                type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""><span
+                                type="email" name="EMAIL" class="required email" id="mce-EMAIL" required=""
+                                value=""><span
                                 id="mce-EMAIL-HELPERTEXT" class="helper_text"></span></div>
                         <div id="mce-responses" class="clear foot">
                             <div class="response" id="mce-error-response" style="display: none;"></div>
                             <div class="response" id="mce-success-response" style="display: none;"></div>
                         </div>
                         <div aria-hidden="true" style="position: absolute; left: -5000px;">
-                            /* real people should not fill this in and expect good things - do not remove this or risk form bot signups */
+                            {{--  real people should not fill this in and expect good things - do not remove this or risk form bot signups--}}
                             <input type="text" name="b_4a3c302ee2560c38b3c427157_7ffb6ce758" tabindex="-1" value="">
                         </div>
                         <div class="optionalParent">
                             <div class="clear foot">
-                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button"
+                                       value="Subscribe">
                                 <p style="margin: 0 auto;">
-                                    <a href="http://eepurl.com/iraQMc" title="Mailchimp - email marketing made easy and fun">
-                                        <span style="display: inline-block; background-color: transparent; border-radius: 4px;">
+                                    <a href="http://eepurl.com/iraQMc"
+                                       title="Mailchimp - email marketing made easy and fun">
+                                        <span
+                                            style="display: inline-block; background-color: transparent; border-radius: 4px;">
                                             <img class="refferal_badge" alt="Intuit Mailchimp"
-                                                src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-dark.svg"
-                                                style="width: 220px; height: 40px; display: flex; padding: 2px 0px; justify-content: center; align-items: center;">
+                                                 src="https://digitalasset.intuit.com/render/content/dam/intuit/mc-fe/en_us/images/intuit-mc-rewards-text-dark.svg"
+                                                 style="width: 220px; height: 40px; display: flex; padding: 2px 0px; justify-content: center; align-items: center;">
                                         </span>
                                     </a>
                                 </p>
@@ -118,11 +124,11 @@
         @csrf
     </form>
 
-{{--    <div class="brand-div text-center">--}}
-{{--        <a class="footer-brand" href="{{ url('/') }}" style="text-transform: uppercase;">--}}
-{{--            {{ $coreSiteDetails->siteName() }}--}}
-{{--        </a>--}}
-{{--    </div>--}}
+    {{--    <div class="brand-div text-center">--}}
+    {{--        <a class="footer-brand" href="{{ url('/') }}" style="text-transform: uppercase;">--}}
+    {{--            {{ $coreSiteDetails->siteName() }}--}}
+    {{--        </a>--}}
+    {{--    </div>--}}
 
     <div class="d-flex justify-content-center">
         @include('components.front-social-links-section')
@@ -148,23 +154,31 @@
     Quill.register("modules/ImageResize", ImageResize.default)
 </script>
 <script src="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
-<script src="{{ assetWithVersion('js/hamkke-custom-helpers.js') }}"></script>\
+<script src="{{ assetWithVersion('js/hamkke-custom-helpers.js') }}"></script>
 <script>
-    (function ($){
+    (function ($) {
         $(document).ready(function () {
             const select2 = $('.select2');
             if (select2.length) {
                 select2.each(function () {
                     let $this = $(this);
                     let maximumSelectionLength = parseInt($this.data('maximumSelectionLength'));
-                    console.log({ placeholder: $this.data('select-placeholder') })
+                    console.log({placeholder: $this.data('select-placeholder')})
                     $this.wrap('<div class="position-relative"></div>').select2({
-                        placeholder: $this.data('select-placeholder') ? $this.data('select-placeholder'): 'Select Tag',
+                        placeholder: $this.data('select-placeholder') ? $this.data('select-placeholder') : 'Select Tag',
                         dropdownParent: $this.parent(),
                         maximumSelectionLength
                     });
                 });
             }
+
+
+            $.each($('.naira-prefix'), (x, item) => {
+                const itemValue = $(item).html();
+                if (!isNaN(itemValue) && !$(item).hasClass('icon')) {
+                    $(item).html(HamkkeJsHelpers.number_format(itemValue));
+                }
+            });
         });
     })(jQuery);
 </script>

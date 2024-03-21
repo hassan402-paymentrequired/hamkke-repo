@@ -33,7 +33,14 @@ if (document.getElementById('layout-menu')) {
             } else {
                 $('.modal-backdrop').remove();
             }
-        })
+        });
+
+        $.each($('.naira-prefix'), (x, item) => {
+            const itemValue = $(item).html();
+            if (!isNaN(itemValue) && !$(item).hasClass('icon')) {
+                $(item).html(HamkkeJsHelpers.number_format(itemValue));
+            }
+        });
     });
 
     if (typeof Waves !== 'undefined') {

@@ -1,5 +1,5 @@
 body {
-    min-width: 100vh;
+    min-width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -1813,7 +1813,7 @@ footer {
     }
 
     .group1 {
-        padding: 100px 0;
+        padding: 10px 0;
     }
 
     .group1 .row .col-md-4 {
