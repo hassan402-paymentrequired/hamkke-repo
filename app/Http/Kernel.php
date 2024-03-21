@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\AuthUserSessionMiddleware;
+use App\Http\Middleware\RedirectIfCustomer;
 use App\Http\Middleware\VerifyUserRoutePermission;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'permission_protected' => VerifyUserRoutePermission::class
+        'permission_protected' => VerifyUserRoutePermission::class,
+        'auth.customer' => RedirectIfCustomer::class
     ];
 }

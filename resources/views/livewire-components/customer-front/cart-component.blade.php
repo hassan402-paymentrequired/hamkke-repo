@@ -38,7 +38,10 @@
                     </div>
 
                     <div class="payment">
-                        <button>Make Payment</button>
+                        <form action="{{ route('pay') }}" method="POST">
+                            @csrf
+                            <button>Make Payment</button>
+                        </form>
                     </div>
 
                 </div>

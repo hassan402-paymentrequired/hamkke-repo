@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\TagsCrudController;
 use App\Http\Controllers\Customer\AuthenticationContoller;
 use App\Http\Controllers\Front\ForumCrudController;
+use App\Http\Controllers\Front\PaymentController;
 use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
@@ -33,10 +34,6 @@ use Illuminate\Support\Facades\Route;
 $defaultDomain = includeWWWPrefix(config('app.default_domain'));
 
 Route::group(['domain' => $defaultDomain],  function () {
-//    Route::get('system-dev-test', function (){
-//        $defaultDomain = includeWWWPrefix(config('app.default_domain'));
-//        dd($defaultDomain);
-//    });
     Route::get('/', [PagesController::class, 'home'])->name('home');
     Route::get('/about-us', [PagesController::class, 'about'])->name('about_us');
     Route::post('/contact-us', [PagesController::class, 'submitContactRequest'])->name('contact_us');
@@ -50,6 +47,10 @@ Route::group(['domain' => $defaultDomain],  function () {
 
     Route::get('/store', Store::class)->name('store.products_list');
     Route::get('/cart', CartComponent::class)->name('store.cart');
+    Route::post('/pay', [PaymentController::class, 'redirectToGateway'])
+        ->name('pay')->middleware('auth.customer');
+    Route::get('/gateway-callback', [PaymentController::class, 'handleGatewayCallback'])
+        ->name('pay.callback');
 
     Route::prefix('admin')->middleware('permission_protected')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');

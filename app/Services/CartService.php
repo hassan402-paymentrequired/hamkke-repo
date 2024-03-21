@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Enums\OrderStatus;
 use App\Helpers\CartProductItem;
 use App\Models\CustomerCartProduct;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Order;
 use Illuminate\Support\Arr;
@@ -145,29 +147,38 @@ class CartService
     }
 
     /**
-     * @return void
+     * @return Order|null
      */
-    public function moveToOrder(): void
+    public function moveToOrder(): ?Order
     {
         // Check if the user is logged in
         $customerId = $this->getLoggedInCustomer();
         if ($customerId) {
             $cartItems = CustomerCartProduct::where('customer_id', $customerId)->get();
             if ($cartItems->isEmpty()) {
-                return;
+                return null;
             }
             $totalAmount = 0;
-            $order = Order::create(['customer_id' => $customerId, 'total_amount' => 0, 'order_status' => 'pending']);
+            $order = Order::create(['customer_id' => $customerId, 'amount' => 0, 'order_status' => OrderStatus::PENDING->value]);
+            if(empty($order)){
+                return null;
+            }
             foreach ($cartItems as $cartItem) {
-                $order->products()->attach($cartItem->product_id, [
-                    'unit_price' => $cartItem->price,
+                OrderProduct::create([
+                    'order_id' => $order->id,
+                    'customer_id' => $order->customer_id,
+                    'product_id' => $cartItem->product_id,
+                    'price' => $cartItem->price,
                     'quantity' => $cartItem->quantity
                 ]);
                 $totalAmount += $cartItem->price * $cartItem->quantity;
             }
-            $order->update(['total_amount' => $totalAmount]);
+            $order->update(['amount' => $totalAmount]);
             CustomerCartProduct::where('customer_id', $customerId)->delete();
+            $this->clearCart();
+            return $order;
         }
+        return null;
     }
 
     /**

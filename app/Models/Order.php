@@ -9,6 +9,7 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Class Order
@@ -19,6 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $order_status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ *
+ *
+ * @property Product[]|Collection $products
+ * @property Customer $customer
  *
  * @package App\Models
  */
@@ -37,4 +42,15 @@ class Order extends Model
 		'amount',
 		'order_status'
 	];
+
+    public function products()
+    {
+        return $this->hasManyThrough(Product::class, OrderProduct::class,
+            'order_id', 'id', 'id', 'product_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

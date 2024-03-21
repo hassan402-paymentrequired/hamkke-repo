@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class OrderProduct
- * 
+ *
  * @property int $order_id
  * @property int $product_id
  * @property int $customer_id
@@ -34,8 +34,10 @@ class OrderProduct extends Model
 	];
 
 	protected $fillable = [
-		'customer_id',
-		'quantity',
-		'price'
+        'order_id',
+        'product_id',
+        'customer_id',
+        'quantity',
+        'price'
 	];
 }
