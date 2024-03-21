@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
 use App\Livewire\Admin\ProductCategoriesList;
 use App\Livewire\Admin\ProductsList;
+use App\Livewire\CustomerFront\CartComponent;
+use App\Livewire\CustomerFront\Store;
 use App\Livewire\ManageRolePermissions;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +47,10 @@ Route::group(['domain' => $defaultDomain],  function () {
     Route::get('/posts/{post}', [FrontPostsController::class, 'singlePost'])->name('post.view');
 
     Route::post('/comment/{post}', [FrontPostsController::class, 'postComment'])->name('post.comment.add');
+
+    Route::get('/store', Store::class)->name('store.products_list');
+    Route::get('/cart', CartComponent::class)->name('store.cart');
+
     Route::prefix('admin')->middleware('permission_protected')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
         Route::get('/', [DashboardController::class, 'home'])->middleware(['auth', 'verified']);

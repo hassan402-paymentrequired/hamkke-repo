@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Request;
  * @property Category $post_category
  * @property User $author
  * @property PostComment[]|Collection $comments
+ * @property Tag[]|Collection $tags
  *
  * @package App\Models
  */

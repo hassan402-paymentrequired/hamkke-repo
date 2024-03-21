@@ -45,17 +45,14 @@
             <div class="navbtn">
                 <button>
                     <a class="nav-link"
-                       onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currently unavailable', 'Oops!', 'info').then(completeAction => false)"
-                       href="javascript:void(0)">
+{{--                       onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currently unavailable', 'Oops!', 'info').then(completeAction => false)"--}}
+                       href="{{ route('store.products_list') }}">
                         <img src="{{ asset('frontend-assets/store.svg') }}" alt="hamkke store - icon"/>Store
                     </a>
                 </button>
 
-                <button class="bg-filled">
-                    <a class="nav-link"
-                       onclick="return HamkkeJsHelpers.confirmationAlert('This Feature is currectly unavailable', 'Oops!', 'info').then(completeAction => false)"
-                       href="javascript:void(0)"><img src="{{ asset('frontend-assets/cart.svg') }}" alt="Cart icon"/>Cart</a>
-                </button>
+                <livewire:customer-front.cart-button :cartItemsQuantity="$cartItemCount"/>
+
                 @auth(CUSTOMER_GUARD_NAME)
                     <div class="dropdown customer-auth-menu">
                         <a class="text-hamkke-purple nav-login-link dropdown-toggle" href="javascript:void(0);"
