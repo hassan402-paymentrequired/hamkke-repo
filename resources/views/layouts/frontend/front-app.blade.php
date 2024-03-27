@@ -24,6 +24,15 @@
 
     <script src="{{ asset('cms-assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ assetWithVersion('cms-assets/js/config.js') }}"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9NB48P8XBK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-9NB48P8XBK');
+    </script>
     <style>
         #mc_embed_signup {
             background: #fff;
