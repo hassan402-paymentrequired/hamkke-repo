@@ -1546,6 +1546,24 @@ footer {
     color: #ffffff;
 }
 
+
+.btn-hamkke-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #662687;
+    --bs-btn-border-color: #832fae;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #832fae;
+    --bs-btn-hover-border-color: #8c33ba;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #832fae;
+    --bs-btn-active-border-color: #8c33ba;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+}
+
 @media (min-width: 1500px) {
 
     .logo-div {

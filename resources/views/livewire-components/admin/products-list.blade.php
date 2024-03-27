@@ -37,7 +37,7 @@
     </div>
 
     <!-- Modal -->
-    <livewire:admin.create-product key="productCreationModal" :productCategories="$productCategories" />
+    <livewire:admin.create-product key="productCreationModal" :productCategories="$productCategories" :productTypes="$productTypes"/>
 </div>
 
 <x-slot name="more_scripts_slot">

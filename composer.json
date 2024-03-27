@@ -21,7 +21,9 @@
         "opcodesio/log-viewer": "^3.1",
         "propaganistas/laravel-phone": "^5.1",
         "reliese/laravel": "^1.2",
-        "spatie/laravel-permission": "^6.4"
+        "spatie/laravel-permission": "^6.4",
+        "unicodeveloper/laravel-paystack": "^1.1",
+        "ext-openssl": "*"
     },
     "require-dev": {
         "backpack/generators": "^4.0",

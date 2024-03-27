@@ -67,12 +67,18 @@
                             <span class="ml-1">{{ $customerAuthUser->getName() }}</span>
                         </a>
 
-                        <ul class="dropdown-menu" aria-labelledby="auth-menu-link">
+                        <ul class="user-profile-dropdown dropdown-menu" aria-labelledby="auth-menu-link">
                             <li>
+                                <a class="dropdown-item" href="{{ route('customer.orders') }}" id="ordersLink">
+                                    <em class="fa fa-box-open"></em>
+                                    <span class="ml-1">Orders</span>
+                                </a>
+                            </li>
+                            <li class="logout-section">
+                                <hr>
                                 <a class="dropdown-item" href="javascript:void(0)" role="button" id="logoutLink"
                                    onclick="return HamkkeJsHelpers.submitActionForm('{{ route('customer.auth.logout') }}', 'Please confirm you want to logout.');">
-                                    <em class="fa fa-sign-out"></em>
-                                    <span class="ml-1">Logout</span>
+                                    <span class="ml-1">LOGOUT</span>
                                 </a>
                             </li>
                         </ul>

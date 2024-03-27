@@ -1,4 +1,4 @@
-@extends('layouts.frontend.front-app', ['pageTitle' => $title])
+@extends('layouts.frontend.front-app', ['pageTitle' => $title ?? ''])
 
 @section('content')
     {{ $slot }}

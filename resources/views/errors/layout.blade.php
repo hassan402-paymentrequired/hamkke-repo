@@ -1,5 +1,6 @@
+@php use App\Providers\RouteServiceProvider; @endphp
 @props(['title'])
-<!DOCTYPE html>
+    <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
       data-theme="theme-default" data-assets-path="{{ asset('cms-assets') }}"
@@ -49,20 +50,21 @@
     <div class="misc-wrapper">
         <h2 class="mb-1 mx-2">{{ $title }}</h2>
         <p class="mb-4 mx-2">{{ $message }}</p>
-        <a href="{{ route('dashboard') }}" class="btn btn-primary mb-4">Back to home</a>
+        <a href="{{ isAdminRoute() ? route(RouteServiceProvider::ADMIN_HOME) : url(RouteServiceProvider::HOME) }}"
+           class="btn btn-primary mb-4">Back to home</a>
         <div class="mt-4">
             <img
                 src="{{ $image ?? asset('cms-assets/illustrations/page-misc-under-maintenance.png') }}"
                 alt="page-misc-not-authorized"
                 width="170"
-                class="img-fluid" />
+                class="img-fluid"/>
         </div>
     </div>
 </div>
 <div class="container-fluid misc-bg-wrapper">
     <img
         src="{{ assetWithVersion('cms-assets/illustrations/bg-shape-image-light.png') }}"
-        alt="page-misc-not-authorized" />
+        alt="page-misc-not-authorized"/>
 </div>
 <!-- / Layout wrapper -->
 
