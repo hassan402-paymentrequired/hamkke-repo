@@ -52,7 +52,7 @@
                         @empty
                             <div class="col-md-12">
                                 <p class="text-center bg-hamkke-primary p-2">
-                                    @if($currentProductCategory)
+                                    @if(!$currentProductCategory)
                                         No products found
                                     @else
                                         No Products found in the '{{ strtolower($currentProductCategory->name) }}' category
