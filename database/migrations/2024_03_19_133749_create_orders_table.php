@@ -20,6 +20,7 @@ return new class extends Migration
                 ->comment('Amount in kobo');
             $table->tinyInteger('order_status')->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

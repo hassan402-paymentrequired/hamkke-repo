@@ -20,7 +20,10 @@ class RedirectIfCustomer
         if (!Auth::guard(CUSTOMER_GUARD_NAME)->check()) {
             // If the user is authenticated with the "customer" guard,
             // redirect them to a specific route or URL
-            return redirect()->intended(route('customer.auth.login'));
+            if($request->isMethod('GET')) {
+                session()->put('url.intended', $request->fullUrl());
+            }
+            return redirect()->route('customer.auth.login');
         }
 
         return $next($request);

@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 
 function isProductionEnv(): bool
 {
@@ -239,7 +242,7 @@ function validatePhoneNumber($phoneNumber, $justStatus = false, $regionCode = nu
         'result' => $invalidPhoneNumber
     ];
 
-    $phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+    $phoneUtil = PhoneNumberUtil::getInstance();
     try {
         if(($regionCode === 'NG') || str_starts_with($phoneNumber, '+234')){
             $formattedPhone = cleanUpNigerianPhoneNumber($phoneNumber);
@@ -256,16 +259,16 @@ function validatePhoneNumber($phoneNumber, $justStatus = false, $regionCode = nu
             return $phoneUtil->isValidNumber($phone);
         }
         if ($phoneUtil->isValidNumber($phone)) {
-            $formattedPhone = $phoneUtil->format($phone, \libphonenumber\PhoneNumberFormat::E164);
+            $formattedPhone = $phoneUtil->format($phone, PhoneNumberFormat::E164);
             return [
                 'status' => true,
                 'result' => $formattedPhone
             ];
         }
-        throw new \libphonenumber\NumberParseException(1, $invalidPhoneNumber);
-    } catch (\libphonenumber\NumberParseException $e) {
+        throw new NumberParseException(1, $invalidPhoneNumber);
+    } catch (NumberParseException $e) {
         $errorResult['result'] = $e->getMessage();
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         $errorResult['result'] = $e->getMessage();
     }
 
@@ -282,31 +285,52 @@ function generateUniqueRef($prefix, $uniqueID, $separator = '.')
     return $prefix . $uniqueID . $separator . strtoupper(uniqid());
 }
 
-function encryptDecrypt($action, $dataToEncrypt, $encryptMethod = null, $secretKey = null, $secretIV = null): bool|string
+/**
+ * @param string $action
+ * @param string $dataToEncrypt
+ * @param $encryptMethod
+ * @param $secretKey
+ * @param $secretIV
+ *
+ * @return string
+ */
+function encryptDecrypt(string $action, string $dataToEncrypt, $encryptMethod = null, $secretKey = null, $secretIV = null): string
 {
-    $output = false;
+    if (empty($action) || !in_array($action, ['encrypt', 'decrypt'])) {
+        throw new InvalidArgumentException('Invalid action provided. Action must be "encrypt" or "decrypt".');
+    }
+
+    if (empty($dataToEncrypt)) {
+        throw new InvalidArgumentException('Data to encrypt/decrypt cannot be empty.');
+    }
 
     $encryptMethod = $encryptMethod ?? config('app.cipher');
     $secretKey = $secretKey ?? config('app.enc_secret_key');
-    $secret_iv = $secretIV ?? config('app.enc_secret_iv');
+    $secretIV = $secretIV ?? config('app.enc_secret_iv');
 
-    // hash
     $key = hash('sha256', $secretKey);
+    $iv = substr(hash('sha256', $secretIV), 0, 16);
 
-    // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
-    $iv = substr(hash('sha256', $secret_iv), 0, 16);
-
-    if ($action == 'encrypt') {
-        if(is_array($dataToEncrypt)){
-            $dataToEncrypt = json_encode($dataToEncrypt);
+    if ($action === 'encrypt') {
+        $dataToEncrypt = is_array($dataToEncrypt) ? json_encode($dataToEncrypt) : $dataToEncrypt;
+        $encryptedData = openssl_encrypt($dataToEncrypt, $encryptMethod, $key, OPENSSL_RAW_DATA, $iv);
+        if ($encryptedData === false) {
+            throw new \RuntimeException('Encryption failed.');
         }
-        $output = openssl_encrypt($dataToEncrypt, $encryptMethod, $key, OPENSSL_RAW_DATA, $iv);
-        $output = base64_encode($output);
-    } elseif ($action == 'decrypt') {
-        $output = openssl_decrypt(base64_decode($dataToEncrypt), $encryptMethod, $key, OPENSSL_RAW_DATA, $iv);
+        return base64_encode($encryptedData);
+    } elseif ($action === 'decrypt') {
+        $decodedData = base64_decode($dataToEncrypt);
+        if ($decodedData === false) {
+            throw new InvalidArgumentException('Invalid base64 data provided for decryption.');
+        }
+        $decryptedData = openssl_decrypt($decodedData, $encryptMethod, $key, OPENSSL_RAW_DATA, $iv);
+        if ($decryptedData === false) {
+            throw new \RuntimeException('Decryption failed.');
+        }
+        return $decryptedData;
     }
 
-    return $output;
+    throw new InvalidArgumentException('Invalid action provided. Action must be "encrypt" or "decrypt".');
 }
 
 /**
@@ -410,7 +434,7 @@ function flashSuccessMessage($message): void
 function tableDataToJSON($tableName, $dataConversionFunction = null, $columnsToExtract = ['*'], $limit = null, $skip = null)
 {
     $jsonPayload = [];
-    $queryBuilder = \Illuminate\Support\Facades\DB::table($tableName)->select($columnsToExtract);
+    $queryBuilder = DB::table($tableName)->select($columnsToExtract);
     if($limit){
         $queryBuilder->limit($limit);
     }

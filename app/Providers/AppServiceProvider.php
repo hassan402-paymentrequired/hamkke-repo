@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Helpers\SiteSettings;
 use App\Models\Permission;
 use App\Services\CartService;
+use App\Services\PaymentService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
         Sanctum::ignoreMigrations();
         $this->app->singleton('hamkke-cart', function ($app) {
             return new CartService();
+        });
+        $this->app->singleton('hamkke-payment', function ($app) {
+            return new PaymentService();
         });
     }
 

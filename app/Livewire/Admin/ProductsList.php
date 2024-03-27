@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Enums\ProductType;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
@@ -20,6 +21,7 @@ class ProductsList extends Component
     public array|Collection $products;
 
     public Collection $productCategories;
+    public array $productTypes;
 
     public User|Authenticatable $authUser;
 
@@ -28,6 +30,7 @@ class ProductsList extends Component
         $this->authUser = auth()->user();
         $this->products = Product::all();
         $this->productCategories = ProductCategory::all();
+        $this->productTypes = ProductType::cases();
     }
 
     public function render()

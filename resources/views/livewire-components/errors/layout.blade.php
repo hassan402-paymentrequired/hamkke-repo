@@ -49,7 +49,8 @@
     <div class="misc-wrapper">
         <h2 class="mb-1 mx-2">{{ $title }}</h2>
         <p class="mb-4 mx-2">{{ $message }}</p>
-        <a href="{{ route('dashboard') }}" class="btn btn-primary mb-4">Back to home</a>
+        <a href="{{ isAdminRoute() ? route(RouteServiceProvider::ADMIN_HOME) : url(RouteServiceProvider::HOME) }}"
+           class="btn btn-primary mb-4">Back to home</a>
         <div class="mt-4">
             <img
                 src="{{ $image ?? asset('cms-assets/illustrations/page-misc-under-maintenance.png') }}"

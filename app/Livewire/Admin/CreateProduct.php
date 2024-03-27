@@ -20,6 +20,7 @@ class CreateProduct extends Component
     public string $modalTitle = '';
 
     public array|Collection $productCategories;
+    public array $productTypes;
 
     public function render()
     {
@@ -36,6 +37,11 @@ class CreateProduct extends Component
         return null;
     }
 
+    public function getProductType()
+    {
+        return $this->form->productType;
+    }
+
     public function openModal(): void
     {
         $this->dispatch('open-creation-modal');
@@ -44,6 +50,24 @@ class CreateProduct extends Component
     public function closeModal(): void
     {
         $this->dispatch('close-creation-modal');
+    }
+
+    public function getProductDocument($fileNameOnly = false): ?string
+    {
+        $product = $this->form->product;
+        if($product){
+            $productUrl = $product->electronic_product_url ?? $product->class_registration_url;
+            return $fileNameOnly ? $productUrl : basename($productUrl);
+        }
+        return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function productTypeEditable() : bool
+    {
+        return !$this->form->product || $this->form->product->orders()->count() === 0;
     }
 
     /**
@@ -98,7 +122,9 @@ class CreateProduct extends Component
                 'name' => $product->name,
                 'description' => $product->description,
                 'price' => $product->price / 100,
-                'productCategory' => $product->product_category_id
+                'productCategory' => $product->product_category_id,
+                'productType' => $product->product_type->value,
+                'class_registration_link' => $product->class_registration_url,
             ]);
             $this->openModal();
         }
@@ -106,7 +132,7 @@ class CreateProduct extends Component
     #[NoReturn] #[On('create-product')] public function createProduct(): void
     {
         $this->modalTitle = 'Add New Product';
-        $this->form->fill([]);
+        $this->form->reset();
         $this->openModal();
     }
 

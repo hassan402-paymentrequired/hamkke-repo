@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -31,6 +27,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $deleted_at
  *
  * @property PostComment[]|Collection $comments
+ * @property PaymentTransaction[]|Collection $payment_transactions
+ *
  * @package App\Models
  */
 class Customer extends Authenticatable
@@ -67,5 +65,10 @@ class Customer extends Authenticatable
     public function getName()
     {
         return $this->name ?: $this->username;
+    }
+
+    public function payment_transactions()
+    {
+        return $this->hasMany(PaymentTransaction::class);
     }
 }

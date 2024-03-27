@@ -174,8 +174,6 @@ class CartService
                 $totalAmount += $cartItem->price * $cartItem->quantity;
             }
             $order->update(['amount' => $totalAmount]);
-            CustomerCartProduct::where('customer_id', $customerId)->delete();
-            $this->clearCart();
             return $order;
         }
         return null;

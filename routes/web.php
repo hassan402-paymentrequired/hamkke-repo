@@ -16,7 +16,9 @@ use App\Http\Controllers\Front\PagesController;
 use App\Livewire\Admin\ProductCategoriesList;
 use App\Livewire\Admin\ProductsList;
 use App\Livewire\CustomerFront\CartComponent;
+use App\Livewire\CustomerFront\OrdersList;
 use App\Livewire\CustomerFront\Store;
+use App\Livewire\CustomerFront\ViewOrder;
 use App\Livewire\ManageRolePermissions;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +53,14 @@ Route::group(['domain' => $defaultDomain],  function () {
         ->name('pay')->middleware('auth.customer');
     Route::get('/gateway-callback', [PaymentController::class, 'handleGatewayCallback'])
         ->name('pay.callback');
+
+    Route::prefix('customer')->middleware('auth.customer')
+        ->group(function (){
+            Route::get('/orders', OrdersList::class)->name('customer.orders');
+            Route::get('/order/download-product/{downloadUuid}', ViewOrder::class)->name('download-product');
+            Route::get('/view-order/{orderId}', ViewOrder::class)->name('customer.order.view-II');
+            Route::get('/order/{order}', ViewOrder::class)->name('customer.order.view');
+        });
 
     Route::prefix('admin')->middleware('permission_protected')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
