@@ -3,31 +3,14 @@ function deletePost(url) {
 }
 (function ($){
     "use strict";
-    console.log('HERE');
-    const postContentHiddenField = $('#postContent');
+    console.log('Here 123');
 
-    const postContentEditor = new Quill('#full-editor', {
-        bounds: '#full-editor',
-        placeholder: 'Type Something...',
-        modules: {
-            formula: true,
-            toolbar: HamkkeJsHelpers.getQuillToolbar()
-        },
-        theme: 'snow'
-    });
-    const currentPageContent = postContentHiddenField.html();
-    if(currentPageContent){
-        postContentEditor.setContents(
-            JSON.parse(currentPageContent)
-        );
-    }
-    $('#postCreationForm').on('submit', function (e){
-        e.preventDefault();
-        postContentHiddenField.html(
-            JSON.stringify(postContentEditor.getContents())
-        )
-        e.target.submit();
-    });
+    HamkkeQuillHelpers.initializeQuillEditor(
+        '#postContent',
+        '#full-editor',
+        '#postCreationForm'
+    );
+
     document.addEventListener('DOMContentLoaded', function (e) {
         (function () {
 

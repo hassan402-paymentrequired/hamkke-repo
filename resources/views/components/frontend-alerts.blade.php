@@ -46,7 +46,7 @@
 <script>
     const flashMessages = {};
     @foreach(['error', 'warning', 'info'] as $status)
-        flashMessages[{{ $status }}] = "{{ Session::get($status) }}";
+        flashMessages['{{ $status }}'] = "{{ Session::get($status) }}";
     @endforeach
     console.log('flashMessages:', flashMessages);
         (function ($) {

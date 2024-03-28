@@ -379,10 +379,7 @@ function uploadFilesFromRequest(\Illuminate\Http\Request $request, string $field
     if (!empty($file)) {
         $filename = $fileNameToSet . time() . '.' . $file->getClientOriginalExtension();
         $path = $file->storeAs($storagePath, $filename, ['disk' => 'public']);
-        if($getAbsoluteUrl) {
-            return getAbsoluteUrlFromPath($path);
-        }
-        return $path;
+        return $getAbsoluteUrl ? getAbsoluteUrlFromPath($path) : $path;
     }
     return null;
 }

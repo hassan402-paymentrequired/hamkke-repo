@@ -25,7 +25,6 @@ if (document.getElementById('layout-menu')) {
                 });
             });
         }
-        Quill.register("modules/imageCompressor", imageCompressor);
 
         $('.modal').on('hide.bs.modal', function () {
             if ($(this).is(':visible')) {

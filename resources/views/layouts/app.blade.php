@@ -51,6 +51,7 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ assetWithVersion('cms-assets/css/main.css') }}"/>
 
+    @vite('resources/js/app.js')
     @yield('more-styles')
 
 </head>
@@ -124,7 +125,6 @@
 <script src="{{ asset('cms-assets/vendor/libs/@form-validation/umd/bundle/popular.min.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js') }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js') }}"></script>
-
 <!-- endbuild -->
 
 <!-- Vendors JS -->
@@ -132,13 +132,7 @@
 <!-- Vendors JS -->
 <script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
-<script src="{{ asset("cms-assets/vendor/libs/quill/modules/imageResizer.min.js") }}"></script>
-<script src="https://unpkg.com/quill-image-compress@1.2.11/dist/quill.imageCompressor.min.js"></script>
-<script>
-    Quill.register("modules/imageCompressor", imageCompressor)
-    // console.log({ImageResize});
-    Quill.register("modules/ImageResize", ImageResize.default)
-</script>
+
 
 <!-- Main JS -->
 <script src="{{ assetWithVersion('js/hamkke-custom-helpers.js') }}"></script>
