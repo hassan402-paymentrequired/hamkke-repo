@@ -15,6 +15,7 @@ use App\Notifications\CustomerWelcomeNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use function Pest\Laravel\json;
 use function Pest\Laravel\post;
 
 class PostsController extends Controller

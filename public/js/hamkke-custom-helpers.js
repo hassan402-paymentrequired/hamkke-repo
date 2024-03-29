@@ -4,6 +4,7 @@
 'use strict';
 const HamkkeJsHelpers = {
     sitewideForm: '#site-wide-action-form',
+    imageUploadEndpoint: "/quill/upload-image",
     quillBaseToolbar: [
         [
             {
@@ -581,58 +582,6 @@ const HamkkeJsHelpers = {
     isAdminPath() {
         const currentUrl = window.location.href;
         return currentUrl.includes('/admin')
-    },
-
-    initializeQuillEditor(finalSubmissionField, editorContainerSelector, parentFormSelector, noImage = false) {
-        const finalSubmissionFieldInstance = $(finalSubmissionField);
-        let toolbar = this.getQuillToolbar(noImage),
-            imageResize = noImage ? false : {}
-            imageCompressor = noImage ? false : {
-                quality: 1,
-                maxHeight: 500,
-                debug: true
-            };
-        const postContentEditor = new Quill(editorContainerSelector, {
-            bounds: editorContainerSelector,
-            placeholder: 'Type Something...',
-            modules: {
-                formula: true,
-                toolbar,
-                imageCompressor,
-                ImageResize: imageResize
-            },
-            theme: 'snow'
-        });
-        const currentPageContent = finalSubmissionFieldInstance.html();
-        if (currentPageContent) {
-            postContentEditor.setContents(
-                JSON.parse(currentPageContent)
-            );
-        }
-        $(parentFormSelector).on('submit', function (e) {
-            e.preventDefault();
-            const contentCharLength = postContentEditor.getLength();
-            const maxLength = 500;
-            if (contentCharLength <= 2) {
-                HamkkeJsHelpers.showFrontendAlert(
-                    'Please do not submit an empty reply',
-                    'danger'
-                );
-                return;
-            }
-            if (contentCharLength > maxLength) {
-                HamkkeJsHelpers.showFrontendAlert(
-                    `You have exceeded the ${maxLength} character limit by "${contentCharLength - maxLength}" characters.<br> Please review it`,
-                    'danger'
-                );
-                return;
-            }
-
-            finalSubmissionFieldInstance.html(
-                JSON.stringify(postContentEditor.getContents())
-            )
-            e.target.submit();
-        });
     },
 
     showFrontendAlert(alertMessage, alertStatus, alertTitle = 'Oops!!') {

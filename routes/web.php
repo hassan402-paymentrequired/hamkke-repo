@@ -13,6 +13,7 @@ use App\Http\Controllers\Front\PaymentController;
 use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
+use App\Http\Controllers\General\QuillManager;
 use App\Livewire\Admin\ProductCategoriesList;
 use App\Livewire\Admin\ProductsList;
 use App\Livewire\CustomerFront\CartComponent;
@@ -140,6 +141,10 @@ Route::group(['domain' => $defaultDomain],  function () {
         Route::post('/start-discussion', [ForumCrudController::class, 'createThread'])->name('forum.posts.create');
         Route::get('/{forumPost:slug}', [ForumCrudController::class, 'viewPost'])->name('forum.posts.view');
         Route::post('/comment/{forumPost:slug}', [ForumCrudController::class, 'replyThread'])->name('forum.posts.reply');
+    });
+
+    Route::prefix('quill')->group( function() {
+        Route::post('/upload-image', [QuillManager::class, 'uploadImageToServer'])->name('quill.upload-image');
     });
 
     Route::middleware('guest:' . CUSTOMER_GUARD_NAME)->group(function (){

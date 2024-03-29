@@ -7,6 +7,7 @@ use App\Models\ForumPost;
 use App\Models\Post;
 use nadar\quill\Lexer as QuillParser;
 use Everyday\HtmlToQuill\HtmlConverter;
+use nadar\quill\listener\Image;
 
 class PostParser
 {
@@ -18,7 +19,9 @@ class PostParser
 
     public function parsePostBody()
     {
-        return new QuillParser($this->post->body);
+        $quillParser = new QuillParser($this->post->body);
+        $quillParser->overwriteListener(new Image(), new ImageListenerCustom());
+        return $quillParser;
     }
 
     public static function getQuillFromHtml($htmlString)
