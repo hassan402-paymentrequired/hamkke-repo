@@ -44,61 +44,33 @@
 
 
 <script>
-    const flashMessages = {};
-    @foreach(['error', 'warning', 'info'] as $status)
-        flashMessages['{{ $status }}'] = "{{ Session::get($status) }}";
-    @endforeach
-    console.log('flashMessages:', flashMessages);
-        (function ($) {
-            // On document load, execute the following code
-            $(document).ready(function () {
-                // When the successAlertModal is about to be shown
-                $('#successAlertModal, #errorsAlertModal').on('show.bs.modal', function () {
+    const flashMessages = {
+        @foreach(['success', 'error', 'warning', 'info'] as $status)
+            @if (Session::has($status))
+                "{{ $status }}": "{{ Session::get($status) }}",
+           @endif
+        @endforeach
+    };
 
-                    const _this = $(this);
-
-                    // Clear any existing timeout to hide the modal
-                    clearTimeout(_this.data('hideInterval'));
-
-                    // Set a new timeout to hide the modal after 3000 milliseconds (3 seconds)
-                    _this.data('hideInterval', setTimeout(function () {
-                        _this.modal('hide');
-                    }, 5000));
-                });
-
-                // PHP code to set default values for alertStatuses and sessionKeys
-                @php
-                    $alertStatuses = $alertStatuses ?? ['error', 'warning', 'info'];
-                    $sessionKeys = array_keys(session()->all());
-                    $statusesInSession = array_intersect($sessionKeys, $alertStatuses);
-                @endphp
-
-                // If there is a 'success' message in the session, show the successAlertModal
-                @if($successMessage)
-                    $('#successAlertModal').modal('show');
-                @elseif(!empty($statusesInSession))
-
-                    // Loop through each status in $statusesInSession
-                    @foreach ($statusesInSession as $status)
-
-                    // If there is a message for the current status, append a paragraph to the 'error-paragraphs' element
-                    @if($alertMessage = Session::get($status))
-                        $('#alert-paragraph').append(`
-                            <p class="sitewide-alert-message text-{{ $status === 'error' ? 'danger' : $status }}">{{ $alertMessage }}</p>
-                        `);
-                    @endif
-
-                    // End of loop
-                    @endforeach
-                @endif
-
-                @if(empty($successMessage))
-                    // If there are paragraphs in the 'error-paragraphs' element, show the errorsAlertModal
-                    if ($('#error-paragraphs p').length > 0) {
-                        $('#errorsAlertModal').modal('show')
-                    }
-                @endif
+    (function ($) {
+        let errorMessage = flashMessages['error'] ?? '';
+        @php
+            $errorMessages = implode(', ', $errors->all());
+        @endphp
+        @if($errorMessages)
+            errorMessage += '{{ $errorMessages }}';
+        @endif
+        console.log({errorMessage});
+        if(errorMessage) {
+            flashMessages['error'] = errorMessage;
+        }
+        // On document load, execute the following code
+        $(document).ready(function () {
+            Object.keys(flashMessages).forEach(function (status) {
+                let msgTitle = (status === 'success') ? 'Successful': '';
+                HamkkeJsHelpers.showToast('', flashMessages[status], status)
             });
-        })(jQuery);
+        });
+    })(jQuery);
 </script>
 

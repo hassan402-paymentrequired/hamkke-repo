@@ -134,7 +134,7 @@ const HamkkeJsHelpers = {
 
     showToast(title, message, toast_type = 'success') {
         toastr.options = {
-            maxOpened: 1,
+            maxOpened: 2,
             autoDismiss: false,
             closeButton: true,
             debug: true,
@@ -142,7 +142,10 @@ const HamkkeJsHelpers = {
             positionClass: 'toast-top-center',
             preventDuplicates: true,
             onclick: null,
-            rtl: true
+            rtl: true,
+            extendedTimeOut:0,
+            timeOut: 0
+            // hideDuration: 10
         };
         toastr[toast_type](message, title);
     },

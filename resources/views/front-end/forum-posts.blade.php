@@ -70,7 +70,7 @@
                                             </div>
                                             <p class="card-text">{{ $forumPost->getPostSummary() }} ...</p>
                                             <div class="like-div">
-                                                <span>0</span>
+                                                <span>{{ $forumPost->likes()->count() }}</span>
                                                 <img src="{{ asset('frontend-assets/likes.png') }}" alt="...">
 
                                                 <span>{{ $forumPost->forum_discussions()->count() }}</span>

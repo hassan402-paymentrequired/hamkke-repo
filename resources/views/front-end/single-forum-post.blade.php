@@ -52,15 +52,7 @@
                         <p class="card-text">{!! $parsedPostBody !!}</p>
 
                         <div class="like-div">
-                            {{-- TODO:: Allow logged-in customers like the post and clicking again should remove the like :) --}}
-                            <span>
-                                0
-                                <a href="javascript:void(0);" class="text-decoration-none" id="like-button"
-                                    data-post-id="{{ $forumPost->slug }}">
-                                    <img src="{{ asset('frontend-assets/likes.png') }}" alt="..." />
-                                </a>
-                                <span class="text">Likes</span>
-                            </span>
+                            <livewire:customer-front.forum-post-like-button :forumPost="$forumPost"/>
                         </div>
 
                         <div class="row ">

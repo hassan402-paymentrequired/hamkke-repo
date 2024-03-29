@@ -68,16 +68,18 @@ const HamkkeQuillHelpers = {
             const maxLength = 500;
             if(!HamkkeJsHelpers.isAdminPath()) {
                 if (contentCharLength <= 2) {
-                    HamkkeJsHelpers.showFrontendAlert(
+                    HamkkeJsHelpers.showToast(
+                        'Oops!!',
                         'Please do not submit an empty reply',
-                        'danger'
+                        'error'
                     );
                     return;
                 }
                 if (contentCharLength > maxLength) {
-                    HamkkeJsHelpers.showFrontendAlert(
+                    HamkkeJsHelpers.showToast(
+                        'Oops!!',
                         `You have exceeded the ${maxLength} character limit by "${contentCharLength - maxLength}" characters.<br> Please review it`,
-                        'danger'
+                        'error'
                     );
                     return;
                 }

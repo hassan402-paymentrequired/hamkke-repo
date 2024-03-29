@@ -11,10 +11,12 @@
     {{--    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>--}}
     <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/fonts/fontawesome.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/fonts/tabler-icons.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.min.css') }}"/>
     <link rel="stylesheet" href="{{ assetWithVersion('frontend-assets/css/styles.css') }}" type="text/css">
     <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ assetWithVersion('cms-assets/css/select2.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/toastr/toastr.css') }}"/>
 
     <link href="{{ assetWithVersion('frontend-assets/css/custom-styles.css') }}" rel="stylesheet" type="text/css">
 
@@ -159,6 +161,7 @@
 <script src="{{ asset("cms-assets/vendor/libs/quill/katex.js") }}"></script>
 <script src="{{ asset("cms-assets/vendor/libs/quill/quill.js") }}"></script>
 <script src="{{ asset('cms-assets/vendor/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
+<script src="{{ asset('cms-assets/vendor/libs/toastr/toastr.js') }}"></script>
 <script src="{{ assetWithVersion('js/hamkke-custom-helpers.js') }}"></script>
 <script>
     (function ($) {
@@ -183,6 +186,12 @@
                 if (!isNaN(itemValue) && !$(item).hasClass('icon')) {
                     $(item).html(HamkkeJsHelpers.number_format(itemValue));
                 }
+            });
+            HamkkeJsHelpers.addLivewireEventListener(function (){
+                Livewire.on('show-toast', (event) => {
+                    const eventParams = event[0]
+                    HamkkeJsHelpers.showToast(eventParams.title, eventParams.message, eventParams.toast_type)
+                });
             });
         });
     })(jQuery);
