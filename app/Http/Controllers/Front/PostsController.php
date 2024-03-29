@@ -100,16 +100,18 @@ class PostsController extends Controller
         if ($selectedCategory) {
             $postsQuery->where('posts.post_category_id', $selectedCategory->id);
         }
-        $posts = $postsQuery->groupBy('posts.id')->select([
-            'posts.*',
-            'categories.name as post_category',
-            'categories.slug as post_category_slug',
-            'users.id as author_id',
-            'users.name as author_name',
-            'users.avatar as author_avatar',
-            DB::raw('COUNT(post_comments.id) as comments'),
-            DB::raw('COUNT(post_likes.customer_id) as likes')
-        ])
+        $posts = $postsQuery->groupBy('posts.id')
+            ->withCount(['likes', 'comments'])
+            ->select([
+                'posts.*',
+                'categories.name as post_category',
+                'categories.slug as post_category_slug',
+                'users.id as author_id',
+                'users.name as author_name',
+                'users.avatar as author_avatar',
+    //            DB::raw('COUNT(post_comments.id) as comments'),
+    //            DB::raw('COUNT(post_likes.customer_id) as likes')
+            ])
             ->latest()
             ->paginate(10);
         return view('front-end.post-type-template', compact('posts', 'postType', 'postCategories', 'selectedCategory', 'selectedCategory'));

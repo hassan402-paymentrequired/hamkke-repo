@@ -62,6 +62,11 @@ class ForumPost extends Model
 		return $this->belongsTo(User::class);
 	}
 
+    public function likes()
+    {
+        return $this->hasMany(ForumPostLike::class);
+    }
+
 	public function forum_discussions()
 	{
 		return $this->hasMany(ForumDiscussion::class);

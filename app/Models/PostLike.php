@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  *
  * @package App\Models
+ * @mixin Model
  */
 class PostLike extends Model
 {
@@ -28,4 +29,9 @@ class PostLike extends Model
 		'post_id' => 'int',
 		'customer_id' => 'int'
 	];
+
+    protected $fillable = [
+        'post_id',
+        'customer_id'
+    ];
 }

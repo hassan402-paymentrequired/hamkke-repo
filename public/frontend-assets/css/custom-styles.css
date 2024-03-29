@@ -590,6 +590,26 @@ p.sitewide-alert-message {
     letter-spacing: 1px;
 }
 
+#toast-container:not(.toast-bottom-full-width, .toast-top-full-width) > div {
+    width: 30em !important;
+}
+
+.toast-title {
+    color: #ffffff;
+}
+
+.toast-close-button {
+    color: #f2f2f2 !important;
+}
+
+.toast-top-center {
+    top: 2em;
+}
+
+#like-button i{
+    color: #404040;
+}
+
 @media (max-width: 991px) and (min-width: 768px) {
 
     .category-posts-div .col-md-3,

@@ -22,7 +22,7 @@ class OrdersList extends Component
     public function render(): View
     {
         $orders = Order::where('customer_id', auth(CUSTOMER_GUARD_NAME)->id())
-            ->paginate();
+            ->latest()->paginate();
         return view('livewire-components.customer-front.orders-list', compact('orders'));
     }
 }

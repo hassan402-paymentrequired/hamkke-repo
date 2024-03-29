@@ -28,6 +28,7 @@ use Laravel\Sanctum\HasApiTokens;
  *
  * @property PostComment[]|Collection $comments
  * @property PaymentTransaction[]|Collection $payment_transactions
+ * @property PostLike[]|Collection $liked_posts
  *
  * @package App\Models
  */
@@ -70,5 +71,10 @@ class Customer extends Authenticatable
     public function payment_transactions()
     {
         return $this->hasMany(PaymentTransaction::class);
+    }
+
+    public function liked_posts()
+    {
+        return $this->hasMany(PostLike::class);
     }
 }

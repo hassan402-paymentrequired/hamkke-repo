@@ -1,3 +1,4 @@
+@php use Illuminate\Database\Events\QueryExecuted;use Illuminate\Support\Facades\DB; @endphp
 @extends('layouts.frontend.front-app', ['pageTitle' => "Post Type ::: {$postType->name}"])
 
 @section('content')
@@ -15,7 +16,8 @@
                                 data-bs-target="#v-{{ $category->slug }}"
                                 type="button" role="tab" aria-controls="v-{{ $category->slug }}"
                                 aria-selected="{{ $loop->first ? 'true' : 'false'}}">
-                                <a  class="decoration-0" href="{{ route('post_type.view', ['post_type' => $postType->slug, 'post_category' => $category->slug]) }}">
+                                <a class="decoration-0"
+                                   href="{{ route('post_type.view', ['post_type' => $postType->slug, 'post_category' => $category->slug]) }}">
                                     <img src="{{ $category->navigation_icon }}" alt="{{ $category->name }} nav icon"/>
                                     {{ $category->name }}
                                 </a>
@@ -25,10 +27,14 @@
                 </div>
 
                 <div class="col-md-9 paddingR tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-{{ $selectedCategory ? $selectedCategory->slug : '' }}" role="tabpanel"
+                    <div class="tab-pane fade show active"
+                         id="v-pills-{{ $selectedCategory ? $selectedCategory->slug : '' }}" role="tabpanel"
                          aria-labelledby="v-pills-{{ $selectedCategory ? $selectedCategory->slug : '' }}-tab">
                         <div class="forum">
                             <div class="d-flex flex-row flex-wrap forum-row justify-content-between">
+                                @php
+                                    DB::enableQueryLog();
+                                @endphp
                                 @foreach($posts as $post)
                                     <div class="card">
                                         <img class="card-img-top"
@@ -51,15 +57,16 @@
                                             </p>
 
                                             <div class="like-div">
-                                                <span>{{ $post->likes }}</span>
+                                                <span>{{ $post->likes->count() }}</span>
                                                 <img src="{{ asset('frontend-assets/likes.png') }}" alt="...">
-                                                <span>{{ $post->comments }}</span>
+                                                <span>{{ $post->comments->count() }}</span>
                                                 <img src="{{ asset('frontend-assets/comment.png') }}" alt="...">
                                                 <span>Posted {{ $post->created_at->diffForHumans() }}</span>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
+                                @php $queryLog = DB::getQueryLog(); @endphp
                             </div>
                         </div>
                     </div>
@@ -69,6 +76,8 @@
     </section>
 @endsection
 
-@section('more_scripts')
-    <script src="{{ asset('frontend-assets/pages/single-post.js') }}"></script>
+@section('more-scripts')
+    <script>
+        console.log(@json($queryLog))
+    </script>
 @stop

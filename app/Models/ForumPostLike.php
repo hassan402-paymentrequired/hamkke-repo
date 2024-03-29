@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $forum_post_id
  * @property int $model_id
- * @property int $model_table_name
+ * @property string $model_table_name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
@@ -27,8 +27,13 @@ class ForumPostLike extends Model
 
 	protected $casts = [
 		'forum_post_id' => 'int',
-		'model_id' => 'int',
-		'model_table_name' => 'int'
+		'model_id' => 'int'
+	];
+
+	protected $fillable = [
+		'forum_post_id',
+		'model_id',
+		'model_table_name'
 	];
 
     public function forum_post()

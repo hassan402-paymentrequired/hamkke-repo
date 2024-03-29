@@ -31,29 +31,18 @@
                         {{--                        </span>--}}
                         <div id="postContent">{!! $parsedPostBody !!}</div>
 
-
                         <div class="like-div">
-                            {{-- TODO:: Allow logged-in customers like the post and clicking again should remove the like :) --}}
-                            <span>
-                                {{ $post->likes()->count() }}
-                                <a href="javascript:void(0);" class="text-decoration-none" id="like-button"
-                                   data-post-id="{{ $post->slug }}">
-                                    <img src="{{ asset('frontend-assets/likes.png') }}" alt="..."/>
-                                </a>
-                                <span class="text">Likes</span>
-                            </span>
+                            <livewire:customer-front.post-like-button :post="$post"/>
+{{--                            <span class="post-comment-button">--}}
+{{--                                {{ $postComments->count() }}--}}
+{{--                                <img src="{{ asset('frontend-assets/comment.png') }}" alt="..."/>--}}
+{{--                                <span class="text">Comments</span>--}}
+{{--                            </span>--}}
                         </div>
 
 
                         <div class="row">
                             <div class="col-12 dropdown">
-
-                                <span class="post-comment-button">
-                                    {{ $postComments->count() }}
-                                    <img src="{{ asset('frontend-assets/comment.png') }}" alt="..."/>
-                                    <span class="text">Comments</span>
-                                </span>
-
                                 <div class="post-comment-content">
                                     <div class="comment">
                                         <div class="comment-form">
@@ -109,8 +98,10 @@
                                                                            checked
                                                                            type="checkbox" name="remember_me"
                                                                            role="switch" id="subscription-checkbox">
-                                                                    <label class="form-check-label" for="subscription-checkbox">
-                                                                        Remember me on this browser for the next time I comment
+                                                                    <label class="form-check-label"
+                                                                           for="subscription-checkbox">
+                                                                        Remember me on this browser for the next time I
+                                                                        comment
                                                                     </label>
                                                                 </div>
                                                                 <hr>

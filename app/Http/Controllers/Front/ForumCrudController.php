@@ -18,12 +18,8 @@ class ForumCrudController extends Controller
 {
     public function index(Request $request)
     {
-        $forumPostsQuery = ForumPost::leftJoin('forum_discussions', function (JoinClause $joinClause) {
-                $joinClause->on('forum_discussions.forum_post_id', 'forum_posts.id')
-                    ->where('forum_discussions.post_status_id', PostStatus::PUBLISHED);
-            })
+        $forumPostsQuery = ForumPost::withCount(['likes', 'forum_discussions'])
             ->leftJoin('forum_post_tag', 'forum_post_tag.forum_post_id', 'forum_posts.id')
-//            ->leftJoin('forum_post_likes', 'forum_post_likes.forum_post_id', 'forum_posts.id')
             ->where('forum_posts.post_status_id', PostStatus::PUBLISHED);
         if($request->get('tag')){
             $tag = Tag::where('slug', $request->get('tag'))->first();
@@ -31,13 +27,11 @@ class ForumCrudController extends Controller
         }
         $forumPosts = $forumPostsQuery->groupBy('forum_posts.id')
             ->select([
-                'forum_posts.*',
-                DB::raw('count(forum_discussions.id) as discussions')
-//                DB::raw('count(forum_post_likes.*)')
+                'forum_posts.*'
             ])
             ->latest()->paginate(10);
         $tags = Tag::all();
-        return view('front-end/forum-posts', compact('forumPosts', 'tags'));
+        return view('front-end.forum-posts', compact('forumPosts', 'tags'));
     }
 
     public function createThread(ForumPostCrudRequest $request)
