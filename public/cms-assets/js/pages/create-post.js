@@ -3,13 +3,14 @@ function deletePost(url) {
 }
 (function ($){
     "use strict";
-    console.log('Here 123');
 
-    HamkkeQuillHelpers.initializeQuillEditor(
-        '#postContent',
-        '#full-editor',
-        '#postCreationForm'
-    );
+    window.onload = function () {
+        HamkkeQuillHelpers.initializeQuillEditor(
+            '#postContent',
+            '#full-editor',
+            '#postCreationForm'
+        );
+    }
 
     document.addEventListener('DOMContentLoaded', function (e) {
         (function () {

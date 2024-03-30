@@ -23,5 +23,5 @@
             HamkkeJsHelpers.submitActionForm(url, 'This thread will not longer be accessible')
         }
     </script>
-    <script src="{{ asset('cms-assets/js/pages/create-post.js') }}"></script>
+    <script src="{{ assetWithVersion('cms-assets/js/pages/create-post.js') }}"></script>
 @endsection

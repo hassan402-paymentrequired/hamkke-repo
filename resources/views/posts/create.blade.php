@@ -118,6 +118,6 @@
         };
         const CATEGORIES = @json($postCategories);
     </script>
-    <script src="{{ asset("cms-assets/js/pages/post-fields-manager.js") }}"></script>
-    <script src="{{ asset("cms-assets/js/pages/create-post.js") }}"></script>
+    <script src="{{ assetWithVersion("cms-assets/js/pages/post-fields-manager.js") }}"></script>
+    <script src="{{ assetWithVersion("cms-assets/js/pages/create-post.js") }}"></script>
 @endsection

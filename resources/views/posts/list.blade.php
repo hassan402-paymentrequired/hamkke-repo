@@ -19,5 +19,5 @@
 @endsection
 
 @section('more-scripts')
-    <script src="{{ asset('cms-assets/js/pages/create-post.js') }}"></script>
+    <script src="{{ assetWithVersion('cms-assets/js/pages/create-post.js') }}"></script>
 @endsection
