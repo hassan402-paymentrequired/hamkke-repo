@@ -270,5 +270,5 @@
         });
 
     </script>
-    <script src="{{ asset('cms-assets/js/pages/list-categories.js') }}"></script>
+    <script src="{{ assetWithVersion('cms-assets/js/pages/list-categories.js') }}"></script>
 @endsection

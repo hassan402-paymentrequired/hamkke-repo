@@ -76,5 +76,5 @@
 @endsection
 
 @section('more-script')
-    <script src="{{ asset('cms-assets/js/dashboards-crm.js') }}"></script>
+    <script src="{{ assetWithVersion('cms-assets/js/dashboards-crm.js') }}"></script>
 @endsection

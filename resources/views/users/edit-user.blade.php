@@ -83,5 +83,5 @@
 @endsection
 
 @section('more-scripts')
-    <script src="{{ asset("cms-assets/js/pages/create-update-user.js") }}"></script>
+    <script src="{{ assetWithVersion("cms-assets/js/pages/create-update-user.js") }}"></script>
 @endsection
