@@ -156,3 +156,16 @@ html:not([dir=rtl]) .app-brand-text {
     color: #5d596c;
     background-color: #f0faf4;
 }
+
+.ql-editor {
+    max-height: 700px;
+    overflow-y: scroll;
+}
+.ql-container p{
+    font-size: 16px !important;
+    font-weight: 300;
+    color: #2e2e2e;
+    line-height: 36px !important;
+    margin-top: 0;
+    margin-bottom: 1rem !important;
+}
