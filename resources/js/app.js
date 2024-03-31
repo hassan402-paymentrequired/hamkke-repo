@@ -1,8 +1,8 @@
 import './bootstrap';
-import ImageUploader from "quill-image-uploader";
 import { ImageActions } from 'https://cdn.jsdelivr.net/npm/@xeger/quill-image-actions/lib/index.js';
 import { ImageFormats } from "https://cdn.jsdelivr.net/npm/@xeger/quill-image-formats/lib/index.js";
 import htmlEditButton from "quill-html-edit-button";
+import ImageUploader from "quill-image-uploader";
 
 Quill.register("modules/imageUploader", ImageUploader);
 Quill.register("modules/imageActions", ImageActions);
@@ -16,11 +16,10 @@ const HamkkeQuillHelpers = {
         let imageUploader =  {
             upload: (file) => {
                 return new Promise((resolve, reject) => {
-                    const formData = new FormData(document.querySelector(this.sitewideForm));
+                    const formData = new FormData(document.querySelector(HamkkeJsHelpers.sitewideForm));
                     formData.append('image', file);
-                    console.log({formData});
                     fetch(
-                        this.imageUploadEndpoint,
+                        HamkkeJsHelpers.imageUploadEndpoint,
                         {
                             method: "POST",
                             body: formData
@@ -28,12 +27,12 @@ const HamkkeQuillHelpers = {
                     )
                         .then(response => response.json())
                         .then((result) => {
-                            console.log(result);
+                            console.log("SUCCESS:", result);
                             resolve(result.data.url);
                         })
                         .catch((error) => {
-                            reject("Upload failed");
                             console.error("Error:", error);
+                            reject("Upload failed");
                         });
                 });
             }
@@ -41,7 +40,7 @@ const HamkkeQuillHelpers = {
         const postContentEditor = new Quill(editorContainerSelector, {
             formats: [
                 "align", "background", "blockquote", "bold", "code-block",
-                "color", "float", "font", "header", "height", "image", "italic",
+                "color", "float", "font", "header", "height", "italic", 'image',
                 "link", "script", "strike", "size", "underline", "width"
             ],
             bounds: editorContainerSelector,
@@ -49,14 +48,14 @@ const HamkkeQuillHelpers = {
             modules: {
                 imageActions: {},
                 imageFormats: {},
-                toolbar,
                 imageUploader,
+                toolbar,
                 htmlEditButton: {}
             },
             theme: 'snow'
         });
         const currentPageContent = finalSubmissionFieldInstance.html();
-        console.log({currentPageContent})
+
         if (currentPageContent) {
             postContentEditor.setContents(
                 JSON.parse(currentPageContent)
@@ -85,7 +84,6 @@ const HamkkeQuillHelpers = {
                 }
             }
 
-            console.log({finalSubmission: postContentEditor.getContents()})
             finalSubmissionFieldInstance.html(
                 JSON.stringify(postContentEditor.getContents())
             )
@@ -95,4 +93,3 @@ const HamkkeQuillHelpers = {
 }
 
 window.HamkkeQuillHelpers = HamkkeQuillHelpers;
-console.log({quillBaseToolbar : HamkkeJsHelpers.quillBaseToolbar});

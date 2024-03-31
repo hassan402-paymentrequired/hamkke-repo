@@ -33,7 +33,7 @@ class QuillManager extends Controller
                 throw new \Exception('Image upload failed');
             }
             return response()->json([
-                'status' => false,
+                'status' => true,
                 'message' => 'Image Uploaded Successfully',
                 'data' => [
                     'url' => $imageUrl
