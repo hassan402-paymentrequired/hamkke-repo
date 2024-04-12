@@ -14,23 +14,25 @@ class ForumPostLikeButton extends Component
 {
     public ForumPost $forumPost;
 
-    public bool $postLiked;
+    public bool $postLiked = false;
 
     public Authenticatable|null|Customer|User $authUser;
 
-    public int $modelId;
-    public string $modelTable;
+    public ?int $modelId;
+    public ?string $modelTable;
 
     public function mount(ForumPost $forumPost): void
     {
         $this->forumPost = $forumPost;
         $this->authUser = getAuthUserPrioritizeCustomer();
-        $this->modelId = $this->authUser->id;
-        $this->modelTable = $this->authUser->getTable();
-        $this->postLiked = ForumPostLike::where('forum_post_id', $this->forumPost->id)
-            ->where('model_id', $this->modelId)
-            ->where('model_table_name', $this->modelTable)
-            ->exists();
+        $this->modelId = $this->authUser?->id;
+        $this->modelTable = $this->authUser?->getTable();
+        if($this->modelTable && $this->modelId) {
+            $this->postLiked = ForumPostLike::where('forum_post_id', $this->forumPost->id)
+                ->where('model_id', $this->modelId)
+                ->where('model_table_name', $this->modelTable)
+                ->exists();
+        }
     }
 
     public function render(): View

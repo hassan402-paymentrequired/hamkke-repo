@@ -55,10 +55,17 @@
                                             @php
                                                 $forumPoster = $forumPost->getPoster();
                                             @endphp
-                                            <div class="d-flex profile-div align-items-center mt-0">
+                                            <div class="d-flex profile-div align-items-center mt-0 justify-content-sm-between">
+                                                <div class="forum-poster-details">
                                                 @component('components.front.profile-image', ['avatar' => $forumPoster->avatar])
                                                 @endcomponent
                                                 <span>{{ $forumPoster->name }}</span>
+                                                </div>
+                                                <div class="forum-tags">
+                                                    @foreach($forumPost->tags as $tag)
+                                                        <span class="badge"> {{ $tag->name }}</span>
+                                                    @endforeach
+                                                </div>
                                             </div>
 
                                             <div class="row">
@@ -81,6 +88,9 @@
                                         </div>
                                     </div>
                                 @endforeach
+                                <div class="w-100">
+                                {{ $forumPosts->links('vendor.pagination.customer-front.float-right') }}
+                                </div>
                             </div>
                         </div>
                     </div>

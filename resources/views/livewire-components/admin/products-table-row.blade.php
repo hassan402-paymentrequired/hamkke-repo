@@ -1,7 +1,7 @@
 <tr>
     <td>#{{ $product->id }}</td>
     <td class="nk-tb-col">{{ $product->name }}</td>
-    <td class="nk-tb-col"><span class="ti ti-currency-naira"></span>{{ moneyFormat($product->price/100) }}</td>
+    <td class="nk-tb-col"><span class="ti ti-currency-naira"></span>{{ $product->getPriceInNaira(true) }}</td>
     <td>0</td>
     <td class="nk-tb-col">
         @canany(['admin.product.update', 'admin.product.delete'])

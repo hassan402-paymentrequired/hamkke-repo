@@ -1,0 +1,28 @@
+/* Override Bootstrap 5 Pagination Styles */
+.pagination {
+    justify-content: center;
+}
+
+.pagination .page-link {
+    color: #662687;
+    border-color: #662687;
+}
+
+.pagination .page-link:hover {
+    color: #fff;
+    background-color: #704b84;
+    border-color: #662687;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #662687;
+    border-color: #662687;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: transparent;
+    border-color: #dee2e6;
+}

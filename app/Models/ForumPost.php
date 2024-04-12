@@ -109,6 +109,12 @@ class ForumPost extends Model
         return $this->post_status_id === PostStatus::PUBLISHED->value;
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)
+            ->withTrashed();
+    }
+
     /**
      * @return string
      */

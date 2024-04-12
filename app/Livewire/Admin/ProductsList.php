@@ -11,14 +11,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Title('Products')]
 class ProductsList extends Component
 {
-    /**
-     * @var Product[]|Collection $products
-     */
-    public array|Collection $products;
+    use WithPagination;
 
     public Collection $productCategories;
     public array $productTypes;
@@ -28,14 +26,14 @@ class ProductsList extends Component
     public function mount(): void
     {
         $this->authUser = auth()->user();
-        $this->products = Product::all();
         $this->productCategories = ProductCategory::all();
         $this->productTypes = ProductType::cases();
     }
 
     public function render()
     {
-        return view('livewire-components.admin.products-list');
+        $products = Product::paginate(3);
+        return view('livewire-components.admin.products-list', compact('products'));
     }
 
     #[On('open-creation-modal')] public function openCreationModal(): void

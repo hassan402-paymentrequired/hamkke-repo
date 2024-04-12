@@ -32,9 +32,6 @@
                          aria-labelledby="v-pills-{{ $selectedCategory ? $selectedCategory->slug : '' }}-tab">
                         <div class="forum">
                             <div class="d-flex flex-row flex-wrap forum-row justify-content-between">
-                                @php
-                                    DB::enableQueryLog();
-                                @endphp
                                 @foreach($posts as $post)
                                     <div class="card">
                                         <img class="card-img-top"
@@ -66,7 +63,9 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                @php $queryLog = DB::getQueryLog(); @endphp
+                                <div class="w-100">
+                                {{ $posts->links('vendor.pagination.customer-front.float-right') }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -76,8 +75,8 @@
     </section>
 @endsection
 
-@section('more-scripts')
-    <script>
-        console.log(@json($queryLog))
-    </script>
-@stop
+{{--@section('more-scripts')--}}
+{{--    <script>--}}
+{{--        console.log(@json($queryLog))--}}
+{{--    </script>--}}
+{{--@stop--}}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\RouteServiceProvider;
 use Doctrine\DBAL\Schema\Index;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Routing\Route;
@@ -730,6 +731,11 @@ function isAdminRoute(): bool
 {
     $currentPath = request()->path();
     return str_starts_with($currentPath, 'admin');
+}
+
+function redirectUserHome(): string
+{
+    return isAdminRoute() ? url(RouteServiceProvider::ADMIN_HOME) : url(RouteServiceProvider::HOME);
 }
 
 function includeWWWPrefix($domain)
