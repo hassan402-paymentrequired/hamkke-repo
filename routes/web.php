@@ -14,6 +14,8 @@ use App\Http\Controllers\Front\PostsController as FrontPostsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Front\PagesController;
 use App\Http\Controllers\General\QuillManager;
+use App\Livewire\Admin\OrderDetails as AdminOrderDetails;
+use App\Livewire\Admin\OrdersList as AdminOrdersList;
 use App\Livewire\Admin\ProductCategoriesList;
 use App\Livewire\Admin\ProductsList;
 use App\Livewire\CustomerFront\CartComponent;
@@ -118,6 +120,7 @@ Route::group(['domain' => $defaultDomain],  function () {
 
             Route::get('/manage-permissions', ManageRolePermissions::class)->name('admin.permissions.manage');
 
+            // Ecommerce
             Route::prefix('product-categories')->group(function (){
                 Route::get('/', ProductCategoriesList::class)->name('admin.product-categories.list');
                 Route::post('/create', ProductCategoriesList::class)->name('admin.product-category.create');
@@ -129,6 +132,10 @@ Route::group(['domain' => $defaultDomain],  function () {
                 Route::post('/create', ProductsList::class)->name('admin.product.create');
                 Route::post('/update', ProductsList::class)->name('admin.product.update');
                 Route::post('/delete', ProductsList::class)->name('admin.product.delete');
+            });
+            Route::prefix('orders')->group(function (){
+                Route::get('/', AdminOrdersList::class)->name('admin.orders.list');
+                Route::get('/view/{order}', AdminOrderDetails::class)->name('admin.order.view');
             });
 
         });

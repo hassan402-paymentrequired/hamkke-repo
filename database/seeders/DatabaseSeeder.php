@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             SettingsTableSeeder::class,
             PostTypesTableSeeder::class,
             PostCategoriesTableSeeder::class,
-            ProductCategoriesTableSeeder::class
+            ProductCategoriesTableSeeder::class,
+            CountriesTableSeeder::class
         ]);
     }
 }

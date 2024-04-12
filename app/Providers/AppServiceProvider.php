@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Helpers\SiteSettings;
 use App\Models\Permission;
 use App\Services\CartService;
+use App\Services\OrderService;
 use App\Services\PaymentService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\Paginator;
@@ -26,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton('hamkke-payment', function ($app) {
             return new PaymentService();
+        });
+        $this->app->singleton('hamkke-order', function ($app) {
+            return new OrderService();
         });
     }
 

@@ -46,6 +46,12 @@
     text-decoration: none;
 }
 
+.forum-tags .badge {
+    border: 1px solid #945ab3;
+    color: #945ab3;
+    font-size: 12px;
+}
+
 .about-div {
     background-image: url('/frontend-assets/about-us.png');
 }
@@ -607,6 +613,19 @@ p.sitewide-alert-message {
 }
 
 #like-button i{
+    color: #404040;
+}
+
+.info-form input, .info-form select {
+    margin: 5px 0;
+    padding: 10px;
+    outline: none;
+    border: 0.6px solid #404040;
+    background-color: transparent;
+    width: 49%;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 400;
     color: #404040;
 }
 

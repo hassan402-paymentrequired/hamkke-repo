@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/toastr/toastr.css') }}"/>
 
     <link href="{{ assetWithVersion('frontend-assets/css/custom-styles.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ assetWithVersion('frontend-assets/css/custom-pagination-styles.css') }}" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/typography.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/katex.css') }}"/>

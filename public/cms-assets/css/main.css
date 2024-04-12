@@ -169,3 +169,7 @@ html:not([dir=rtl]) .app-brand-text {
     margin-top: 0;
     margin-bottom: 1rem !important;
 }
+
+.naira-prefix::before {
+    content: "₦"
+}

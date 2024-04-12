@@ -19,7 +19,7 @@ class ProductForm extends Form
     public ?int $productCategory = null;
     public ?int $productType = null;
     public $electronic_document;
-    public ?string $class_registration_link;
+    public ?string $class_registration_link = null;
 
     public ?Product $product = null;
 

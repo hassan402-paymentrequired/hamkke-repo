@@ -15,7 +15,8 @@
                 </div>
             @endcan
             <div class="table-responsive text-nowrap">
-                <table class="table table-bordered permissions-management-table">
+                <table class="table table-bordered">
+                    <caption>All Products</caption>
                     <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
@@ -32,6 +33,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                {{ $products->links('vendor.pagination.bootstrap-5') }}
             </div>
         </div>
     </div>
@@ -46,7 +48,6 @@
         const {addLivewireEventListener, uploadAndPreviewImage} = HamkkeJsHelpers;
         addLivewireEventListener( function () {
             uploadAndPreviewImage('#uploadedProductImage', '#productImage', '#resetProductImage');
-            const deleteProductLinks = document.querySelectorAll("[id^='deleteProduct_']")
         });
         $wire.on('show-toast', (event) => {
             const eventParams = event[0]

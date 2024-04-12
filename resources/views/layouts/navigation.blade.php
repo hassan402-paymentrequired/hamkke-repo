@@ -73,5 +73,6 @@
         <x-admin-nav-link routeName="admin.product-categories.list" linkText="Product Categories" icon="ti-list"/>
 
         <x-admin-nav-link routeName="admin.products.list" linkText="Products" icon="ti-shopping-bag"/>
+        <x-admin-nav-link routeName="admin.orders.list" linkText="Orders" icon="ti-shopping-bag"/>
     </ul>
 </aside>

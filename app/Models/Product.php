@@ -34,7 +34,8 @@ use Illuminate\Support\Str;
 class Product extends Model
 {
 	use SoftDeletes;
-	protected $table = 'products';
+
+    protected $table = 'products';
 
 	protected $casts = [
 		'price' => 'int',
@@ -95,4 +96,6 @@ class Product extends Model
         // Decrypt the ID
         return encryptDecrypt('decrypt', $decodedEncryptedId);
     }
+
+
 }

@@ -41,10 +41,11 @@
             <div class="col-md-9 paddingR tab-content pt-0 table-responsive" id="v-pills-tabContent">
                 <div class="article-div">
                     <h4>My Orders</h4>
-                    <p class="lead">Your orders in one place.</p>
+{{--                    <p class="lead">Your orders in one place.</p>--}}
                     <hr>
                     <div class="table-responsive">
                         <table class="table table-hover">
+                            <caption>Your orders in one place.</caption>
                             <thead>
                             <tr>
                                 <th scope="col">Order</th>
@@ -62,6 +63,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="text-center">
+                        {{ $orders->links('vendor.pagination.customer-front.float-right') }}
+                        </div>
                     </div>
                 </div>
             </div>

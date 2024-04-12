@@ -37,7 +37,7 @@ class ViewOrder extends Component
                 $this->order = Order::find($orderId);
             }
         }
-        $this->orderProducts =  $this->order->products;
+        $this->orderProducts =  $this->order->products()->withTrashed()->get();
     }
 
     /**
