@@ -18,6 +18,7 @@ use App\Livewire\Admin\OrderDetails as AdminOrderDetails;
 use App\Livewire\Admin\OrdersList as AdminOrdersList;
 use App\Livewire\Admin\ProductCategoriesList;
 use App\Livewire\Admin\ProductsList;
+use App\Livewire\CustomerFront\AccessOrderProduct;
 use App\Livewire\CustomerFront\CartComponent;
 use App\Livewire\CustomerFront\OrdersList;
 use App\Livewire\CustomerFront\Store;
@@ -60,9 +61,9 @@ Route::group(['domain' => $defaultDomain],  function () {
     Route::prefix('customer')->middleware('auth.customer')
         ->group(function (){
             Route::get('/orders', OrdersList::class)->name('customer.orders');
-            Route::get('/order/download-product/{downloadUuid}', ViewOrder::class)->name('download-product');
-            Route::get('/view-order/{orderId}', ViewOrder::class)->name('customer.order.view-II');
             Route::get('/order/{order}', ViewOrder::class)->name('customer.order.view');
+            Route::get('/access-order-product/{order}', ViewOrder::class)->name('download-product');
+
         });
 
     Route::prefix('admin')->middleware('permission_protected')->group(function () {

@@ -11,20 +11,44 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="checkout">
-                        <div class="total d-flex justify-content-between">
-                            <span>Cart Total</span>
-                            <span class="naira-prefix">{{ $totalAmount }}</span>
-                        </div>
+                    <form action="{{ route('pay') }}" method="POST">
+                        <div class="checkout">
+                            <div class="total d-flex justify-content-between">
+                                <span>Cart Total</span>
+                                <span class="naira-prefix">{{ $totalAmount }}</span>
+                            </div>
+                            <div class="personal">
+                                <div class="title">Personal Details</div>
+                                <p>Fill in your details for Checkout</p>
 
-                        <div class="payment">
-                            <form action="{{ route('pay') }}" method="POST">
+                                <div class="info-form">
+                                    <div class="d-flex justify-content-between">
+                                        <input type="text" wire:model.live="customerDetailsForm.customerFirstName" placeholder="First Name">
+                                        <input type="text" wire:model.live="customerDetailsForm.customerLastName" placeholder="Last Name">
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <input type="text" class="w-100" wire:model.live="customerDetailsForm.customerEmail" placeholder="Email Address">
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+{{--                                        <select data-live-search="true"  wire:model.live="customerDetailsForm.customerCountry">--}}
+{{--                                            <option value="" style="color: #757575">Select Phone Prefix</option>--}}
+{{--                                            @foreach($countries as $country)--}}
+{{--                                                <option value="{{ $country->id }}">+{{ $country->phone_prefix }}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+                                        <input type="text" wire:model.live="customerDetailsForm.customerPhone" placeholder="Phone Number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="payment">
                                 @csrf
                                 <button>Make Payment</button>
-                            </form>
-                        </div>
+                            </div>
 
-                    </div>
+                        </div>
+                    </form>
                 </div>
             @else
                 <div class="col-md-12">

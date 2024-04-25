@@ -5,7 +5,6 @@ namespace App\Livewire\Forms\Admin;
 use App\Enums\ProductType;
 use App\Models\Product;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\ValidationException;
 use Livewire\Form;
@@ -22,6 +21,9 @@ class ProductForm extends Form
     public ?string $class_registration_link = null;
 
     public ?Product $product = null;
+
+    public ?string $slug = '';
+    public ?string $productFilePath = null;
 
     public function rules()
     {
@@ -66,15 +68,17 @@ class ProductForm extends Form
     {
         $this->validate();
         $this->slug = createSlugFromString($this->name);
+        $this->productFilePath = Product::uploadProductDocument($this->electronic_document, $this->slug);
         return Product::create([
-            'product_image' => $this->uploadImage($this->productImage, 'product_images'),
+            'product_image' => $this->uploadImage($this->productImage),
             'name' => $this->name,
             'slug' => $this->slug,
             'price' => $this->price * 100,
             'description' => $this->description,
             'product_type' => $this->productType,
             'product_category_id' => $this->productCategory,
-            'electronic_product_url' => $this->uploadImage($this->electronic_document, 'electronic_product_documents') ?? $this->product->electronic_product_url,
+            'electronic_product_file_path' => $this->productFilePath,
+            'electronic_product_url' => $this->productFilePath ? getAbsoluteUrlFromPath($this->productFilePath) : null,
             'class_registration_url' => $this->class_registration_link
         ]);
     }
@@ -86,25 +90,29 @@ class ProductForm extends Form
     {
         $this->validate();
         $this->slug = createSlugFromString($this->name);
+        if($this->electronic_document){
+            $this->productFilePath = Product::uploadProductDocument($this->electronic_document, $this->slug);
+        }
         return $this->product->update([
-            'product_image' => $this->uploadImage($this->productImage, 'product_images') ?? $this->product->product_image,
+            'product_image' => $this->uploadImage($this->productImage) ?? $this->product->product_image,
             'name' => $this->name,
             'slug' => $this->slug,
             'price' => $this->price * 100,
             'description' => $this->description,
             'product_category_id' => $this->productCategory,
             'product_type' => $this->productType,
-            'electronic_product_url' => $this->uploadImage($this->electronic_document, 'electronic_product_documents') ?? $this->product->electronic_product_url,
+            'electronic_product_file_path' => $this->productFilePath ?? $this->product->electronic_product_file_path,
+            'electronic_product_url' => $this->productFilePath ? getAbsoluteUrlFromPath($this->productFilePath) : $this->product->electronic_product_url,
             'class_registration_url' => $this->class_registration_link
         ]);
     }
 
-    private function uploadImage($fileInRequest, $folderName): ?string
+    private function uploadImage($fileInRequest): ?string
     {
         if ($fileInRequest) {
             $filename = strtolower($this->slug) . time()
                 . '.' . $fileInRequest->getClientOriginalExtension();
-            $path = $fileInRequest->storeAs("/{$folderName}", $filename, ['disk' => 'public']);
+            $path = $fileInRequest->storeAs('/product_images', $filename, ['disk' => 'public']);
             return getAbsoluteUrlFromPath($path);
         }
         return null;

@@ -32,6 +32,6 @@ class PostLike extends Model
 
     protected $fillable = [
         'post_id',
-        'customer_id'
+        'customer_id',
     ];
 }

@@ -11,8 +11,13 @@
                     <div class="ms-3">
                         {{--                        <a href="detail.html" class="text-decoration-none">--}}
                         <h6 class="mb-0 text-dark">{{ $orderProduct->name }}</h6>
-                        {{--                            <span class="text-muted text-sm">Order ID: {{ $orderProduct->order_id }}</span>--}}
-                        {{--                        </a>--}}
+                        @if($order->isSuccessful() && $orderProduct->product_type === \App\Enums\ProductType::DIGITAL_PRODUCT)
+                        <a class="text-success" style="font-size: small; text-decoration: none"
+                           href="javascript:void(0)"
+                           wire:click="$parent.startDownload({{ $orderProduct->id }})">
+                            <span class="fa fa-download"></span> Download Product
+                        </a>
+                        @endif
                     </div>
                 </div>
             </div>

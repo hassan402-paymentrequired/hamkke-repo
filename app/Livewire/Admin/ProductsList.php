@@ -32,7 +32,7 @@ class ProductsList extends Component
 
     public function render()
     {
-        $products = Product::paginate(3);
+        $products = Product::paginate(10);
         return view('livewire-components.admin.products-list', compact('products'));
     }
 
