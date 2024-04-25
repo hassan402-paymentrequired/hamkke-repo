@@ -129,6 +129,8 @@
                         <input type="file" id="electronicDocument" hidden
                                wire:model.live="form.electronic_document"/>
                     </label>
+                    <br>
+                    <div wire:loading wire:target="form.electronic_document">Uploading...</div>
                     @error('form.electronic_document')
                     <div>
                         <span class="help-block form-error" role="alert">{{ $message }}</span>
@@ -156,7 +158,7 @@
             <button type="button" class="btn btn-label-secondary"
                     wire:click="closeModal">Close
             </button>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Submit</button>
         </div>
     </form>
 </x-admin.modal>

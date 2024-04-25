@@ -79,7 +79,6 @@ class CreateProduct extends Component
             $this->update();
         } else {
             $product = $this->form->store();
-
             flashSuccessMessage('Product "' . $product['name'] . '" created successfully');
             $this->redirect(route('admin.products.list'));
         }
@@ -119,6 +118,7 @@ class CreateProduct extends Component
             $this->modalTitle = 'Update Product: ' . $product->name;
             $this->form->fill([
                 'product' => $product,
+                'slug' => $product->slug,
                 'name' => $product->name,
                 'description' => $product->description,
                 'price' => $product->price / 100,

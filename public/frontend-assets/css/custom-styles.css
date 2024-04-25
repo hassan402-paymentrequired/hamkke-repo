@@ -597,7 +597,7 @@ p.sitewide-alert-message {
 }
 
 #toast-container:not(.toast-bottom-full-width, .toast-top-full-width) > div {
-    width: 30em !important;
+    width: 35em !important;
 }
 
 .toast-title {

@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property int $customer_id
  * @property int $amount
- * @property int $order_status
+ * @property OrderStatus $order_status
  * @property string $access_code
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -61,7 +61,8 @@ class Order extends Model
 
     public function order_downloads()
     {
-        return $this->hasMany(OrderDownload::class);
+        return $this->hasMany(OrderDownload::class)
+            ->with(['product']);
     }
 
     public function payment_transactions()
@@ -85,5 +86,10 @@ class Order extends Model
             return number_format($this->amount/100, 2);
         }
         return moneyFormat($this->amount / 100);
+    }
+
+    public function isSuccessful(): bool
+    {
+        return $this->order_status === OrderStatus::COMPLETED;
     }
 }

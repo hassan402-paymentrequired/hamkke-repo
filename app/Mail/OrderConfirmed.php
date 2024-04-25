@@ -4,7 +4,9 @@ namespace App\Mail;
 
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderDownload;
 use Illuminate\Bus\Queueable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -16,11 +18,13 @@ class OrderConfirmed extends Mailable
 
     protected Order $order;
     protected Customer $notifiable;
+    protected array|Collection $orderDownloads;
 
     public function __construct(Order $order, Customer $notifiable)
     {
         $this->order = $order;
         $this->notifiable = $notifiable;
+        $this->orderDownloads = $this->order->order_downloads;
     }
 
     /**
@@ -43,7 +47,8 @@ class OrderConfirmed extends Mailable
             with: [
                 'order' => $this->order,
                 'notifiable' => $this->notifiable,
-                'encodedOrderId' => urlencode(encryptDecrypt('encrypt', $this->order->id))
+                'encodedOrderId' => urlencode(encryptDecrypt('encrypt', $this->order->id)),
+                'orderDownloads' => $this->orderDownloads
             ]
         );
     }

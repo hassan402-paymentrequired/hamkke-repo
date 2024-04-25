@@ -5,6 +5,7 @@
                  alt="Image for product : {{ $product->name }}"/>
             <div class="material-details">
                 <h6>{{ $product->name }}</h6>
+                <span class="badge mb-1" style="background-color: #f78181">{{ $product->product_type->displayName() }}</span>
                 <p class="naira-prefix">{{ $product->getPriceInNaira(true) }}</p>
             </div>
         </a>

@@ -8,7 +8,8 @@
                         <div class="text-white text-center p-4 border border-bottom-0"
                              style="background-color: #662687;">
                             <a class="d-inline-block" href="#">
-                                <img class="img-fluid rounded-circle img-thumbnail p-2 mb-3"
+                                <img class="img-fluid rounded-circle img-
+                                 p-2 mb-3"
                                      src="{{ asset('frontend-assets/no-avatar-icon.jpg') }}"
                                      width="150" alt="...">
                             </a>
@@ -52,6 +53,16 @@
                         @endif
 
                     </p>
+                    @if($download)
+                        @if ($downloading)
+                            <div>
+                                Download in progress ...
+                            </div>
+                        @endif
+                        @if($downloadStatus)
+                            <p class="alert alert-{{ $downloadStatus['type'] }}">{{ $downloadStatus['message'] }}
+                        @endif
+                    @endif
                     <hr>
                     <div class="bg-light px-4 py-3">
                         <div class="row fw-normal text-uppercase">
@@ -63,7 +74,7 @@
                     </div>
                     @foreach($orderProducts as $orderProduct)
                         <livewire:customer-front.order-products-table-row
-                            key="{{ $orderProduct->id }}" :orderProduct="$orderProduct"/>
+                            key="{{ $orderProduct->id }}" :order="$order" :orderProduct="$orderProduct"/>
                     @endforeach
                     <div class="border-bottom py-3">
                         <div class="row">
@@ -72,9 +83,44 @@
                                 <strong>{{ $order->getPriceInNaira(true) }}</strong></div>
                         </div>
                     </div>
+                    @if($download)
+                        <button type="button" id="download-file" wire:click="startDownload" style="display:none;">
+                            Download
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
 </section>
+@if($download)
+    <x-slot name="more_scripts_slot">
+        @script
+        <script>
+            $wire.on('show-toast', (event) => {
+                const eventParams = event[0]
+                HamkkeJsHelpers.showToast(eventParams.title, eventParams.message, eventParams.toast_type)
+            });
+            window.onload = function () {
+                const result = Swal.fire({
+                    title: 'Thank you for your purchase',
+                    text: 'Please click confirm to start your download',
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonText: 'Confirm Download',
+                    customClass: {
+                        confirmButton: 'btn btn-success me-3 waves-effect waves-light',
+                        cancelButton: 'btn btn-danger waves-effect waves-light'
+                    },
+                    buttonsStyling: false
+                }).then(response => {
+                    if (response.isConfirmed) {
+                        $('#download-file').trigger('click')
+                    }
+                })
+            }
+        </script>
+        @endscript
+    </x-slot>
+@endif
