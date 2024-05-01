@@ -57,7 +57,7 @@ class CreateProduct extends Component
         $product = $this->form->product;
         if($product){
             $productUrl = $product->electronic_product_url ?? $product->class_registration_url;
-            return $fileNameOnly ? $productUrl : basename($productUrl);
+            return $fileNameOnly ? basename($productUrl) : $productUrl;
         }
         return null;
     }
@@ -67,7 +67,7 @@ class CreateProduct extends Component
      */
     public function productTypeEditable() : bool
     {
-        return !$this->form->product || $this->form->product->orders()->count() === 0;
+        return !$this->form->product || ($this->form->product && $this->form->product->orders()->count() > 0);
     }
 
     /**

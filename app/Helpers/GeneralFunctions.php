@@ -167,9 +167,6 @@ function logCriticalError($message, Exception $actualException = null, $logChann
         $logMessage = $errorMessage . "\n
             Trace:: " . $actualException->getTraceAsString();
     }
-    if (in_array(config('app.env'), ['staging', 'production']) && !in_array($logChannel,['cron_tasks_logs', 'external_api_requests'])) {
-        Log::channel('slack')->critical($errorMessage);
-    }
     Log::channel($logChannel)->critical("Message :: " . $logMessage);
 }
 

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Helpers\SiteSettings;
+use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Permission;
 use App\Services\CartService;
 use App\Services\OrderService;
@@ -10,6 +12,7 @@ use App\Services\PaymentService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Laravel\Sanctum\Sanctum;
@@ -64,6 +67,9 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layouts.frontend.front-app', function ($view) use ($cartService) {
             $cartItemCount = $cartService->getCartItemCount(); // Implement this method in your CartService
             $view->with('cartItemCount', $cartItemCount);
+        });
+        Gate::define('access-order', function (Customer $customer, Order $order) {
+            return $customer->id === $order->customer_id;
         });
     }
 }

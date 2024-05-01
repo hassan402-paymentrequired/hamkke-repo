@@ -36,10 +36,12 @@ class PaymentController extends Controller
      */
     public function handleGatewayCallback()
     {
+        $order = null;
         try {
             $paystackResponse = Paystack::getPaymentData();
             $data = $paystackResponse['data'];
             $paymentTransaction = HamkkePayment::getPayment($data['reference']);
+            $order = $paymentTransaction->order;
             $paymentSuccessful = HamkkePayment::updatePayment($paymentTransaction, $data);
             if ($paymentSuccessful) {
                 $paymentTransaction->order()->update([
@@ -53,9 +55,14 @@ class PaymentController extends Controller
                 ]);
                 flashErrorMessage($paymentTransaction->payment_status->description());
             }
-            return redirect()->route('customer.orders');
         } catch (Exception $exception){
-            dd($exception);
+            logCriticalError('An error occurred: Unable to verify transaction', $exception);
+            flashErrorMessage('An error occurred: Unable to verify transaction');
         }
+
+        if($order){
+            return  redirect()->route('customer.order.view', $order);
+        }
+        return redirect()->route('customer.orders');
     }
 }

@@ -27,4 +27,12 @@ class OrderDetails extends Component
     {
         return view('livewire-components.admin.order-details');
     }
+
+    public function verifyTransaction()
+    {
+        $paymentTransactions = $this->order->payment_transactions;
+        foreach ($paymentTransactions as $transaction){
+
+        }
+    }
 }
