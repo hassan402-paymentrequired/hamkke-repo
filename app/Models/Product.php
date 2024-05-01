@@ -137,7 +137,9 @@ class Product extends Model
         if(!$this->electronic_product_file_path){
             $relativePath = self::ELECTRONIC_PRODUCT_FOLDER . '/' . basename($this->electronic_product_url);
         }
+        $fileExtension = pathinfo($this->electronic_product_url, PATHINFO_EXTENSION);
         return [
+            'preferred_name' => "{$this->name}.{$fileExtension}",
             'mimeType' => $storageDisk->mimeType($relativePath),
             'size' => $storageDisk->size($relativePath),
             'path' => $relativePath,

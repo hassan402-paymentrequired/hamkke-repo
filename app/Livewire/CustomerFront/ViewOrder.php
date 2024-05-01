@@ -8,6 +8,7 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
@@ -17,6 +18,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[Title('Order Details')]
 #[Layout('livewire-layouts.customer-front-layout')]
@@ -40,11 +42,13 @@ class ViewOrder extends Component
      * @param string|Order $order
      * @return void
      */
-    public function mount(Order $order) : void
+    public function mount(Order $order): void
     {
         $this->order = $order;
-        $this->orderProducts =  $this->order->products()->withTrashed()->get();
-        if($this->download) {
+        $authUser = auth(CUSTOMER_GUARD_NAME)->user();
+        $this->authorizeForUser($authUser,'access-order', $order)->allowed();
+        $this->orderProducts = $this->order->products()->withTrashed()->get();
+        if ($this->download) {
             $this->orderDownload = $order->order_downloads()->whereUuid($this->download)->first();
         }
     }
@@ -52,7 +56,7 @@ class ViewOrder extends Component
     /**
      * @return View
      */
-    public function render() : View
+    public function render(): View
     {
         return view('livewire-components.customer-front.view-order');
     }
@@ -60,7 +64,7 @@ class ViewOrder extends Component
     public function startDownload($productId = null)
     {
         try {
-            if($productId){
+            if ($productId) {
                 $this->orderDownload = $this->order->order_downloads()->where('product_id', $productId)
                     ->first();
             }
@@ -69,40 +73,26 @@ class ViewOrder extends Component
                 ->where('product_id', $product->id)->first();
 
             $downloadCount = $this->orderDownload->download_count;
-            if($downloadCount > $orderProduct->quantity * 2) {
+            if (isProductionEnv() && $downloadCount > $orderProduct->quantity * 2) {
                 $this->dispatch('show-toast', [
                     'title' => 'Oops!! Download Limit Exceeded!!',
                     'message' => 'This product has been downloaded 3 time already. <br>Thank you for your purchase',
                     'toast_type' => 'error'
                 ]);
             } else {
-
+                $fileMetadata = $this->orderDownload->product->getProductDocumentMetadata();
+                $headers = [
+                    'Content-Type' => $fileMetadata['mimeType'],
+                    'Content-Length' => $fileMetadata['size'],
+                ];
                 $downloadCount += 1;
                 $this->orderDownload->update([
                     'download_count' => $downloadCount,
                     'downloaded_at' => $downloadCount >= 2 ? now()->toDateTimeString() : null
                 ]);
-                $fileMetadata = $this->orderDownload->product->getProductDocumentMetadata();
-                $path = $fileMetadata['path'];
-                $headers = [
-                    'Content-Type' => $fileMetadata['mimeType'],
-                    'Content-Length' => $fileMetadata['size'],
-                ];
-
-                return Storage::disk('public')->download(
-                    $path,
-                    $product->name . " - {$this->order->id}",
-                    $headers
-                )->setCallback(function () {
-                    $this->dispatch('show-toast', [
-                        'title' => 'Download Complete!!',
-                        'message' => 'Your download is complete. Once again, thank you for your purchase',
-                        'toast_type' => 'success'
-                    ]);
-                });
+                return Storage::disk('public')->download($fileMetadata['path'], $fileMetadata['preferred_name'], $headers);
             }
-
-        }catch (\Exception|\TypeError $exception) {
+        } catch (\Exception|\TypeError $exception) {
             Log::error($exception->getMessage() . "| File:: {$exception->getFile()} | Line:: {$exception->getLine()}");
             $this->dispatch('show-toast', [
                 'title' => 'Download Failed!!',

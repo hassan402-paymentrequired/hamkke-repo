@@ -53,7 +53,7 @@
                         <span style="font-weight: bold">Product Type :: {{ $form->product->product_type->displayName() }}</span>
                         <br>
                         <span class="text-decoration-underline">Product::</span>
-                        <a href="{{ $this->getProductDocument() }}">
+                        <a href="{{ $this->getProductDocument() }}" target="_blank">
                             {{ $this->getProductDocument(true) }}
                         </a>
                     </p>

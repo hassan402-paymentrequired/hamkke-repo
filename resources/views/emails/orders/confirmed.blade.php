@@ -31,7 +31,7 @@ This email confirms your recent purchase of the following digital products:
 </x-mail::button>
 
 If you have any questions or need assistance, feel free to reply to this email or contact our customer support team
-at [kemmiola@gmail.com](mailto:kemmiola@gmail.com).
+at [admin@hamkkechingu.com](mailto:admin@hamkkechingu.com).
 
 Thank you for your purchase.
 
