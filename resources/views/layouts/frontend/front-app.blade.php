@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/toastr/toastr.css') }}"/>
 
     <link href="{{ assetWithVersion('frontend-assets/css/custom-styles.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ assetWithVersion('frontend-assets/css/custom-pagination-styles.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ assetWithVersion('frontend-assets/css/custom-pagination-styles.css') }}" rel="stylesheet"
+          type="text/css">
 
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/typography.css') }}"/>
     <link rel="stylesheet" href="{{ asset('cms-assets/vendor/libs/quill/katex.css') }}"/>
@@ -28,15 +29,22 @@
     <script src="{{ asset('cms-assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ assetWithVersion('cms-assets/js/config.js') }}"></script>
     @if(isProductionEnv())
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9NB48P8XBK"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9NB48P8XBK"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
 
-        gtag('config', 'G-9NB48P8XBK');
-    </script>
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+
+            gtag('config', 'G-9NB48P8XBK');
+        </script>
+        <script async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8763045245161653"
+                crossorigin="anonymous"></script>
     @endif
     <style>
         #mc_embed_signup {
@@ -190,7 +198,7 @@
                     $(item).html(HamkkeJsHelpers.number_format(itemValue));
                 }
             });
-            HamkkeJsHelpers.addLivewireEventListener(function (){
+            HamkkeJsHelpers.addLivewireEventListener(function () {
                 Livewire.on('show-toast', (event) => {
                     const eventParams = event[0]
                     HamkkeJsHelpers.showToast(eventParams.title, eventParams.message, eventParams.toast_type)
