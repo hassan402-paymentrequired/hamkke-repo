@@ -1,5 +1,10 @@
 @php
+    use App\Helpers\SiteSettings;
+    use App\Models\Post;
     use App\Models\PostType;
+    /**
+ * @var $coreSiteDetails SiteSettings
+    */
 @endphp
     <!DOCTYPE html>
 <html lang="en">
@@ -7,6 +12,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-8763045245161653">
+    {{--  Twitter Tags  --}}
+    @if(isCurrentRoute(['home', 'about_us', 'contact_us']))
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:site" content="@ham_kke"/>
+        <meta name="twitter:title" content="{{ $coreSiteDetails->siteName() }}"/>
+        <meta name="twitter:description" content="{{ $coreSiteDetails->tagline() }}"/>
+        <meta name="twitter:image" content="{{ $coreSiteDetails->siteLogo() }}"/>
+    @elseif(isset($post) && ($post instanceof Post))
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:site" content="@ham_kke"/>
+        <meta name="twitter:title" content="{{ $post->title }}"/>
+        <meta name="twitter:description" content="{{ $post->summary }}"/>
+        <meta name="twitter:image" content="{{ $post->featured_image }}"/>
+    @endif
     <!-- Core CSS -->
     {{--    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>--}}
     <link href="{{ asset('frontend-assets/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -78,7 +98,7 @@
     @vite('resources/js/app.js')
 </head>
 
-<body class="{{ isset($bodyClass) ? $bodyClass : 'article-body' }}">
+<body class="{{ $bodyClass ?? 'article-body' }}">
 @if(auth('web')->check())
     @include('components.front.top-admin-row')
 @endif
