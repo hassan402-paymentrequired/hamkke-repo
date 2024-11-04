@@ -25,6 +25,9 @@
                             <span>{{ $postAuthor->name }}</span>
                         </div>
                         <p>{{ $postAuthor->author_bio }}</p>
+                        <hr>
+                        @component('components.front.ads-component-portrait')
+                        @endcomponent
                     </span>
                 </div>
 

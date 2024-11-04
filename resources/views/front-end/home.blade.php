@@ -200,16 +200,11 @@
                                 <img src="{{ asset('frontend-assets/arrow_right_color.svg') }}" alt="Right arrow icon"/>
                             </a>
                         </button>
+
+                        @component('components.front.ads-component-landscape') @endcomponent
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-{{-- @section('more_scripts')
-    <script>
-        HamkkeJsHelpers.convertQuillDeltaToHTML('#postContent', "{{ $post->body }}");
-    </script>
-    <script src="{{ asset('frontend-assets/pages/single-post.js') }}"></script>
-@stop --}}
