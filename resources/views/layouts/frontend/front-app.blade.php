@@ -15,17 +15,19 @@
     <meta name="google-adsense-account" content="ca-pub-8763045245161653">
     {{--  Twitter Tags  --}}
     @if(isCurrentRoute(['home', 'about_us', 'contact_us']))
-        <meta name="twitter:card" content="summary"/>
-        <meta name="twitter:site" content="@ham_kke"/>
-        <meta name="twitter:title" content="{{ $coreSiteDetails->siteName() }}"/>
-        <meta name="twitter:description" content="{{ $coreSiteDetails->tagline() }}"/>
-        <meta name="twitter:image" content="{{ $coreSiteDetails->siteLogo() }}"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="{{ $coreSiteDetails->siteName() }}">
+        <meta property="og:description" content="{{ $coreSiteDetails->tagline() }}">
+        <meta property="og:image" content="{{ $coreSiteDetails->siteLogo() }}">
+        <meta property="og:url" content="{{ request()->fullUrl() }}">
+        <meta name="twitter:card" content="summary_large_image">
     @elseif(isset($post) && ($post instanceof Post))
-        <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:site" content="@ham_kke"/>
-        <meta name="twitter:title" content="{{ $post->title }}"/>
-        <meta name="twitter:description" content="{{ $post->summary }}"/>
-        <meta name="twitter:image" content="{{ $post->featured_image }}"/>
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="{{ $post->title }}">
+        <meta property="og:description" content="{{ $post->summary }}">
+        <meta property="og:image" content="{{ $post->featured_image }}">
+        <meta property="og:url" content="{{ request()->fullUrl() }}">
+        <meta name="twitter:card" content="summary_large_image">
     @endif
     <!-- Core CSS -->
     {{--    <link rel="stylesheet" href="{{ asset('cms-assets/vendor/css/rtl/core.css') }}"/>--}}
@@ -62,9 +64,6 @@
 
             gtag('config', 'G-9NB48P8XBK');
         </script>
-        <script async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8763045245161653"
-                crossorigin="anonymous"></script>
     @endif
     <style>
         #mc_embed_signup {
