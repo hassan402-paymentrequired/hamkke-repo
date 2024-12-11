@@ -1,6 +1,6 @@
 import './bootstrap';
-import { ImageActions } from 'https://cdn.jsdelivr.net/npm/@xeger/quill-image-actions/lib/index.js';
-import { ImageFormats } from "https://cdn.jsdelivr.net/npm/@xeger/quill-image-formats/lib/index.js";
+import { ImageActions } from '@xeger/quill-image-actions';
+import { ImageFormats } from '@xeger/quill-image-formats';
 import htmlEditButton from "quill-html-edit-button";
 import ImageUploader from "quill-image-uploader";
 
