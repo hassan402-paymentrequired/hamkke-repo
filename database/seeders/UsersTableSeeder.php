@@ -27,7 +27,12 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Kemmieola',
                 'email' => 'kemmieola@gmail.com',
                 'password' => bcrypt('hamkke@password')
-            ]
+            ],
+            [
+                'name' => 'Hassan',
+                'email' => 'hassanlateef@initshq.com',
+                'password' => bcrypt('hamkke@password')
+            ],
         ];
         $role = Role::find(ROLE_SUPER_ADMIN);
         foreach($users as $u) {

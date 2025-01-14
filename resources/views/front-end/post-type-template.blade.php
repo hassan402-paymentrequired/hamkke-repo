@@ -84,3 +84,4 @@
 {{--        console.log(@json($queryLog)) --}}
 {{--    </script> --}}
 {{-- @stop --}}
+

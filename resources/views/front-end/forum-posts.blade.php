@@ -20,7 +20,9 @@
                                 data-bs-target="#navbarNav2" aria-controls="navbarNav2" aria-expanded="false"
                                 aria-label="Toggle navigation">
                                 <img src="{{ asset('frontend-assets/tabs.svg') }}" alt="View Tabs Icon" />
+
                                 {{--                                <span>View Tabs</span> --}}
+
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarNav2">
