@@ -1,5 +1,6 @@
 @php
-    use App\Helpers\SiteSettings;use App\Models\PostType;
+    use App\Helpers\SiteSettings;
+    use App\Models\PostType;
 
     /**
      * @var SiteSettings $coreSiteDetails

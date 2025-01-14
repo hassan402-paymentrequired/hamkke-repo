@@ -18,6 +18,7 @@ class GeneralSettingsController extends Controller
         if (request()->isMethod('GET')) {
             return view('settings.site-settings', compact('siteSettings'));
         }
+        
         $request->validate([
             'site_name' => 'required|string',
             'tagline' => 'required|string',

@@ -34,7 +34,7 @@
                         <div class="title-box"></div>
                     </div>
                     <div class="paragraph">
-                        <p>{{ $hallyuPostType->description }}</p>
+                        <p>{{ $hallyuPostType?->description }}</p>
                     </div>
                     <button class="link-div">
                         <a href="{{ route('post_type.view', ['post_type' => PostType::SLUG_HALLYU]) }}">

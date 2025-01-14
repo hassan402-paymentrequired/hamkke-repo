@@ -26,7 +26,7 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        if(isCurrentRoute('customer.auth.login') && $this->isMethod('GET')){
+        if (isCurrentRoute('customer.auth.login') && $this->isMethod('GET')) {
             return [];
         }
         return [
@@ -45,13 +45,14 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         $loginCredentials = ['email' => $this->get('email'), 'password' => $this->get('password')];
-        if($guard === 'web'){
+
+        if ($guard === 'web') {
             $loginCredentials['is_active'] = 1;
         }
         if (!auth($guard)->attempt(
             $loginCredentials,
-            $this->boolean('remember'))
-        ) {
+            $this->boolean('remember')
+        )) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
