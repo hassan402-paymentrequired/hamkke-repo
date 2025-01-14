@@ -27,11 +27,13 @@ class ProductForm extends Form
 
     public function rules()
     {
-        $nameRule = $this->product ? Rule::unique('products')->ignore($this->product->id)
+        $nameRule = $this->product
+            ? Rule::unique('products')->ignore($this->product->id)
             : Rule::unique('products');
+
         $imageRequired = $this->product && $this->product->product_image ? 'nullable' : 'required';
 
-        if($this->product){
+        if ($this->product) {
             $imageRequired = $this->product->product_image ? 'nullable' : 'required';
             $electronicDocRequired = $this->product->electronic_product_url ? ["nullable"] :
                 ["required_if:productType," . ProductType::DIGITAL_PRODUCT->value, "nullable"];
@@ -42,11 +44,12 @@ class ProductForm extends Form
                 'description' => ['required'],
                 'price' => ['required', 'numeric', 'min:1', 'max:100000000'],
                 'productCategory' => [Rule::exists('product_categories', 'id')],
-                'productType' => ['required', Rule::in(ProductType::DIGITAL_PRODUCT->value, ProductType::LIVE_CLASSES->value)],
+                'productType' => ['required', Rule::in(ProductType::DIGITAL_PRODUCT->value, ProductType::LIVE_CLASSES->value, ProductType::PHYSICAL_PRODUCT->value)],
                 'electronic_document' => [...$electronicDocRequired, File::types(['pdf', 'epub', 'doc', 'docx'])],
-                'class_registration_link' => ['required_if:productType,'. ProductType::LIVE_CLASSES->value, 'nullable', 'url']
+                'class_registration_link' => ['required_if:productType,' . ProductType::LIVE_CLASSES->value, 'nullable', 'url']
             ];
         }
+
         return [
             'productImage' => ['bail', $imageRequired, File::image()->types(['png', 'jpg', 'jpeg', 'svg'])
                 ->max('2mb')],
@@ -54,12 +57,20 @@ class ProductForm extends Form
             'description' => ['required'],
             'price' => ['required', 'numeric', 'min:1', 'max:100000000'],
             'productCategory' => [Rule::exists('product_categories', 'id')],
-            'productType' => ['required', Rule::in(ProductType::DIGITAL_PRODUCT->value, ProductType::LIVE_CLASSES->value)],
-            'electronic_document' => ['required_without:class_registration_link', 'nullable', File::types(['pdf', 'epub', 'doc', 'docx'])],
-            'class_registration_link' => ['required_without:electronic_document', 'nullable', 'url']
+            'productType' => ['required', Rule::in(ProductType::DIGITAL_PRODUCT->value, ProductType::LIVE_CLASSES->value, ProductType::PHYSICAL_PRODUCT->value)],
+            'electronic_document' => ['required_if:productType,' . ProductType::DIGITAL_PRODUCT->value, 'nullable', File::types(['pdf', 'epub', 'doc', 'docx'])],
+            'class_registration_link' => ['required_if:productType,' . ProductType::LIVE_CLASSES->value, 'nullable', 'url']
         ];
-
     }
+
+    public function messages()
+    {
+        return [
+            'electronic_document.required_if' => 'Please upload an electronic document when the product type is digital.',
+            'class_registration_link.required_if' => 'A registration link is required when the product type is live classes.',
+        ];
+    }
+
 
     /**
      * @throws ValidationException
@@ -90,7 +101,7 @@ class ProductForm extends Form
     {
         $this->validate();
         $this->slug = createSlugFromString($this->name);
-        if($this->electronic_document){
+        if ($this->electronic_document) {
             $this->productFilePath = Product::uploadProductDocument($this->electronic_document, $this->slug);
         }
         return $this->product->update([
@@ -117,6 +128,4 @@ class ProductForm extends Form
         }
         return null;
     }
-
-
 }

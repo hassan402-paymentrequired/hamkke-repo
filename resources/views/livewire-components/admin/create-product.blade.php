@@ -154,6 +154,20 @@
                 </div>
             @endif
         @endif
+
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
+
         <div class="modal-footer px-0 py-1">
             <button type="button" class="btn btn-label-secondary"
                     wire:click="closeModal">Close
