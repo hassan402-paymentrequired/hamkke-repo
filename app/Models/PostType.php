@@ -71,14 +71,7 @@ class PostType extends Model
                 'slug' => self::SLUG_FORUM,
                 'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
             ]
-           ,
-           [
-               'id' => self::FORUM,
-               'name' => 'Forum',
-               'slug' => self::SLUG_FORUM,
-               'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
-           ]
-
+           
         ];
     }
 
